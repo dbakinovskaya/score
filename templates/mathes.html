@@ -6,9 +6,10 @@
 <body>
     <h1>Матчи</h1>
     <ul>
-        {% for match in matches %}
-            <li>{{ match.home_team }} vs {{ match.away_team }} - {{ match.home_odds }} / {{ match.away_odds }} / {{ match.draw_odds }}</li>
-        {% endfor %}
+        
+{% for match in matches %}
+<p>{{ match.home_team }} vs {{ match.away_team }} - {{ match.home_odds }} : {{ match.away_odds }}</p>
+{% endfor %}
     </ul>
 </body>
 </html>
