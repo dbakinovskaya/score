@@ -1,4 +1,5 @@
 from django.views.generic import View
+from django.http import JsonResponse
 from django.shortcuts import render
 import requests
 from .models import Match
@@ -32,3 +33,13 @@ class MatchesView(View):
 
         context = {'events': events}
         return render(request, 'score/mathes.html', context)
+    def post(self, request):
+        match_id = request.POST.get('match_id')
+        new_score = request.POST.get('new_score')
+
+        # Обновляем счет матча в базе данных
+        match = Match.objects.get(id=match_id)
+        match.score = new_score
+        match.save()
+
+        return JsonResponse({'success': True})
