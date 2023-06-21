@@ -26,6 +26,10 @@ class Leagues(models.Model):
     league_name = models.CharField(max_length=50)
     country_id = models.ForeignKey(Countries, on_delete=models.CASCADE)
     seasons_id = models.ForeignKey(Seasons, on_delete=models.CASCADE)
+    type = models.CharField(max_length=10, choices=[("league", "League"), ("cup", "Cup")])
+    current = models.CharField(max_length=5, choices=[("true", "True"), ("false", "False")])
+    search = models.CharField(max_length=255)
+    last = models.IntegerField()
 
     def __str__(self):
         return self.league_name
@@ -44,11 +48,12 @@ class Fixtures(models.Model):
 
 
 class H2H(models.Model):
-    h2h_id = models.AutoField(primary_key=True)
+    h2h_id = models.CharField(primary_key=True)
     team1_id = models.IntegerField()
     team2_id = models.IntegerField()
     date = models.DateField()
     fixture_id = models.ForeignKey(Fixtures, on_delete=models.CASCADE)
+    league_id = models.ForeignKey(Leagues, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Match between Team {self.team1_id} and Team {self.team2_id}"
@@ -159,11 +164,12 @@ class MatchesStatistics(models.Model):
 class Odds(models.Model):
     odds_id = models.AutoField(primary_key=True)
     fixture_id = models.ForeignKey(
-        Fixtures, on_delete=models.CASCADE)  # legue?
+        Fixtures, on_delete=models.CASCADE)  
     bookmaker_id = models.IntegerField()
-    home_odds = models.FloatField()
-    draw_odds = models.FloatField()
-    away_odds = models.FloatField()
+    # home_odds = models.FloatField()
+    # draw_odds = models.FloatField()
+    # away_odds = models.FloatField()
+    league_id = models.ForeignKey(Leagues, on_delete=models.CASCADE)
 
 
 class Players(models.Model):
@@ -204,6 +210,7 @@ class Coachs(models.Model):
 class Bookmaker(models.Model):
     bookmaker_id = models.AutoField(primary_key=True)
     bookmaker_name = models.CharField(max_length=100)
+    odds_id = models.ForeignKey(Odds,on_delete=models.CASCADE)#тут на свой страх и риск связал 
 
 
 class Label(models.Model):
@@ -216,9 +223,11 @@ class Trophy(models.Model):
     trophy_name = models.CharField(max_length=100)
     league_id = models.ForeignKey(Leagues, on_delete=models.CASCADE)
     player_id = models.ForeignKey(Players, on_delete=models.CASCADE)
+    coahes_id  = models.ForeignKey(Coachs,on_delete=models.CASCADE)
 
 
 class Sidelined(models.Model):
     sidelined_id = models.AutoField(primary_key=True)
     player_id = models.ForeignKey(Players, on_delete=models.CASCADE)
     reason = models.CharField(max_length=100)
+    coahes_id  = models.ForeignKey(Coachs,on_delete=models.CASCADE)
