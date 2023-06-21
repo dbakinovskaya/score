@@ -14,6 +14,8 @@ class Seasons(models.Model):
 class Countries(models.Model):
     country_id = models.AutoField(primary_key=True)
     country_name = models.CharField(max_length=50)
+    code = models.CharField(max_length=2)
+    search = models.CharField(max_length=3)
 
     def __str__(self):
         return self.country_name
@@ -35,6 +37,7 @@ class Fixtures(models.Model):
     home_team_id = models.IntegerField()
     away_team_id = models.IntegerField()
     date = models.DateTimeField()
+    seasons_id = models.ForeignKey(Seasons, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.home_team_id} vs {self.away_team_id}"
@@ -103,6 +106,7 @@ class Standings(models.Model):
     team_id = models.ForeignKey(Teams, on_delete=models.CASCADE)
     position = models.IntegerField()
     points = models.IntegerField()
+    seasons_id = models.ForeignKey(Seasons, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.team_id} - {self.points} points"
