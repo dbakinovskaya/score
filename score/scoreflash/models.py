@@ -26,8 +26,10 @@ class Leagues(models.Model):
     league_name = models.CharField(max_length=50)
     country_id = models.ForeignKey(Countries, on_delete=models.CASCADE)
     seasons_id = models.ForeignKey(Seasons, on_delete=models.CASCADE)
-    type = models.CharField(max_length=10, choices=[("league", "League"), ("cup", "Cup")])
-    current = models.CharField(max_length=5, choices=[("true", "True"), ("false", "False")])
+    type = models.CharField(max_length=10, choices=[
+                            ("league", "League"), ("cup", "Cup")])
+    current = models.CharField(max_length=5, choices=[
+                               ("true", "True"), ("false", "False")])
     search = models.CharField(max_length=255)
     last = models.IntegerField()
 
@@ -48,7 +50,7 @@ class Fixtures(models.Model):
 
 
 class H2H(models.Model):
-    h2h_id = models.CharField(primary_key=True)
+    h2h_id = models.CharField(max_length=300,primary_key=True)
     team1_id = models.IntegerField()
     team2_id = models.IntegerField()
     date = models.DateField()
@@ -136,15 +138,6 @@ class Events(models.Model):
     event_time = models.TimeField()
 
 
-class Lineups(models.Model):
-    lineup_id = models.AutoField(primary_key=True)
-    fixture_id = models.ForeignKey(
-        Fixtures, on_delete=models.CASCADE)
-    team_id = models.ForeignKey(Teams, on_delete=models.CASCADE)
-    player_id = models.ForeignKey('players.Players', on_delete=models.CASCADE)
-    position = models.CharField(max_length=50)
-
-
 class MatchesStatistics(models.Model):
     match_stat_id = models.AutoField(primary_key=True)
     fixture_id = models.ForeignKey(
@@ -164,7 +157,7 @@ class MatchesStatistics(models.Model):
 class Odds(models.Model):
     odds_id = models.AutoField(primary_key=True)
     fixture_id = models.ForeignKey(
-        Fixtures, on_delete=models.CASCADE)  
+        Fixtures, on_delete=models.CASCADE)
     bookmaker_id = models.IntegerField()
     # home_odds = models.FloatField()
     # draw_odds = models.FloatField()
@@ -189,7 +182,7 @@ class PlayersStatistics(models.Model):
     goals = models.IntegerField()
     assists = models.IntegerField()
     fixture_id = models.ForeignKey(
-        Fixtures, on_delete=models.CASCADE)#?
+        Fixtures, on_delete=models.CASCADE)  # ?
 
 
 class PlayersTransfer(models.Model):
@@ -198,6 +191,15 @@ class PlayersTransfer(models.Model):
     team_from_id = models.IntegerField()
     team_to_id = models.IntegerField()
     transfer_date = models.DateField()
+
+
+class Lineups(models.Model):
+    lineup_id = models.AutoField(primary_key=True)
+    fixture_id = models.ForeignKey(
+        Fixtures, on_delete=models.CASCADE)
+    team_id = models.ForeignKey(Teams, on_delete=models.CASCADE)
+    player_id = models.ForeignKey(Players, on_delete=models.CASCADE)
+    position = models.CharField(max_length=50)
 
 
 class Coachs(models.Model):
@@ -210,7 +212,8 @@ class Coachs(models.Model):
 class Bookmaker(models.Model):
     bookmaker_id = models.AutoField(primary_key=True)
     bookmaker_name = models.CharField(max_length=100)
-    odds_id = models.ForeignKey(Odds,on_delete=models.CASCADE)#тут на свой страх и риск связал 
+    # тут на свой страх и риск связал
+    odds_id = models.ForeignKey(Odds, on_delete=models.CASCADE)
 
 
 class Label(models.Model):
@@ -223,11 +226,11 @@ class Trophy(models.Model):
     trophy_name = models.CharField(max_length=100)
     league_id = models.ForeignKey(Leagues, on_delete=models.CASCADE)
     player_id = models.ForeignKey(Players, on_delete=models.CASCADE)
-    coahes_id  = models.ForeignKey(Coachs,on_delete=models.CASCADE)
+    coahes_id = models.ForeignKey(Coachs, on_delete=models.CASCADE)
 
 
 class Sidelined(models.Model):
     sidelined_id = models.AutoField(primary_key=True)
     player_id = models.ForeignKey(Players, on_delete=models.CASCADE)
     reason = models.CharField(max_length=100)
-    coahes_id  = models.ForeignKey(Coachs,on_delete=models.CASCADE)
+    coahes_id = models.ForeignKey(Coachs, on_delete=models.CASCADE)
