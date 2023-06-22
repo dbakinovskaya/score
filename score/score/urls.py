@@ -18,5 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('scoreflash/', include('scoreflash.url')),
+    path('scoreflash/', include('scoreflash.url')),
 ]
