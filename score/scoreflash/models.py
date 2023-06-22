@@ -25,7 +25,7 @@ class Countries(models.Model):
     code = models.CharField(
         verbose_name='Буквенный код страны',
         max_length=2)
-    # Нужно добавить флаг?
+    # Нужно добавить флаг? Я не нашел поля такого 
     #flag = models.ImageField(verbose_name='Флаг страны')
     search = models.CharField(max_length=3)
 

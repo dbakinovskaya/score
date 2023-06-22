@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>H2H</title>
+</head>
+<body>
+ <h1>Head to Head</h1>
+ {% for fixture, data in h2h_data.items %}
+  <h2>{{ fixture }}</h2>
+  <p>H2H ID: {{ data.h2h }}</p>
+  <p>Date: {{ data.date }}</p>
+  <p>League: {{ data.league }}</p>
+  <p>Season: {{ data.season }}</p>
+  <p>Score: {{ data.score }}</p>
+ {% endfor %}
+</body>
+</html>

@@ -1,0 +1,42 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Список лиг</h1>
+
+    <form method="get">
+        <label for="country">Страна:</label>
+        <select name="country" id="country">
+            <option value="">Все</option>
+            {% for league in leagues_data %}
+                <option value="{{ league.country }}">{{ league.country }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="season">Сезон:</label>
+        <select name="season" id="season">
+            <option value="">Все</option>
+            {% for league in leagues_data %}
+                <option value="{{ league.season }}">{{ league.season }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Фильтровать</button>
+    </form>
+
+    {% if selected_country %}
+        <p>Выбрана страна: {{ selected_country }}</p>
+    {% endif %}
+
+    {% if selected_season %}
+        <p>Выбран сезон: {{ selected_season }}</p>
+    {% endif %}
+
+    <ul>
+        {% for league in leagues %}
+            <li>{{ league.name }} ({{ league.country }}, {{ league.season }})</li>
+        {% empty %}
+            <li>Нет доступных лиг</li>
+        {% endfor %}
+    </ul>
+{% endblock %} 
