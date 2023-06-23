@@ -83,8 +83,8 @@ class LeaguesListView(ListView):
         return context
     
 class FixturesListView(ListView):
-    model = Fixtures
-    template_name = 'fixtures_list.html'
+    model = Fixtures 
+    template_name = 'fixture_list.html'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -117,7 +117,6 @@ class FixturesListView(ListView):
                 away_team_id=fixture['teams']['away']['id'],
                
             )
-        
         return queryset
 
 class H2HListView(ListView):
@@ -127,7 +126,8 @@ class H2HListView(ListView):
     def process_h2h_data(self, data):
         h2h_data = {}
         json_data = json.loads(data)
-        fixtures = json_data['response']['fixtures']
+        #fixtures = json_data['response']['fixtures']
+        fixtures = json_data['response']
         for fixture in fixtures:
             h2h_id = fixture['fixture']['id']
             date = fixture['fixture']['date']

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Live Data</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for live in live_data %}
+        <tr>
+          <td>{{ live.id }}</td>
+          <td>{{ live.name }}</td>
+          <td>{{ live.status }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
