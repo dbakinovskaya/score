@@ -29,12 +29,6 @@ figcaption,
 figure,
 footer,
 form,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 header,
 hgroup,
 html,
@@ -352,33 +346,33 @@ body.football.index.sport {}
 .icon-detail {
     width: 100%;
     height: 100%;
-    background-image: url(../images/icons/sprite-icons-detail.png);
+    background-image: url(../img/icons/sprite-icons-detail.png);
     background-repeat: no-repeat;
 }
 .icon-detail.icon-soccer-ball {
     width: 22px;
     height: 22px;
-    background-image: url(../images/icons/detail/icon-football-ball.svg);
+    background-image: url(../img/icons/detail/icon-football-ball.svg);
 }
 .icon-detail.icon-soccer-ball-own {
     width: 22px;
     height: 22px;
-    background-image: url(../images/icons/detail/icon-football-ball-own.svg);
+    background-image: url(../img/icons/detail/icon-football-ball-own.svg);
 }
 .icon-detail.icon-hockey-ball {
     width: 22px;
     height: 22px;
-    background-image: url(../images/icons/detail/icon-hockey-ball.svg);
+    background-image: url(../img/icons/detail/icon-hockey-ball.svg);
 }
 .icon-detail.icon-y-card {
     width: 22px;
     height: 22px;
-    background-image: url(../images/icons/detail/icon-y-card.svg);
+    background-image: url(../img/icons/detail/icon-y-card.svg);
 }
 .icon-detail.icon-r-card {
     width: 22px;
     height: 22px;
-    background-image: url(../images/icons/detail/icon-r-card.svg);
+    background-image: url(../img/icons/detail/icon-r-card.svg);
 }
 .icon-detail.icon-substitution {
     background-position: -151px 50% !important;
@@ -386,12 +380,12 @@ body.football.index.sport {}
 .icon-detail.icon-substitution-in {
     width: 12px;
     height: 12px;
-    background-image: url(../images/icons/detail/icon-substitution-in.svg);
+    background-image: url(../img/icons/detail/icon-substitution-in.svg);
 }
 .icon-detail.icon-substitution-out {
     width: 12px;
     height: 12px;
-    background-image: url(../images/icons/detail/icon-substitution-out.svg);
+    background-image: url(../img/icons/detail/icon-substitution-out.svg);
 }
 .icon-detail.icon-lineup1 {
     background-position: -179px 50% !important;
@@ -635,7 +629,7 @@ a:hover {
     display: block;
     width: 24px;
     height: 24px;
-    background-image: url(../images/icons/icon-arrow-left.svg);
+    background-image: url(../img/icons/icon-arrow-left.svg);
     background-repeat: no-repeat;
     text-indent: -99999px;
     overflow: hidden;
@@ -1156,13 +1150,13 @@ body.sport .m-header-title {
     background-color: var(--lightGreen);
 }
 .m-menu__item-football:before {
-    background-image: url(../images/icons/icon-football-ball.svg);
+    background-image: url(../img/icons/icon-football-ball.svg);
 }
 .m-menu__item-hockey {
     background-color: var(--lightBlue);
 }
 .m-menu__item-hockey:before {
-    background-image: url(../images/icons/icon-hockey-puck.svg);
+    background-image: url(../img/icons/icon-hockey-puck.svg);
 }
 .m-side-social {
     display: -webkit-box;
@@ -1687,34 +1681,34 @@ body.hockey .footer-social {
     background-color: var(--green);
 }
 .m-nav-events__tab-live {
-    background-image: url(../images/icons/icon-events-live-gray.svg);
+    background-image: url(../img/icons/icon-events-live-gray.svg);
 }
 .m-nav-events__tab-all {
-    background-image: url(../images/icons/icon-events-all-gray.svg);
+    background-image: url(../img/icons/icon-events-all-gray.svg);
 }
 .m-nav-events__tab-my {
-    background-image: url(../images/icons/icon-events-my-gray.svg);
+    background-image: url(../img/icons/icon-events-my-gray.svg);
 }
 .m-nav-events__tab-finished {
-    background-image: url(../images/icons/icon-events-finished-gray.svg);
+    background-image: url(../img/icons/icon-events-finished-gray.svg);
 }
 .m-nav-events__tab-schedule {
-    background-image: url(../images/icons/icon-events-schedule-gray.svg);
+    background-image: url(../img/icons/icon-events-schedule-gray.svg);
 }
 .m-nav-events__tab-live.active {
-    background-image: url(../images/icons/icon-events-live-white.svg);
+    background-image: url(../img/icons/icon-events-live-white.svg);
 }
 .m-nav-events__tab-all.active {
-    background-image: url(../images/icons/icon-events-all-white.svg);
+    background-image: url(../img/icons/icon-events-all-white.svg);
 }
 .m-nav-events__tab-my.active {
-    background-image: url(../images/icons/icon-events-my-white.svg);
+    background-image: url(../img/icons/icon-events-my-white.svg);
 }
 .m-nav-events__tab-finished.active {
-    background-image: url(../images/icons/icon-events-finished-white.svg);
+    background-image: url(../img/icons/icon-events-finished-white.svg);
 }
 .m-nav-events__tab-schedule.active {
-    background-image: url(../images/icons/icon-events-schedule-white.svg);
+    background-image: url(../img/icons/icon-events-schedule-white.svg);
 }
 .m-tournament-link {
     display: none;
@@ -1735,7 +1729,7 @@ body.hockey .footer-social {
     right: 10px;
     width: 18px;
     height: 9px;
-    background-image: url(../images/icons/icon-arrow-down-gray.svg);
+    background-image: url(../img/icons/icon-arrow-down-gray.svg);
     background-repeat: no-repeat;
     -webkit-transform: rotate(-90deg);
     -ms-transform: rotate(-90deg);
@@ -2430,20 +2424,20 @@ body.hockey .footer-social {
 .lineups-table .soccer-ball {
     width: 22px;
     height: 22px;
-    background-image: url(../images/icons/detail/icon-football-ball.svg);
+    background-image: url(../img/icons/detail/icon-football-ball.svg);
 }
 .lineups-table .hockey-ball {
     width: 22px;
     height: 22px;
-    background-image: url(../images/icons/detail/icon-hockey-ball.svg);
+    background-image: url(../img/icons/detail/icon-hockey-ball.svg);
 }
 .lineups-table .y-card {
     width: 22px;
     height: 22px;
-    background-image: url(../images/icons/detail/icon-y-card.svg);
+    background-image: url(../img/icons/detail/icon-y-card.svg);
 }
 .lineups-table .r-card {
-    background-image: url(../images/incident-sprite.svg);
+    background-image: url(../img/incident-sprite.svg);
     background-color: rgba(0, 0, 0, 0);
     background-repeat: no-repeat;
     background-position: 0 -16px;
@@ -2452,161 +2446,161 @@ body.hockey .footer-social {
 .lineups-table .substitution-in {
     width: 22px;
     height: 22px;
-    background-image: url(../images/icons/detail/icon-substitution-in-big.svg);
+    background-image: url(../img/icons/detail/icon-substitution-in-big.svg);
 }
 .lineups-table .substitution-out {
     width: 22px;
     height: 22px;
-    background-image: url(../images/icons/detail/icon-substitution-out-big.svg);
+    background-image: url(../img/icons/detail/icon-substitution-out-big.svg);
 }
 .lineups-table .icon-box.substitution-in,
 .lineups-table .substitution-out-name .substitution-out {
     margin: -3px 3px !important;
 }
 .lineups-table .flag.fl_145 {
-    background-image: url(../images/flags/no.084b240.png);
+    background-image: url(../img/flags/no.084b240.png);
 }
 .lineups-table .flag.fl_51 {
-    background-image: url(../images/flags/cl.5615947.png);
+    background-image: url(../img/flags/cl.5615947.png);
 }
 .lineups-table .flag.fl_201 {
-    background-image: url(../images/flags/uy.f10f2fa.png);
+    background-image: url(../img/flags/uy.f10f2fa.png);
 }
 .lineups-table .flag.fl_17 {
-    background-image: url(../images/flags/al.fbde5f8.png);
+    background-image: url(../img/flags/al.fbde5f8.png);
 }
 .lineups-table .flag.fl_31 {
-    background-image: url(../images/flags/by.3f9a3dd.png);
+    background-image: url(../img/flags/by.3f9a3dd.png);
 }
 .lineups-table .flag.fl_62 {
-    background-image: url(../images/flags/cz.b9b2362.png);
+    background-image: url(../img/flags/cz.b9b2362.png);
 }
 .lineups-table .flag.fl_77 {
-    background-image: url(../images/flags/fr.f5e7288.png);
+    background-image: url(../img/flags/fr.f5e7288.png);
 }
 .lineups-table .flag.fl_98 {
-    background-image: url(../images/flags/it.225fa57.png);
+    background-image: url(../img/flags/it.225fa57.png);
 }
 .lineups-table .flag.fl_61 {
-    background-image: url(../images/flags/cy.6bdaca3.png);
+    background-image: url(../img/flags/cy.6bdaca3.png);
 }
 .lineups-table .flag.fl_91 {
-    background-image: url(../images/flags/hu.a479892.png);
+    background-image: url(../img/flags/hu.a479892.png);
 }
 .lineups-table .flag.fl_25 {
-    background-image: url(../images/flags/at.693357d.png);
+    background-image: url(../img/flags/at.693357d.png);
 }
 .lineups-table .flag.fl_83 {
-    background-image: url(../images/flags/gr.78093cc.png);
+    background-image: url(../img/flags/gr.78093cc.png);
 }
 .lineups-table .flag.fl_171 {
-    background-image: url(../images/flags/sk.8e660f7.png);
+    background-image: url(../img/flags/sk.8e660f7.png);
 }
 .lineups-table .flag.fl_181 {
-    background-image: url(../images/flags/se.fdd164b.png);
+    background-image: url(../img/flags/se.fdd164b.png);
 }
 .lineups-table .flag.fl_195 {
-    background-image: url(../images/flags/ua.cbd8dc2.png);
+    background-image: url(../img/flags/ua.cbd8dc2.png);
 }
 .lineups-table .flag.fl_225,
 .lineups-table .x_17 {
-    background-image: url(../images/flags/lc.c9ec68c.png);
+    background-image: url(../img/flags/lc.c9ec68c.png);
 }
 .lineups-table .flag.fl_22 {
-    background-image: url(../images/flags/ar.dc93f45.png);
+    background-image: url(../img/flags/ar.dc93f45.png);
 }
 .lineups-table .flag.fl_128 {
-    background-image: url(../images/flags/mx.0d2b73e.png);
+    background-image: url(../img/flags/mx.0d2b73e.png);
 }
 .lineups-table .flag.fl_200 {
-    background-image: url(../images/flags/us.98be361.png);
+    background-image: url(../img/flags/us.98be361.png);
 }
 .lineups-table .flag.fl_198 {
-    background-image: url(../images/flags/en.12159c6.png);
+    background-image: url(../img/flags/en.12159c6.png);
 }
 .lineups-table .flag.fl_41 {
-    background-image: url(../images/flags/bg.a44eba3.png);
+    background-image: url(../img/flags/bg.a44eba3.png);
 }
 .lineups-table .flag.fl_63 {
-    background-image: url(../images/flags/dk.d35eb12.png);
+    background-image: url(../img/flags/dk.d35eb12.png);
 }
 .lineups-table .flag.fl_96 {
-    background-image: url(../images/flags/ie.94179e5.png);
+    background-image: url(../img/flags/ie.94179e5.png);
 }
 .lineups-table .flag.fl_97 {
-    background-image: url(../images/flags/il.7f37fd6.png);
+    background-image: url(../img/flags/il.7f37fd6.png);
 }
 .lineups-table .flag.fl_116 {
-    background-image: url(../images/flags/lt.acdce25.png);
+    background-image: url(../img/flags/lt.acdce25.png);
 }
 .lineups-table .flag.fl_81 {
-    background-image: url(../images/flags/de.494bda8.png);
+    background-image: url(../img/flags/de.494bda8.png);
 }
 .lineups-table .flag.fl_154 {
-    background-image: url(../images/flags/pl.78c2c39.png);
+    background-image: url(../img/flags/pl.78c2c39.png);
 }
 .lineups-table .flag.fl_157 {
-    background-image: url(../images/flags/ro.1e7d5f5.png);
+    background-image: url(../img/flags/ro.1e7d5f5.png);
 }
 .lineups-table .flag.fl_172 {
-    background-image: url(../images/flags/si.5007fc2.png);
+    background-image: url(../img/flags/si.5007fc2.png);
 }
 .lineups-table .flag.fl_182 {
-    background-image: url(../images/flags/ch.fc3c710.png);
+    background-image: url(../img/flags/ch.fc3c710.png);
 }
 .lineups-table .flag.fl_207 {
-    background-image: url(../images/flags/wa.41aac5a.png);
+    background-image: url(../img/flags/wa.41aac5a.png);
 }
 .lineups-table .flag.fl_170 {
-    background-image: url(../images/flags/sg.20c58cd.png);
+    background-image: url(../img/flags/sg.20c58cd.png);
 }
 .lineups-table .flag.fl_39 {
-    background-image: url(../images/flags/br.ccca590.png);
+    background-image: url(../img/flags/br.ccca590.png);
 }
 .lineups-table .flag.fl_152 {
-    background-image: url(../images/flags/pe.2033344.png);
+    background-image: url(../img/flags/pe.2033344.png);
 }
 .lineups-table .flag.fl_153 {
-    background-image: url(../images/flags/ph.63e3103.png);
+    background-image: url(../img/flags/ph.63e3103.png);
 }
 .lineups-table .flag.fl_100 {
-    background-image: url(../images/flags/jp.95bdd3c.png);
+    background-image: url(../img/flags/jp.95bdd3c.png);
 }
 .lineups-table .flag.fl_32 {
-    background-image: url(../images/flags/be.35385b1.png);
+    background-image: url(../img/flags/be.35385b1.png);
 }
 .lineups-table .flag.fl_59 {
-    background-image: url(../images/flags/hr.eed9ac8.png);
+    background-image: url(../img/flags/hr.eed9ac8.png);
 }
 .lineups-table .flag.fl_76 {
-    background-image: url(../images/flags/fi.4716002.png);
+    background-image: url(../img/flags/fi.4716002.png);
 }
 .lineups-table .flag.fl_92 {
-    background-image: url(../images/flags/is.ad26002.png);
+    background-image: url(../img/flags/is.ad26002.png);
 }
 .lineups-table .flag.fl_110 {
-    background-image: url(../images/flags/lv.0555c07.png);
+    background-image: url(../img/flags/lv.0555c07.png);
 }
 .lineups-table .flag.fl_139 {
-    background-image: url(../images/flags/nl.dede5ef.png);
+    background-image: url(../img/flags/nl.dede5ef.png);
 }
 .lineups-table .flag.fl_155 {
-    background-image: url(../images/flags/pt.0e255ff.png);
+    background-image: url(../img/flags/pt.0e255ff.png);
 }
 .lineups-table .flag.fl_158 {
-    background-image: url(../images/flags/ru.362b4e4.png);
+    background-image: url(../img/flags/ru.362b4e4.png);
 }
 .lineups-table .flag.fl_199 {
-    background-image: url(../images/flags/sc.c794ec4.png);
+    background-image: url(../img/flags/sc.c794ec4.png);
 }
 .lineups-table .flag.fl_176 {
-    background-image: url(../images/flags/es.ac54d02.png);
+    background-image: url(../img/flags/es.ac54d02.png);
 }
 .lineups-table .flag.fl_191 {
-    background-image: url(../images/flags/tr.2e7ac0b.png);
+    background-image: url(../img/flags/tr.2e7ac0b.png);
 }
 .lineups-table .flag.fl_24 {
-    background-image: url(../images/flags/au.6b76ac9.png);
+    background-image: url(../img/flags/au.6b76ac9.png);
 }
 .lineups-table .flag.fl_1,
 .lineups-table .flag.fl_02,
@@ -2622,635 +2616,635 @@ body.hockey .footer-social {
 .lineups-table .flag.fl_450,
 .lineups-table .flag.fl_451,
 .lineups-table .flag.fl_453 {
-    background-image: url(../images/flags/world.ee5f190.png);
+    background-image: url(../img/flags/world.ee5f190.png);
 }
 .lineups-table .flag.fl_53 {
-    background-image: url(../images/flags/co.7a52949.png);
+    background-image: url(../img/flags/co.7a52949.png);
 }
 .lineups-table .flag.fl_47 {
-    background-image: url(../images/flags/ca.6cd0ddc.png);
+    background-image: url(../img/flags/ca.6cd0ddc.png);
 }
 .lineups-table .flag.fl_52 {
-    background-image: url(../images/flags/cn.9bdf859.png);
+    background-image: url(../img/flags/cn.9bdf859.png);
 }
 .lineups-table .flag.fl_167 {
-    background-image: url(../images/flags/rs.d2aad69.png);
+    background-image: url(../img/flags/rs.d2aad69.png);
 }
 .lineups-table .flag.fl_118 {
-    background-image: url(../images/flags/mk.9709219.png);
+    background-image: url(../img/flags/mk.9709219.png);
 }
 .lineups-table .flag.fl_85 {
-    background-image: url(../images/flags/gt.7e4860a.png);
+    background-image: url(../img/flags/gt.7e4860a.png);
 }
 .lineups-table .flag.fl_73 {
-    background-image: url(../images/flags/ee.afc2553.png);
+    background-image: url(../img/flags/ee.afc2553.png);
 }
 .lineups-table .flag.fl_68 {
-    background-image: url(../images/flags/ec.2970c13.png);
+    background-image: url(../img/flags/ec.2970c13.png);
 }
 .lineups-table .flag.fl_57 {
-    background-image: url(../images/flags/cr.a7322ee.png);
+    background-image: url(../img/flags/cr.a7322ee.png);
 }
 .lineups-table .flag.fl_37 {
-    background-image: url(../images/flags/ba.90ecd40.png);
+    background-image: url(../img/flags/ba.90ecd40.png);
 }
 .lineups-table .flag.fl_175 {
-    background-image: url(../images/flags/za.23f7c64.png);
+    background-image: url(../img/flags/za.23f7c64.png);
 }
 .lineups-table .flag.fl_23 {
-    background-image: url(../images/flags/am.fa2215f.png);
+    background-image: url(../img/flags/am.fa2215f.png);
 }
 .lineups-table .flag.fl_69 {
-    background-image: url(../images/flags/eg.cd17604.png);
+    background-image: url(../img/flags/eg.cd17604.png);
 }
 .lineups-table .flag.fl_231 {
-    background-image: url(../images/flags/fo.116c508.png);
+    background-image: url(../img/flags/fo.116c508.png);
 }
 .lineups-table .flag.fl_82 {
-    background-image: url(../images/flags/gh.7029ec7.png);
+    background-image: url(../img/flags/gh.7029ec7.png);
 }
 .lineups-table .flag.fl_95 {
-    background-image: url(../images/flags/iq.dd6c327.png);
+    background-image: url(../img/flags/iq.dd6c327.png);
 }
 .lineups-table .flag.fl_94 {
-    background-image: url(../images/flags/ir.6e9a381.png);
+    background-image: url(../img/flags/ir.6e9a381.png);
 }
 .lineups-table .flag.fl_101 {
-    background-image: url(../images/flags/jo.d862974.png);
+    background-image: url(../img/flags/jo.d862974.png);
 }
 .lineups-table .flag.fl_102 {
-    background-image: url(../images/flags/kz.a397872.png);
+    background-image: url(../img/flags/kz.a397872.png);
 }
 .lineups-table .flag.fl_103 {
-    background-image: url(../images/flags/ke.fa367d2.png);
+    background-image: url(../img/flags/ke.fa367d2.png);
 }
 .lineups-table .flag.fl_119 {
-    background-image: url(../images/flags/mg.af9180d.png);
+    background-image: url(../img/flags/mg.af9180d.png);
 }
 .lineups-table .flag.fl_121 {
-    background-image: url(../images/flags/my.1cc0279.png);
+    background-image: url(../img/flags/my.1cc0279.png);
 }
 .lineups-table .flag.fl_130 {
-    background-image: url(../images/flags/md.64a947d.png);
+    background-image: url(../img/flags/md.64a947d.png);
 }
 .lineups-table .flag.fl_135 {
-    background-image: url(../images/flags/mz.490443e.png);
+    background-image: url(../img/flags/mz.490443e.png);
 }
 .lineups-table .flag.fl_166 {
-    background-image: url(../images/flags/sn.1b15825.png);
+    background-image: url(../img/flags/sn.1b15825.png);
 }
 .lineups-table .flag.fl_144 {
-    background-image: url(../images/flags/nirl.e3833da.png);
+    background-image: url(../img/flags/nirl.e3833da.png);
 }
 .lineups-table .flag.fl_183 {
-    background-image: url(../images/flags/sy.5994bd6.png);
+    background-image: url(../img/flags/sy.5994bd6.png);
 }
 .lineups-table .x_87 {
-    background-image: url(../images/flags/kp.dd18ef7.png);
+    background-image: url(../img/flags/kp.dd18ef7.png);
 }
 .lineups-table .flag.fl_194 {
-    background-image: url(../images/flags/ug.44bacb1.png);
+    background-image: url(../img/flags/ug.44bacb1.png);
 }
 .lineups-table .flag.fl_185 {
-    background-image: url(../images/flags/tz.a3d163a.png);
+    background-image: url(../img/flags/tz.a3d163a.png);
 }
 .lineups-table .flag.fl_187 {
-    background-image: url(../images/flags/tg.b6b6e1f.png);
+    background-image: url(../img/flags/tg.b6b6e1f.png);
 }
 .lineups-table .flag.fl_18 {
-    background-image: url(../images/flags/dz.78a622e.png);
+    background-image: url(../img/flags/dz.78a622e.png);
 }
 .lineups-table .flag.fl_70 {
-    background-image: url(../images/flags/sv.19152ae.png);
+    background-image: url(../img/flags/sv.19152ae.png);
 }
 .lineups-table .flag.fl_90 {
-    background-image: url(../images/flags/hn.09306dd.png);
+    background-image: url(../img/flags/hn.09306dd.png);
 }
 .lineups-table .flag.fl_36 {
-    background-image: url(../images/flags/bo.cc19386.png);
+    background-image: url(../img/flags/bo.cc19386.png);
 }
 .lineups-table .flag.fl_222 {
-    background-image: url(../images/flags/hk.b81b5e1.png);
+    background-image: url(../img/flags/hk.b81b5e1.png);
 }
 .lineups-table .flag.fl_107 {
-    background-image: url(../images/flags/gaza.3974d2e.png);
+    background-image: url(../img/flags/gaza.3974d2e.png);
 }
 .lineups-table .flag.fl_117 {
-    background-image: url(../images/flags/lu.5d3fb95.png);
+    background-image: url(../img/flags/lu.5d3fb95.png);
 }
 .lineups-table .flag.fl_151 {
-    background-image: url(../images/flags/py.34efa61.png);
+    background-image: url(../img/flags/py.34efa61.png);
 }
 .lineups-table .flag.fl_134 {
-    background-image: url(../images/flags/ma.29ceac8.png);
+    background-image: url(../img/flags/ma.29ceac8.png);
 }
 .lineups-table .flag.fl_133 {
-    background-image: url(../images/flags/me.5bf8eb9.png);
+    background-image: url(../img/flags/me.5bf8eb9.png);
 }
 .lineups-table .flag.fl_156 {
-    background-image: url(../images/flags/qa.1aa4ee9.png);
+    background-image: url(../img/flags/qa.1aa4ee9.png);
 }
 .lineups-table .flag.fl_124 {
-    background-image: url(../images/flags/mt.a804b88.png);
+    background-image: url(../img/flags/mt.a804b88.png);
 }
 .lineups-table .flag.fl_186 {
-    background-image: url(../images/flags/th.9816d71.png);
+    background-image: url(../img/flags/th.9816d71.png);
 }
 .lineups-table .flag.fl_190 {
-    background-image: url(../images/flags/tn.71aa193.png);
+    background-image: url(../img/flags/tn.71aa193.png);
 }
 .lineups-table .flag.fl_26 {
-    background-image: url(../images/flags/az.d0ed7ba.png);
+    background-image: url(../img/flags/az.d0ed7ba.png);
 }
 .lineups-table .flag.fl_205 {
-    background-image: url(../images/flags/ve.a6b050a.png);
+    background-image: url(../img/flags/ve.a6b050a.png);
 }
 .lineups-table .flag.fl_28 {
-    background-image: url(../images/flags/bh.6457f47.png);
+    background-image: url(../img/flags/bh.6457f47.png);
 }
 .lineups-table .flag.fl_80 {
-    background-image: url(../images/flags/ge.cfad8ee.png);
+    background-image: url(../img/flags/ge.cfad8ee.png);
 }
 .lineups-table .flag.fl_196 {
-    background-image: url(../images/flags/ae.885ad9e.png);
+    background-image: url(../img/flags/ae.885ad9e.png);
 }
 .lineups-table .flag.fl_106 {
-    background-image: url(../images/flags/kr.9e0b226.png);
+    background-image: url(../img/flags/kr.9e0b226.png);
 }
 .lineups-table .flag.fl_111 {
-    background-image: url(../images/flags/lb.1a858f1.png);
+    background-image: url(../img/flags/lb.1a858f1.png);
 }
 .lineups-table .flag.fl_146 {
-    background-image: url(../images/flags/om.5e0d115.png);
+    background-image: url(../img/flags/om.5e0d115.png);
 }
 .lineups-table .x_114 {
-    background-image: url(../images/flags/bd.ecdd0f8.png);
+    background-image: url(../img/flags/bd.ecdd0f8.png);
 }
 .lineups-table .flag.fl_206 {
-    background-image: url(../images/flags/vn.cff9735.png);
+    background-image: url(../img/flags/vn.cff9735.png);
 }
 .lineups-table .flag.fl_19 {
-    background-image: url(../images/flags/ad.945b07a.png);
+    background-image: url(../img/flags/ad.945b07a.png);
 }
 .lineups-table .flag.fl_46 {
-    background-image: url(../images/flags/cm.eed53ca.png);
+    background-image: url(../img/flags/cm.eed53ca.png);
 }
 .lineups-table .flag.fl_178 {
-    background-image: url(../images/flags/sd.6670fcd.png);
+    background-image: url(../img/flags/sd.6670fcd.png);
 }
 .lineups-table .flag.fl_93 {
-    background-image: url(../images/flags/in.aa3d441.png);
+    background-image: url(../img/flags/in.aa3d441.png);
 }
 .lineups-table .flag.fl_228 {
-    background-image: url(../images/flags/id.9ed9e2e.png);
+    background-image: url(../img/flags/id.9ed9e2e.png);
 }
 .lineups-table .flag.fl_114 {
-    background-image: url(../images/flags/ly.2005ada.png);
+    background-image: url(../img/flags/ly.2005ada.png);
 }
 .lineups-table .flag.fl_136 {
-    background-image: url(../images/flags/na.2a3bbb2.png);
+    background-image: url(../img/flags/na.2a3bbb2.png);
 }
 .lineups-table .flag.fl_208 {
-    background-image: url(../images/flags/ye.fbb6fbc.png);
+    background-image: url(../img/flags/ye.fbb6fbc.png);
 }
 .lineups-table .flag.fl_202 {
-    background-image: url(../images/flags/uz.e9b0eea.png);
+    background-image: url(../img/flags/uz.e9b0eea.png);
 }
 .lineups-table .flag.fl_140 {
-    background-image: url(../images/flags/nz.5c9093b.png);
+    background-image: url(../img/flags/nz.5c9093b.png);
 }
 .lineups-table .flag.fl_189 {
-    background-image: url(../images/flags/tt.f33c193.png);
+    background-image: url(../img/flags/tt.f33c193.png);
 }
 .lineups-table .flag.fl_210 {
-    background-image: url(../images/flags/zw.58b8e84.png);
+    background-image: url(../img/flags/zw.58b8e84.png);
 }
 .lineups-table .flag.fl_165 {
-    background-image: url(../images/flags/sa.7924707.png);
+    background-image: url(../img/flags/sa.7924707.png);
 }
 .lineups-table .flag.fl_20 {
-    background-image: url(../images/flags/ao.492aa49.png);
+    background-image: url(../img/flags/ao.492aa49.png);
 }
 .lineups-table .flag.fl_143 {
-    background-image: url(../images/flags/ng.06f6ef6.png);
+    background-image: url(../img/flags/ng.06f6ef6.png);
 }
 .lineups-table .flag.fl_197 {
-    background-image: url(../images/flags/uk.7bb55ee.png);
+    background-image: url(../img/flags/uk.7bb55ee.png);
 }
 .lineups-table .flag.fl_55 {
-    background-image: url(../images/flags/cg.63fc66e.png);
+    background-image: url(../img/flags/cg.63fc66e.png);
 }
 .lineups-table .x_132 {
-    background-image: url(../images/flags/uk.7bb55ee.png);
+    background-image: url(../img/flags/uk.7bb55ee.png);
 }
 .lineups-table .x_133 {
-    background-image: url(../images/flags/ph.63e3103.png);
+    background-image: url(../img/flags/ph.63e3103.png);
 }
 .lineups-table .flag.fl_99 {
-    background-image: url(../images/flags/jm.6c4fa53.png);
+    background-image: url(../img/flags/jm.6c4fa53.png);
 }
 .lineups-table .flag.fl_131 {
-    background-image: url(../images/flags/mc.70c2614.png);
+    background-image: url(../img/flags/mc.70c2614.png);
 }
 .lineups-table .flag.fl_218 {
-    background-image: url(../images/flags/tw.46da9e2.png);
+    background-image: url(../img/flags/tw.46da9e2.png);
 }
 .lineups-table .flag.fl_221 {
-    background-image: url(../images/flags/fr.f5e7288.png);
+    background-image: url(../img/flags/fr.f5e7288.png);
 }
 .lineups-table .flag.fl_64 {
-    background-image: url(../images/flags/dj.29bb1ab.png);
+    background-image: url(../img/flags/dj.29bb1ab.png);
 }
 .lineups-table .flag.fl_149 {
-    background-image: url(../images/flags/pa.10fade4.png);
+    background-image: url(../img/flags/pa.10fade4.png);
 }
 .lineups-table .flag.fl_109 {
-    background-image: url(../images/flags/la.1c6ae80.png);
+    background-image: url(../img/flags/la.1c6ae80.png);
 }
 .lineups-table .flag.fl_169 {
-    background-image: url(../images/flags/sl.cd854c8.png);
+    background-image: url(../img/flags/sl.cd854c8.png);
 }
 .lineups-table .flag.fl_237 {
-    background-image: url(../images/flags/fr.f5e7288.png);
+    background-image: url(../img/flags/fr.f5e7288.png);
 }
 .lineups-table .flag.fl_89 {
-    background-image: url(../images/flags/ht.b3c5b41.png);
+    background-image: url(../img/flags/ht.b3c5b41.png);
 }
 .lineups-table .flag.fl_177 {
-    background-image: url(../images/flags/lk.c51fd9b.png);
+    background-image: url(../img/flags/lk.c51fd9b.png);
 }
 .lineups-table .flag.fl_163 {
-    background-image: url(../images/flags/sm.1169b12.png);
+    background-image: url(../img/flags/sm.1169b12.png);
 }
 .lineups-table .flag.fl_66 {
-    background-image: url(../images/flags/do.0dff2a8.png);
+    background-image: url(../img/flags/do.0dff2a8.png);
 }
 .lineups-table .flag.fl_29 {
-    background-image: url(../images/flags/bd.ecdd0f8.png);
+    background-image: url(../img/flags/bd.ecdd0f8.png);
 }
 .lineups-table .flag.fl_147 {
-    background-image: url(../images/flags/pk.40b4b61.png);
+    background-image: url(../img/flags/pk.40b4b61.png);
 }
 .lineups-table .flag.fl_48 {
-    background-image: url(../images/flags/cv.714c031.png);
+    background-image: url(../img/flags/cv.714c031.png);
 }
 .lineups-table .flag.fl_60 {
-    background-image: url(../images/flags/cu.ec96c9f.png);
+    background-image: url(../img/flags/cu.ec96c9f.png);
 }
 .lineups-table .flag.fl_58 {
-    background-image: url(../images/flags/ci.a45222f.png);
+    background-image: url(../img/flags/ci.a45222f.png);
 }
 .lineups-table .flag.fl_209 {
-    background-image: url(../images/flags/zm.1115927.png);
+    background-image: url(../img/flags/zm.1115927.png);
 }
 .lineups-table .flag.fl_123 {
-    background-image: url(../images/flags/ml.c1ee487.png);
+    background-image: url(../img/flags/ml.c1ee487.png);
 }
 .lineups-table .flag.fl_79 {
-    background-image: url(../images/flags/gm.555aeae.png);
+    background-image: url(../img/flags/gm.555aeae.png);
 }
 .lineups-table .flag.fl_300 {
-    background-image: url(../images/flags/cw.5fdcf59.png);
+    background-image: url(../img/flags/cw.5fdcf59.png);
 }
 .lineups-table .flag.fl_42 {
-    background-image: url(../images/flags/bf.cb73454.png);
+    background-image: url(../img/flags/bf.cb73454.png);
 }
 .lineups-table .flag.fl_86 {
-    background-image: url(../images/flags/gn.f9eac3f.png);
+    background-image: url(../img/flags/gn.f9eac3f.png);
 }
 .lineups-table .flag.fl_71 {
-    background-image: url(../images/flags/gq.730bb22.png);
+    background-image: url(../img/flags/gq.730bb22.png);
 }
 .lineups-table .flag.fl_174 {
-    background-image: url(../images/flags/so.91e4212.png);
+    background-image: url(../img/flags/so.91e4212.png);
 }
 .lineups-table .flag.fl_74 {
-    background-image: url(../images/flags/et.08efea7.png);
+    background-image: url(../img/flags/et.08efea7.png);
 }
 .lineups-table .flag.fl_78 {
-    background-image: url(../images/flags/ga.39edd48.png);
+    background-image: url(../img/flags/ga.39edd48.png);
 }
 .lineups-table .flag.fl_54 {
-    background-image: url(../images/flags/km.0b6f326.png);
+    background-image: url(../img/flags/km.0b6f326.png);
 }
 .lineups-table .flag.fl_21 {
-    background-image: url(../images/flags/ag.e7cdb90.png);
+    background-image: url(../img/flags/ag.e7cdb90.png);
 }
 .lineups-table .flag.fl_34 {
-    background-image: url(../images/flags/bj.6b536de.png);
+    background-image: url(../img/flags/bj.6b536de.png);
 }
 .lineups-table .flag.fl_56 {
-    background-image: url(../images/flags/cd.2e809bc.png);
+    background-image: url(../img/flags/cd.2e809bc.png);
 }
 .lineups-table .flag.fl_159 {
-    background-image: url(../images/flags/rw.de4b2e2.png);
+    background-image: url(../img/flags/rw.de4b2e2.png);
 }
 .lineups-table .flag.fl_236 {
-    background-image: url(../images/flags/pr.5fbe2ec.png);
+    background-image: url(../img/flags/pr.5fbe2ec.png);
 }
 .lineups-table .flag.fl_230 {
-    background-image: url(../images/flags/bm.0cb3e2f.png);
+    background-image: url(../img/flags/bm.0cb3e2f.png);
 }
 .lineups-table .flag.fl_30 {
-    background-image: url(../images/flags/bb.f4df8e8.png);
+    background-image: url(../img/flags/bb.f4df8e8.png);
 }
 .lineups-table .flag.fl_50 {
-    background-image: url(../images/flags/ro.1e7d5f5.png);
+    background-image: url(../img/flags/ro.1e7d5f5.png);
 }
 .lineups-table .flag.fl_180 {
-    background-image: url(../images/flags/sz.7505e38.png);
+    background-image: url(../img/flags/sz.7505e38.png);
 }
 .lineups-table .flag.fl_44 {
-    background-image: url(../images/flags/bi.af98ca0.png);
+    background-image: url(../img/flags/bi.af98ca0.png);
 }
 .lineups-table .flag.fl_164 {
-    background-image: url(../images/flags/st.5ee027f.png);
+    background-image: url(../img/flags/st.5ee027f.png);
 }
 .lineups-table .flag.fl_112 {
-    background-image: url(../images/flags/ls.90e4378.png);
+    background-image: url(../img/flags/ls.90e4378.png);
 }
 .lineups-table .flag.fl_72 {
-    background-image: url(../images/flags/er.9e73f83.png);
+    background-image: url(../img/flags/er.9e73f83.png);
 }
 .lineups-table .flag.fl_49 {
-    background-image: url(../images/flags/cf.dcc3203.png);
+    background-image: url(../img/flags/cf.dcc3203.png);
 }
 .lineups-table .flag.fl_113 {
-    background-image: url(../images/flags/lr.bf2f8be.png);
+    background-image: url(../img/flags/lr.bf2f8be.png);
 }
 .lineups-table .flag.fl_120 {
-    background-image: url(../images/flags/mw.607a24e.png);
+    background-image: url(../img/flags/mw.607a24e.png);
 }
 .lineups-table .flag.fl_45 {
-    background-image: url(../images/flags/kh.69bea05.png);
+    background-image: url(../img/flags/kh.69bea05.png);
 }
 .lineups-table .flag.fl_138 {
-    background-image: url(../images/flags/np.a66f257.png);
+    background-image: url(../img/flags/np.a66f257.png);
 }
 .lineups-table .flag.fl_215 {
-    background-image: url(../images/flags/ps.4e76703.png);
+    background-image: url(../img/flags/ps.4e76703.png);
 }
 .lineups-table .flag.fl_16 {
-    background-image: url(../images/flags/af.908e3a8.png);
+    background-image: url(../img/flags/af.908e3a8.png);
 }
 .lineups-table .flag.fl_67 {
-    background-image: url(../images/flags/tp.40cc4bc.png);
+    background-image: url(../img/flags/tp.40cc4bc.png);
 }
 .lineups-table .flag.fl_192 {
-    background-image: url(../images/flags/tm.2516a8f.png);
+    background-image: url(../img/flags/tm.2516a8f.png);
 }
 .lineups-table .flag.fl_233 {
-    background-image: url(../images/flags/mo.400a7dd.png);
+    background-image: url(../img/flags/mo.400a7dd.png);
 }
 .lineups-table .flag.fl_43 {
-    background-image: url(../images/flags/bar.2aec239.png);
+    background-image: url(../img/flags/bar.2aec239.png);
 }
 .lineups-table .flag.fl_105 {
-    background-image: url(../images/flags/kp.dd18ef7.png);
+    background-image: url(../img/flags/kp.dd18ef7.png);
 }
 .lineups-table .flag.fl_184 {
-    background-image: url(../images/flags/tj.99338a3.png);
+    background-image: url(../img/flags/tj.99338a3.png);
 }
 .lineups-table .flag.fl_115 {
-    background-image: url(../images/flags/li.cf1a626.png);
+    background-image: url(../img/flags/li.cf1a626.png);
 }
 .lineups-table .flag.fl_88 {
-    background-image: url(../images/flags/gy.7358530.png);
+    background-image: url(../img/flags/gy.7358530.png);
 }
 .lineups-table .flag.fl_243 {
-    background-image: url(../images/flags/ai.9564420.png);
+    background-image: url(../img/flags/ai.9564420.png);
 }
 .lineups-table .flag.fl_84 {
-    background-image: url(../images/flags/gre.db634a8.png);
+    background-image: url(../img/flags/gre.db634a8.png);
 }
 .lineups-table .flag.fl_160 {
-    background-image: url(../images/flags/kn.c595035.png);
+    background-image: url(../img/flags/kn.c595035.png);
 }
 .lineups-table .flag.fl_38 {
-    background-image: url(../images/flags/bw.6d3f887.png);
+    background-image: url(../img/flags/bw.6d3f887.png);
 }
 .lineups-table .flag.fl_27 {
-    background-image: url(../images/flags/bs.0046b58.png);
+    background-image: url(../img/flags/bs.0046b58.png);
 }
 .lineups-table .flag.fl_33 {
-    background-image: url(../images/flags/bz.ce4fb5c.png);
+    background-image: url(../img/flags/bz.ce4fb5c.png);
 }
 .lineups-table .flag.fl_35 {
-    background-image: url(../images/flags/bt.32b9e6f.png);
+    background-image: url(../img/flags/bt.32b9e6f.png);
 }
 .lineups-table .flag.fl_40 {
-    background-image: url(../images/flags/bn.06f09c0.png);
+    background-image: url(../img/flags/bn.06f09c0.png);
 }
 .lineups-table .flag.fl_65 {
-    background-image: url(../images/flags/dm.ac15bba.png);
+    background-image: url(../img/flags/dm.ac15bba.png);
 }
 .lineups-table .flag.fl_75 {
-    background-image: url(../images/flags/fj.a4b6288.png);
+    background-image: url(../img/flags/fj.a4b6288.png);
 }
 .lineups-table .flag.fl_87 {
-    background-image: url(../images/flags/gw.64ecd8f.png);
+    background-image: url(../img/flags/gw.64ecd8f.png);
 }
 .lineups-table .flag.fl_104 {
-    background-image: url(../images/flags/ki.65ac58a.png);
+    background-image: url(../img/flags/ki.65ac58a.png);
 }
 .lineups-table .flag.fl_108 {
-    background-image: url(../images/flags/kg.038e2d0.png);
+    background-image: url(../img/flags/kg.038e2d0.png);
 }
 .lineups-table .flag.fl_122 {
-    background-image: url(../images/flags/mv.90aaf2a.png);
+    background-image: url(../img/flags/mv.90aaf2a.png);
 }
 .lineups-table .flag.fl_125 {
-    background-image: url(../images/flags/mh.e6ac142.png);
+    background-image: url(../img/flags/mh.e6ac142.png);
 }
 .lineups-table .flag.fl_126 {
-    background-image: url(../images/flags/mr.91f1659.png);
+    background-image: url(../img/flags/mr.91f1659.png);
 }
 .lineups-table .flag.fl_127 {
-    background-image: url(../images/flags/mu.8f46fac.png);
+    background-image: url(../img/flags/mu.8f46fac.png);
 }
 .lineups-table .flag.fl_129 {
-    background-image: url(../images/flags/fm.320ccff.png);
+    background-image: url(../img/flags/fm.320ccff.png);
 }
 .lineups-table .flag.fl_132 {
-    background-image: url(../images/flags/mn.c0d29db.png);
+    background-image: url(../img/flags/mn.c0d29db.png);
 }
 .lineups-table .flag.fl_137 {
-    background-image: url(../images/flags/nr.483cd24.png);
+    background-image: url(../img/flags/nr.483cd24.png);
 }
 .lineups-table .flag.fl_141 {
-    background-image: url(../images/flags/ni.6f63d10.png);
+    background-image: url(../img/flags/ni.6f63d10.png);
 }
 .lineups-table .flag.fl_142 {
-    background-image: url(../images/flags/ne.d9acc52.png);
+    background-image: url(../img/flags/ne.d9acc52.png);
 }
 .lineups-table .flag.fl_148 {
-    background-image: url(../images/flags/pw.622e1b2.png);
+    background-image: url(../img/flags/pw.622e1b2.png);
 }
 .lineups-table .flag.fl_150 {
-    background-image: url(../images/flags/pap.2af66ed.png);
+    background-image: url(../img/flags/pap.2af66ed.png);
 }
 .lineups-table .flag.fl_161 {
-    background-image: url(../images/flags/vc.b1371bc.png);
+    background-image: url(../img/flags/vc.b1371bc.png);
 }
 .lineups-table .flag.fl_162 {
-    background-image: url(../images/flags/sam.9a614f8.png);
+    background-image: url(../img/flags/sam.9a614f8.png);
 }
 .lineups-table .flag.fl_168 {
-    background-image: url(../images/flags/sch.e2792c0.png);
+    background-image: url(../img/flags/sch.e2792c0.png);
 }
 .lineups-table .flag.fl_173 {
-    background-image: url(../images/flags/sb.7100d6c.png);
+    background-image: url(../img/flags/sb.7100d6c.png);
 }
 .lineups-table .flag.fl_179 {
-    background-image: url(../images/flags/sur.bea9c10.png);
+    background-image: url(../img/flags/sur.bea9c10.png);
 }
 .lineups-table .flag.fl_188 {
-    background-image: url(../images/flags/to.4ce5d35.png);
+    background-image: url(../img/flags/to.4ce5d35.png);
 }
 .lineups-table .flag.fl_203 {
-    background-image: url(../images/flags/vu.455ef8b.png);
+    background-image: url(../img/flags/vu.455ef8b.png);
 }
 .lineups-table .flag.fl_204 {
-    background-image: url(../images/flags/va.271582a.png);
+    background-image: url(../img/flags/va.271582a.png);
 }
 .lineups-table .flag.fl_211 {
-    background-image: url(../images/flags/ge.cfad8ee.png);
+    background-image: url(../img/flags/ge.cfad8ee.png);
 }
 .lineups-table .flag.fl_223 {
-    background-image: url(../images/flags/cay.e976668.png);
+    background-image: url(../img/flags/cay.e976668.png);
 }
 .lineups-table .flag.fl_229 {
-    background-image: url(../images/flags/aw.2eb48e2.png);
+    background-image: url(../img/flags/aw.2eb48e2.png);
 }
 .lineups-table .flag.fl_232 {
-    background-image: url(../images/flags/gu.0c95716.png);
+    background-image: url(../img/flags/gu.0c95716.png);
 }
 .lineups-table .flag.fl_234 {
-    background-image: url(../images/flags/ms.1575892.png);
+    background-image: url(../img/flags/ms.1575892.png);
 }
 .lineups-table .flag.fl_238 {
-    background-image: url(../images/flags/tur.6996394.png);
+    background-image: url(../img/flags/tur.6996394.png);
 }
 .lineups-table .flag.fl_239,
 .lineups-table .flag.fl_241 {
-    background-image: url(../images/flags/an.72ac4a8.png);
+    background-image: url(../img/flags/an.72ac4a8.png);
 }
 .lineups-table .flag.fl_242 {
-    background-image: url(../images/flags/as.86cea2f.png);
+    background-image: url(../img/flags/as.86cea2f.png);
 }
 .lineups-table .flag.fl_244 {
-    background-image: url(../images/flags/ck.aca218c.png);
+    background-image: url(../img/flags/ck.aca218c.png);
 }
 .lineups-table .flag.fl_245 {
-    background-image: url(../images/flags/nc.32d2ca5.png);
+    background-image: url(../img/flags/nc.32d2ca5.png);
 }
 .lineups-table .flag.fl_304 {
-    background-image: url(../images/flags/gi.3f12cf6.png);
+    background-image: url(../img/flags/gi.3f12cf6.png);
 }
 .lineups-table .flag.fl_212 {
-    background-image: url(../images/flags/xk.f33f86b.png);
+    background-image: url(../img/flags/xk.f33f86b.png);
 }
 .lineups-table .flag.fl_226 {
-    background-image: url(../images/flags/pf.bacf384.png);
+    background-image: url(../img/flags/pf.bacf384.png);
 }
 .lineups-table .flag.fl_305 {
-    background-image: url(../images/flags/im.7c0bba7.png);
+    background-image: url(../img/flags/im.7c0bba7.png);
 }
 .lineups-table .flag.fl_407 {
-    background-image: url(../images/flags/ss.42e0849.png);
+    background-image: url(../img/flags/ss.42e0849.png);
 }
 .lineups-table .flag.fl_240 {
-    background-image: url(../images/flags/im.7c0bba7.png);
+    background-image: url(../img/flags/im.7c0bba7.png);
 }
 .lineups-table .flag.fl_254 {
-    background-image: url(../images/flags/zanz.3488375.png);
+    background-image: url(../img/flags/zanz.3488375.png);
 }
 .lineups-table .flag.fl_255,
 .lineups-table .flag.fl_256 {
-    background-image: url(../images/flags/fr.f5e7288.png);
+    background-image: url(../img/flags/fr.f5e7288.png);
 }
 .lineups-table .flag.fl_259 {
-    background-image: url(../images/flags/nu.3869da7.png);
+    background-image: url(../img/flags/nu.3869da7.png);
 }
 .lineups-table .flag.fl_287 {
-    background-image: url(../images/flags/pf.bacf384.png);
+    background-image: url(../img/flags/pf.bacf384.png);
 }
 .lineups-table .flag.fl_452 {
-    background-image: url(../images/flags/je.0903b51.png);
+    background-image: url(../img/flags/je.0903b51.png);
 }
 .lineups-table .flag.fl_483 {
-    background-image: url(../images/flags/gl.e4c275b.png);
+    background-image: url(../img/flags/gl.e4c275b.png);
 }
 .lineups-table .flag.fl_495 {
-    background-image: url(../images/flags/gue.bcc1ba1.png);
+    background-image: url(../img/flags/gue.bcc1ba1.png);
 }
 .lineups-table .flag.fl_496 {
-    background-image: url(../images/flags/cat.df46672.png);
+    background-image: url(../img/flags/cat.df46672.png);
 }
 .lineups-table .flag.fl_9011,
 .lineups-table .flag.fl_3473162 {
-    background: url(../images/flags/man.5460e9f.png) no-repeat 0/18px 12px;
+    background: url(../img/flags/man.5460e9f.png) no-repeat 0/18px 12px;
 }
 .lineups-table .flag.fl_9021,
 .lineups-table .flag.fl_3473163 {
-    background: url(../images/flags/manDouble.1b7d4c6.png) no-repeat 0/18px 12px;
+    background: url(../img/flags/manDouble.1b7d4c6.png) no-repeat 0/18px 12px;
 }
 .lineups-table .flag.fl_9012,
 .lineups-table .flag.fl_3473164 {
-    background: url(../images/flags/woman.d15a198.png) no-repeat 0/18px 12px;
+    background: url(../img/flags/woman.d15a198.png) no-repeat 0/18px 12px;
 }
 .lineups-table .flag.fl_9022,
 .lineups-table .flag.fl_3473165 {
-    background: url(../images/flags/womanDouble.86f2c21.png) no-repeat 0/18px 12px;
+    background: url(../img/flags/womanDouble.86f2c21.png) no-repeat 0/18px 12px;
 }
 .lineups-table .flag.fl_9030,
 .lineups-table .flag.fl_3473166,
 .lineups-table .flag.fl_3473167 {
-    background: url(../images/flags/mixedDouble.3cd3cb1.png) no-repeat 0/18px 12px;
+    background: url(../img/flags/mixedDouble.3cd3cb1.png) no-repeat 0/18px 12px;
 }
 .lineups-table .flag.fl_7400,
 .lineups-table .flag.fl_4647020 {
-    background-image: url(../images/flags/_wow.dba959f.png);
+    background-image: url(../img/flags/_wow.dba959f.png);
 }
 .lineups-table .flag.fl_7401,
 .lineups-table .flag.fl_3473168 {
-    background-image: url(../images/flags/_cs.c18546b.png);
+    background-image: url(../img/flags/_cs.c18546b.png);
 }
 .lineups-table .flag.fl_7402,
 .lineups-table .flag.fl_3473169 {
-    background-image: url(../images/flags/_dota.2b42474.png);
+    background-image: url(../img/flags/_dota.2b42474.png);
 }
 .lineups-table .flag.fl_7403,
 .lineups-table .flag.fl_3473171 {
-    background-image: url(../images/flags/_star.0a33ee5.png);
+    background-image: url(../img/flags/_star.0a33ee5.png);
 }
 .lineups-table .flag.fl_7404,
 .lineups-table .flag.fl_3473170 {
-    background-image: url(../images/flags/_lol.b6953b4.png);
+    background-image: url(../img/flags/_lol.b6953b4.png);
 }
 .lineups-table .flag.fl_90270,
 .lineups-table .flag.fl_7613333 {
-    background-image: url(../images/flags/_heart.ba58946.png);
+    background-image: url(../img/flags/_heart.ba58946.png);
 }
 .lineups-table .flag.fl_90280,
 .lineups-table .flag.fl_7613334 {
-    background-image: url(../images/flags/_over.1582942.png);
+    background-image: url(../img/flags/_over.1582942.png);
 }
 .lineups-table .flag.fl_12390,
 .lineups-table .flag.fl_15836321 {
-    background-image: url(../images/flags/_fifa.14775ea.png);
+    background-image: url(../img/flags/_fifa.14775ea.png);
 }
 .lineups-table .flag.fl_12438,
 .lineups-table .flag.fl_15836322 {
-    background-image: url(../images/flags/_rocket.91f8ba9.png);
+    background-image: url(../img/flags/_rocket.91f8ba9.png);
 }
 .lineups-table .flag.fl_12534,
 .lineups-table .flag.fl_15836323 {
-    background-image: url(../images/flags/_nhl.4e19916.png);
+    background-image: url(../img/flags/_nhl.4e19916.png);
 }
 .lineups-table .flag.fl_12535,
 .lineups-table .flag.fl_15836324 {
-    background-image: url(../images/flags/_nba.bfe844c.png);
+    background-image: url(../img/flags/_nba.bfe844c.png);
 }
 .h2h-content:not(.active) {
     display: none;
@@ -3296,7 +3290,7 @@ body.hockey .footer-social {
     right: 23px;
     width: 18px;
     height: 9px;
-    background-image: url(../images/icons/icon-arrow-down-gray.svg);
+    background-image: url(../img/icons/icon-arrow-down-gray.svg);
     background-repeat: no-repeat;
 }
 .spoiler.open > .spoiler__header:after {
@@ -3505,514 +3499,514 @@ body.hockey .footer-social {
 .flag.flag-173,
 .flag.flag-174,
 .flag.flag-175 {
-    background-image: url(../images/flags/world.ee5f190.png);
+    background-image: url(../img/flags/world.ee5f190.png);
 }
 .flag.flag-4 {
-    background-image: url(../images/flags/al.fbde5f8.png);
+    background-image: url(../img/flags/al.fbde5f8.png);
 }
 .flag.flag-5 {
-    background-image: url(../images/flags/dz.78a622e.png);
+    background-image: url(../img/flags/dz.78a622e.png);
 }
 .flag.flag-8 {
-    background-image: url(../images/flags/ad.945b07a.png);
+    background-image: url(../img/flags/ad.945b07a.png);
 }
 .flag.flag-7 {
-    background-image: url(../images/flags/ao.492aa49.png);
+    background-image: url(../img/flags/ao.492aa49.png);
 }
 .flag.flag-9 {
-    background-image: url(../images/flags/ar.dc93f45.png);
+    background-image: url(../img/flags/ar.dc93f45.png);
 }
 .flag.flag-10 {
-    background-image: url(../images/flags/am.fa2215f.png);
+    background-image: url(../img/flags/am.fa2215f.png);
 }
 .flag.flag-1 {
-    background-image: url(../images/flags/au.6b76ac9.png);
+    background-image: url(../img/flags/au.6b76ac9.png);
 }
 .flag.flag-2 {
-    background-image: url(../images/flags/at.693357d.png);
+    background-image: url(../img/flags/at.693357d.png);
 }
 .flag.flag-3 {
-    background-image: url(../images/flags/az.d0ed7ba.png);
+    background-image: url(../img/flags/az.d0ed7ba.png);
 }
 .flag.flag-13 {
-    background-image: url(../images/flags/bh.6457f47.png);
+    background-image: url(../img/flags/bh.6457f47.png);
 }
 .flag.flag-12 {
-    background-image: url(../images/flags/bd.ecdd0f8.png);
+    background-image: url(../img/flags/bd.ecdd0f8.png);
 }
 .flag.flag-14 {
-    background-image: url(../images/flags/by.3f9a3dd.png);
+    background-image: url(../img/flags/by.3f9a3dd.png);
 }
 .flag.flag-15 {
-    background-image: url(../images/flags/be.35385b1.png);
+    background-image: url(../img/flags/be.35385b1.png);
 }
 .flag.flag-16 {
-    background-image: url(../images/flags/bj.6b536de.png);
+    background-image: url(../img/flags/bj.6b536de.png);
 }
 .flag.flag-19 {
-    background-image: url(../images/flags/bo.cc19386.png);
+    background-image: url(../img/flags/bo.cc19386.png);
 }
 .flag.flag-20 {
-    background-image: url(../images/flags/ba.90ecd40.png);
+    background-image: url(../img/flags/ba.90ecd40.png);
 }
 .flag.flag-21 {
-    background-image: url(../images/flags/bw.6d3f887.png);
+    background-image: url(../img/flags/bw.6d3f887.png);
 }
 .flag.flag-22 {
-    background-image: url(../images/flags/br.ccca590.png);
+    background-image: url(../iimg/flags/br.ccca590.png);
 }
 .flag.flag-18 {
-    background-image: url(../images/flags/bg.a44eba3.png);
+    background-image: url(../img/flags/bg.a44eba3.png);
 }
 .flag.flag-23 {
-    background-image: url(../images/flags/bf.cb73454.png);
+    background-image: url(../img/flags/bf.cb73454.png);
 }
 .flag.flag-97 {
-    background-image: url(../images/flags/bar.2aec239.png);
+    background-image: url(../img/flags/bar.2aec239.png);
 }
 .flag.flag-24 {
-    background-image: url(../images/flags/bi.af98ca0.png);
+    background-image: url(../img/flags/bi.af98ca0.png);
 }
 .flag.flag-59 {
-    background-image: url(../images/flags/kh.69bea05.png);
+    background-image: url(../img/flags/kh.69bea05.png);
 }
 .flag.flag-60 {
-    background-image: url(../images/flags/cm.eed53ca.png);
+    background-image: url(../img/flags/cm.eed53ca.png);
 }
 .flag.flag-61 {
-    background-image: url(../images/flags/ca.6cd0ddc.png);
+    background-image: url(../img/flags/ca.6cd0ddc.png);
 }
 .flag.flag-57 {
-    background-image: url(../images/flags/cv.714c031.png);
+    background-image: url(../img/flags/cv.714c031.png);
 }
 .flag.flag-156 {
-    background-image: url(../images/flags/cl.5615947.png);
+    background-image: url(../img/flags/cl.5615947.png);
 }
 .flag.flag-65 {
-    background-image: url(../images/flags/cn.9bdf859.png);
+    background-image: url(../img/flags/cn.9bdf859.png);
 }
 .flag.flag-66 {
-    background-image: url(../images/flags/co.7a52949.png);
+    background-image: url(../img/flags/co.7a52949.png);
 }
 .flag.flag-68 {
-    background-image: url(../images/flags/cg.63fc66e.png);
+    background-image: url(../img/flags/cg.63fc66e.png);
 }
 .flag.flag-67 {
-    background-image: url(../images/flags/cd.2e809bc.png);
+    background-image: url(../img/flags/cd.2e809bc.png);
 }
 .flag.flag-70 {
-    background-image: url(../images/flags/cr.a7322ee.png);
+    background-image: url(../img/flags/cr.a7322ee.png);
 }
 .flag.flag-71 {
-    background-image: url(../images/flags/ci.a45222f.png);
+    background-image: url(../img/flags/ci.a45222f.png);
 }
 .flag.flag-153 {
-    background-image: url(../images/flags/hr.eed9ac8.png);
+    background-image: url(../img/flags/hr.eed9ac8.png);
 }
 .flag.flag-64 {
-    background-image: url(../images/flags/cy.6bdaca3.png);
+    background-image: url(../img/flags/cy.6bdaca3.png);
 }
 .flag.flag-155 {
-    background-image: url(../images/flags/cz.b9b2362.png);
+    background-image: url(../img/flags/cz.b9b2362.png);
 }
 .flag.flag-40 {
-    background-image: url(../images/flags/dk.d35eb12.png);
+    background-image: url(../img/flags/dk.d35eb12.png);
 }
 .flag.flag-41 {
-    background-image: url(../images/flags/dj.29bb1ab.png);
+    background-image: url(../img/flags/dj.29bb1ab.png);
 }
 .flag.flag-42 {
-    background-image: url(../images/flags/do.0dff2a8.png);
+    background-image: url(../img/flags/do.0dff2a8.png);
 }
 .flag.flag-161 {
-    background-image: url(../images/flags/ec.2970c13.png);
+    background-image: url(../img/flags/ec.2970c13.png);
 }
 .flag.flag-43 {
-    background-image: url(../images/flags/eg.cd17604.png);
+    background-image: url(../img/flags/eg.cd17604.png);
 }
 .flag.flag-118 {
-    background-image: url(../images/flags/sv.19152ae.png);
+    background-image: url(../img/flags/sv.19152ae.png);
 }
 .flag.flag-163 {
-    background-image: url(../images/flags/ee.afc2553.png);
+    background-image: url(../img/flags/ee.afc2553.png);
 }
 .flag.flag-164 {
-    background-image: url(../images/flags/et.08efea7.png);
+    background-image: url(../img/flags/et.08efea7.png);
 }
 .flag.flag-149 {
-    background-image: url(../images/flags/fj.a4b6288.png);
+    background-image: url(../img/flags/fj.a4b6288.png);
 }
 .flag.flag-151 {
-    background-image: url(../images/flags/fi.4716002.png);
+    background-image: url(../img/flags/fi.4716002.png);
 }
 .flag.flag-152 {
-    background-image: url(../images/flags/fr.f5e7288.png);
+    background-image: url(../img/flags/fr.f5e7288.png);
 }
 .flag.flag-28 {
-    background-image: url(../images/flags/ga.39edd48.png);
+    background-image: url(../img/flags/ga.39edd48.png);
 }
 .flag.flag-30 {
-    background-image: url(../images/flags/gm.555aeae.png);
+    background-image: url(../img/flags/gm.555aeae.png);
 }
 .flag.flag-39 {
-    background-image: url(../images/flags/ge.cfad8ee.png);
+    background-image: url(../img/flags/ge.cfad8ee.png);
 }
 .flag.flag-34 {
-    background-image: url(../images/flags/de.494bda8.png);
+    background-image: url(../img/flags/de.494bda8.png);
 }
 .flag.flag-31 {
-    background-image: url(../images/flags/gh.7029ec7.png);
+    background-image: url(../img/flags/gh.7029ec7.png);
 }
 .flag.flag-38 {
-    background-image: url(../images/flags/gr.78093cc.png);
+    background-image: url(../img/flags/gr.78093cc.png);
 }
 .flag.flag-32 {
-    background-image: url(../images/flags/gt.7e4860a.png);
+    background-image: url(../img/flags/gt.7e4860a.png);
 }
 .flag.flag-33 {
-    background-image: url(../images/flags/gn.f9eac3f.png);
+    background-image: url(../img/flags/gn.f9eac3f.png);
 }
 .flag.flag-29 {
-    background-image: url(../images/flags/ht.b3c5b41.png);
+    background-image: url(../img/flags/ht.b3c5b41.png);
 }
 .flag.flag-36 {
-    background-image: url(../images/flags/hn.09306dd.png);
+    background-image: url(../img/flags/hn.09306dd.png);
 }
 .flag.flag-25 {
-    background-image: url(../images/flags/hu.a479892.png);
+    background-image: url(../img/flags/hu.a479892.png);
 }
 .flag.flag-53 {
-    background-image: url(../images/flags/is.ad26002.png);
+    background-image: url(../img/flags/is.ad26002.png);
 }
 .flag.flag-47 {
-    background-image: url(../images/flags/in.aa3d441.png);
+    background-image: url(../img/flags/in.aa3d441.png);
 }
 .flag.flag-51 {
-    background-image: url(../images/flags/ir.6e9a381.png);
+    background-image: url(../img/flags/ir.6e9a381.png);
 }
 .flag.flag-50 {
-    background-image: url(../images/flags/iq.dd6c327.png);
+    background-image: url(../img/flags/iq.dd6c327.png);
 }
 .flag.flag-52 {
-    background-image: url(../images/flags/ie.94179e5.png);
+    background-image: url(../img/flags/ie.94179e5.png);
 }
 .flag.flag-46 {
-    background-image: url(../images/flags/il.7f37fd6.png);
+    background-image: url(../img/flags/il.7f37fd6.png);
 }
 .flag.flag-55 {
-    background-image: url(../images/flags/it.225fa57.png);
+    background-image: url(../img/flags/it.225fa57.png);
 }
 .flag.flag-166 {
-    background-image: url(../images/flags/jm.6c4fa53.png);
+    background-image: url(../img/flags/jm.6c4fa53.png);
 }
 .flag.flag-167 {
-    background-image: url(../images/flags/jp.95bdd3c.png);
+    background-image: url(../img/flags/jp.95bdd3c.png);
 }
 .flag.flag-49 {
-    background-image: url(../images/flags/jo.d862974.png);
+    background-image: url(../img/flags/jo.d862974.png);
 }
 .flag.flag-58 {
-    background-image: url(../images/flags/kz.a397872.png);
+    background-image: url(../img/flags/kz.a397872.png);
 }
 .flag.flag-63 {
-    background-image: url(../images/flags/ke.fa367d2.png);
+    background-image: url(../img/flags/ke.fa367d2.png);
 }
 .flag.flag-165 {
-    background-image: url(../images/flags/kr.9e0b226.png);
+    background-image: url(../img/flags/kr.9e0b226.png);
 }
 .flag.flag-72 {
-    background-image: url(../images/flags/gaza.3974d2e.png);
+    background-image: url(../img/flags/gaza.3974d2e.png);
 }
 .flag.flag-73 {
-    background-image: url(../images/flags/kg.038e2d0.png);
+    background-image: url(../img/flags/kg.038e2d0.png);
 }
 .flag.flag-75 {
-    background-image: url(../images/flags/la.1c6ae80.png);
+    background-image: url(../img/flags/la.1c6ae80.png);
 }
 .flag.flag-76 {
-    background-image: url(../images/flags/lv.0555c07.png);
+    background-image: url(../img/flags/lv.0555c07.png);
 }
 .flag.flag-79 {
-    background-image: url(../images/flags/lb.1a858f1.png);
+    background-image: url(../img/flags/lb.1a858f1.png);
 }
 .flag.flag-77 {
-    background-image: url(../images/flags/ls.90e4378.png);
+    background-image: url(../img/flags/ls.90e4378.png);
 }
 .flag.flag-78 {
-    background-image: url(../images/flags/lr.bf2f8be.png);
+    background-image: url(../img/flags/lr.bf2f8be.png);
 }
 .flag.flag-80 {
-    background-image: url(../images/flags/ly.2005ada.png);
+    background-image: url(../img/flags/ly.2005ada.png);
 }
 .flag.flag-82 {
-    background-image: url(../images/flags/li.cf1a626.png);
+    background-image: url(../img/flags/li.cf1a626.png);
 }
 .flag.flag-81 {
-    background-image: url(../images/flags/lt.acdce25.png);
+    background-image: url(../img/flags/lt.acdce25.png);
 }
 .flag.flag-83 {
-    background-image: url(../images/flags/lu.5d3fb95.png);
+    background-image: url(../img/flags/lu.5d3fb95.png);
 }
 .flag.flag-122 {
-    background-image: url(../images/flags/mk.9709219.png);
+    background-image: url(../img/flags/mk.9709219.png);
 }
 .flag.flag-87 {
-    background-image: url(../images/flags/mw.607a24e.png);
+    background-image: url(../img/flags/mw.607a24e.png);
 }
 .flag.flag-88 {
-    background-image: url(../images/flags/my.1cc0279.png);
+    background-image: url(../img/flags/my.1cc0279.png);
 }
 .flag.flag-90 {
-    background-image: url(../images/flags/mv.90aaf2a.png);
+    background-image: url(../img/flags/mv.90aaf2a.png);
 }
 .flag.flag-89 {
-    background-image: url(../images/flags/ml.c1ee487.png);
+    background-image: url(../img/flags/ml.c1ee487.png);
 }
 .flag.flag-91 {
-    background-image: url(../images/flags/mt.a804b88.png);
+    background-image: url(../img/flags/mt.a804b88.png);
 }
 .flag.flag-85 {
-    background-image: url(../images/flags/mr.91f1659.png);
+    background-image: url(../img/flags/mr.91f1659.png);
 }
 .flag.flag-84 {
-    background-image: url(../images/flags/mu.8f46fac.png);
+    background-image: url(../img/flags/mu.8f46fac.png);
 }
 .flag.flag-93 {
-    background-image: url(../images/flags/mx.0d2b73e.png);
+    background-image: url(../img/flags/mx.0d2b73e.png);
 }
 .flag.flag-95 {
-    background-image: url(../images/flags/md.64a947d.png);
+    background-image: url(../img/flags/md.64a947d.png);
 }
 .flag.flag-96 {
-    background-image: url(../images/flags/mn.c0d29db.png);
+    background-image: url(../img/flags/mn.c0d29db.png);
 }
 .flag.flag-154 {
-    background-image: url(../images/flags/me.5bf8eb9.png);
+    background-image: url(../img/flags/me.5bf8eb9.png);
 }
 .flag.flag-92 {
-    background-image: url(../images/flags/ma.29ceac8.png);
+    background-image: url(../img/flags/ma.29ceac8.png);
 }
 .flag.flag-94 {
-    background-image: url(../images/flags/mz.490443e.png);
+    background-image: url(../img/flags/mz.490443e.png);
 }
 .flag.flag-98 {
-    background-image: url(../images/flags/na.2a3bbb2.png);
+    background-image: url(../img/flags/na.2a3bbb2.png);
 }
 .flag.flag-101 {
-    background-image: url(../images/flags/nl.dede5ef.png);
+    background-image: url(../img/flags/nl.dede5ef.png);
 }
 .flag.flag-103 {
-    background-image: url(../images/flags/nz.5c9093b.png);
+    background-image: url(../img/flags/nz.5c9093b.png);
 }
 .flag.flag-102 {
-    background-image: url(../images/flags/ni.6f63d10.png);
+    background-image: url(../img/flags/ni.6f63d10.png);
 }
 .flag.flag-99 {
-    background-image: url(../images/flags/ne.d9acc52.png);
+    background-image: url(../img/flags/ne.d9acc52.png);
 }
 .flag.flag-100 {
-    background-image: url(../images/flags/ng.06f6ef6.png);
+    background-image: url(../img/flags/ng.06f6ef6.png);
 }
 .flag.flag-121 {
-    background-image: url(../images/flags/nirl.e3833da.png);
+    background-image: url(../img/flags/nirl.e3833da.png);
 }
 .flag.flag-104 {
-    background-image: url(../images/flags/no.084b240.png);
+    background-image: url(../img/flags/no.084b240.png);
 }
 .flag.flag-106 {
-    background-image: url(../images/flags/om.5e0d115.png);
+    background-image: url(../img/flags/om.5e0d115.png);
 }
 .flag.flag-107 {
-    background-image: url(../images/flags/pk.40b4b61.png);
+    background-image: url(../img/flags/pk.40b4b61.png);
 }
 .flag.flag-109 {
-    background-image: url(../images/flags/pa.10fade4.png);
+    background-image: url(../img/flags/pa.10fade4.png);
 }
 .flag.flag-110 {
-    background-image: url(../images/flags/py.34efa61.png);
+    background-image: url(../img/flags/py.34efa61.png);
 }
 .flag.flag-111 {
-    background-image: url(../images/flags/pe.2033344.png);
+    background-image: url(../img/flags/pe.2033344.png);
 }
 .flag.flag-150 {
-    background-image: url(../images/flags/ph.63e3103.png);
+    background-image: url(../img/flags/ph.63e3103.png);
 }
 .flag.flag-112 {
-    background-image: url(../images/flags/pl.78c2c39.png);
+    background-image: url(../img/flags/pl.78c2c39.png);
 }
 .flag.flag-113 {
-    background-image: url(../images/flags/pt.0e255ff.png);
+    background-image: url(../img/flags/pt.0e255ff.png);
 }
 .flag.flag-62 {
-    background-image: url(../images/flags/qa.1aa4ee9.png);
+    background-image: url(../img/flags/qa.1aa4ee9.png);
 }
 .flag.flag-117 {
-    background-image: url(../images/flags/ro.1e7d5f5.png);
+    background-image: url(../img/flags/ro.1e7d5f5.png);
 }
 .flag.flag-115 {
-    background-image: url(../images/flags/ru.362b4e4.png);
+    background-image: url(../img/flags/ru.362b4e4.png);
 }
 .flag.flag-116 {
-    background-image: url(../images/flags/rw.de4b2e2.png);
+    background-image: url(../img/flags/rw.de4b2e2.png);
 }
 .flag.flag-119 {
-    background-image: url(../images/flags/sm.1169b12.png);
+    background-image: url(../img/flags/sm.1169b12.png);
 }
 .flag.flag-120 {
-    background-image: url(../images/flags/sa.7924707.png);
+    background-image: url(../img/flags/sa.7924707.png);
 }
 .flag.flag-124 {
-    background-image: url(../images/flags/sn.1b15825.png);
+    background-image: url(../img/flags/sn.1b15825.png);
 }
 .flag.flag-125 {
-    background-image: url(../images/flags/rs.d2aad69.png);
+    background-image: url(../img/flags/rs.d2aad69.png);
 }
 .flag.flag-123 {
-    background-image: url(../images/flags/sch.e2792c0.png);
+    background-image: url(../img/flags/sch.e2792c0.png);
 }
 .flag.flag-133 {
-    background-image: url(../images/flags/sl.cd854c8.png);
+    background-image: url(../img/flags/sl.cd854c8.png);
 }
 .flag.flag-126 {
-    background-image: url(../images/flags/sg.20c58cd.png);
+    background-image: url(../img/flags/sg.20c58cd.png);
 }
 .flag.flag-128 {
-    background-image: url(../images/flags/sk.8e660f7.png);
+    background-image: url(../img/flags/sk.8e660f7.png);
 }
 .flag.flag-129 {
-    background-image: url(../images/flags/si.5007fc2.png);
+    background-image: url(../img/flags/si.5007fc2.png);
 }
 .flag.flag-130 {
-    background-image: url(../images/flags/so.91e4212.png);
+    background-image: url(../img/flags/so.91e4212.png);
 }
 .flag.flag-168 {
-    background-image: url(../images/flags/za.23f7c64.png);
+    background-image: url(../img/flags/za.23f7c64.png);
 }
 .flag.flag-54 {
-    background-image: url(../images/flags/es.ac54d02.png);
+    background-image: url(../img/flags/es.ac54d02.png);
 }
 .flag.flag-160 {
-    background-image: url(../images/flags/lk.c51fd9b.png);
+    background-image: url(../img/flags/lk.c51fd9b.png);
 }
 .flag.flag-131 {
-    background-image: url(../images/flags/sd.6670fcd.png);
+    background-image: url(../img/flags/sd.6670fcd.png);
 }
 .flag.flag-162 {
-    background-image: url(../images/flags/sz.7505e38.png);
+    background-image: url(../img/flags/sz.7505e38.png);
 }
 .flag.flag-158 {
-    background-image: url(../images/flags/se.fdd164b.png);
+    background-image: url(../img/flags/se.fdd164b.png);
 }
 .flag.flag-157 {
-    background-image: url(../images/flags/ch.fc3c710.png);
+    background-image: url(../img/flags/ch.fc3c710.png);
 }
 .flag.flag-127 {
-    background-image: url(../images/flags/sy.5994bd6.png);
+    background-image: url(../img/flags/sy.5994bd6.png);
 }
 .flag.flag-134 {
-    background-image: url(../images/flags/tj.99338a3.png);
+    background-image: url(../img/flags/tj.99338a3.png);
 }
 .flag.flag-137 {
-    background-image: url(../images/flags/tz.a3d163a.png);
+    background-image: url(../img/flags/tz.a3d163a.png);
 }
 .flag.flag-135 {
-    background-image: url(../images/flags/th.9816d71.png);
+    background-image: url(../img/flags/th.9816d71.png);
 }
 .flag.flag-138 {
-    background-image: url(../images/flags/tg.b6b6e1f.png);
+    background-image: url(../img/flags/tg.b6b6e1f.png);
 }
 .flag.flag-139 {
-    background-image: url(../images/flags/tt.f33c193.png);
+    background-image: url(../img/flags/tt.f33c193.png);
 }
 .flag.flag-140 {
-    background-image: url(../images/flags/tn.71aa193.png);
+    background-image: url(../img/flags/tn.71aa193.png);
 }
 .flag.flag-142 {
-    background-image: url(../images/flags/tr.2e7ac0b.png);
+    background-image: url(../img/flags/tr.2e7ac0b.png);
 }
 .flag.flag-141 {
-    background-image: url(../images/flags/tm.2516a8f.png);
+    background-image: url(../img/flags/tm.2516a8f.png);
 }
 .flag.flag-143 {
-    background-image: url(../images/flags/ug.44bacb1.png);
+    background-image: url(../img/flags/ug.44bacb1.png);
 }
 .flag.flag-145 {
-    background-image: url(../images/flags/ua.cbd8dc2.png);
+    background-image: url(../img/flags/ua.cbd8dc2.png);
 }
 .flag.flag-105 {
-    background-image: url(../images/flags/ae.885ad9e.png);
+    background-image: url(../img/flags/ae.885ad9e.png);
 }
 .flag.flag-184 {
-    background-image: url(../images/flags/uk.7bb55ee.png);
+    background-image: url(../img/flags/uk.7bb55ee.png);
 }
 .flag.flag-6 {
-    background-image: url(../images/flags/en.12159c6.png);
+    background-image: url(../img/flags/en.12159c6.png);
 }
 .flag.flag-159 {
-    background-image: url(../images/flags/sc.c794ec4.png);
+    background-image: url(../img/flags/sc.c794ec4.png);
 }
 .flag.flag-132 {
-    background-image: url(../images/flags/us.98be361.png);
+    background-image: url(../img/flags/us.98be361.png);
 }
 .flag.flag-146 {
-    background-image: url(../images/flags/uy.f10f2fa.png);
+    background-image: url(../img/flags/uy.f10f2fa.png);
 }
 .flag.flag-144 {
-    background-image: url(../images/flags/uz.e9b0eea.png);
+    background-image: url(../img/flags/uz.e9b0eea.png);
 }
 .flag.flag-26 {
-    background-image: url(../images/flags/ve.a6b050a.png);
+    background-image: url(../img/flags/ve.a6b050a.png);
 }
 .flag.flag-27 {
-    background-image: url(../images/flags/vn.cff9735.png);
+    background-image: url(../img/flags/vn.cff9735.png);
 }
 .flag.flag-147 {
-    background-image: url(../images/flags/wa.41aac5a.png);
+    background-image: url(../img/flags/wa.41aac5a.png);
 }
 .flag.flag-56 {
-    background-image: url(../images/flags/ye.fbb6fbc.png);
+    background-image: url(../img/flags/ye.fbb6fbc.png);
 }
 .flag.flag-44 {
-    background-image: url(../images/flags/zm.1115927.png);
+    background-image: url(../img/flags/zm.1115927.png);
 }
 .flag.flag-45 {
-    background-image: url(../images/flags/zw.58b8e84.png);
+    background-image: url(../img/flags/zw.58b8e84.png);
 }
 .flag.flag-69 {
-    background-image: url(../images/flags/xk.f33f86b.png);
+    background-image: url(../img/flags/xk.f33f86b.png);
 }
 .flag.flag-108 {
-    background-image: url(../images/flags/ps.4e76703.png);
+    background-image: url(../img/flags/ps.4e76703.png);
 }
 .flag.flag-136 {
-    background-image: url(../images/flags/tw.46da9e2.png);
+    background-image: url(../img/flags/tw.46da9e2.png);
 }
 .flag.flag-37 {
-    background-image: url(../images/flags/hk.b81b5e1.png);
+    background-image: url(../img/flags/hk.b81b5e1.png);
 }
 .flag.flag-48 {
-    background-image: url(../images/flags/id.9ed9e2e.png);
+    background-image: url(../img/flags/id.9ed9e2e.png);
 }
 .flag.flag-11 {
-    background-image: url(../images/flags/aw.2eb48e2.png);
+    background-image: url(../img/flags/aw.2eb48e2.png);
 }
 .flag.flag-17 {
-    background-image: url(../images/flags/bm.0cb3e2f.png);
+    background-image: url(../img/flags/bm.0cb3e2f.png);
 }
 .flag.flag-148 {
-    background-image: url(../images/flags/fo.116c508.png);
+    background-image: url(../img/flags/fo.116c508.png);
 }
 .flag.flag-86 {
-    background-image: url(../images/flags/mo.400a7dd.png);
+    background-image: url(../img/flags/mo.400a7dd.png);
 }
 .flag.flag-114 {
-    background-image: url(../images/flags/fr.f5e7288.png);
+    background-image: url(../img/flags/fr.f5e7288.png);
 }
 .flag.flag-74 {
-    background-image: url(../images/flags/cw.5fdcf59.png);
+    background-image: url(../img/flags/cw.5fdcf59.png);
 }
 .flag.flag-35 {
-    background-image: url(../images/flags/gi.3f12cf6.png);
+    background-image: url(../img/flags/gi.3f12cf6.png);
 }
 .post-entry p + p {
     margin-top: 1rem;
@@ -4023,7 +4017,7 @@ body.hockey .footer-social {
     font-weight: 700;
 }
 body.hockey .ui-datepicker .ui-icon {
-    background-image: url(../images/icons/icon-arrow-left-blue.svg);
+    background-image: url(../img/icons/icon-arrow-left-blue.svg);
 }
 body.hockey a:hover {
     color: var(--blue);
@@ -4073,7 +4067,7 @@ body.hockey .event-review .info__btn {
     background-color: var(--blue);
 }
 body.hockey .lineups-table .substitution-in {
-    background-image: url(../images/icons/detail/icon-substitution-in-big-blue.svg);
+    background-image: url(../img/icons/detail/icon-substitution-in-big-blue.svg);
 }
 body.hockey .livecentre-nav__tab.active span {
     border-color: var(--blue);
@@ -4090,10 +4084,10 @@ body.hockey .event__periods {
 }
 @media (min-width: 769px) {
     body.football {
-        background-image: url(../images/icons/icon-bg-football.svg);
+        background-image: url(../img/icons/icon-bg-football.svg);
     }
     body.hockey {
-        background-image: url(../images/icons/icon-bg-hockey.svg);
+        background-image: url(../img/icons/icon-bg-hockey.svg);
     }
     .event {
         display: -webkit-box;
