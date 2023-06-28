@@ -85,80 +85,121 @@ class LeaguesListView(ListView):
 class FixturesListView(ListView):
     model = Fixtures 
     template_name = 'fixture_list.html'
-
+    
     def get_queryset(self):
         queryset = super().get_queryset()
         season_id = self.request.GET.get('season_id')
         league_id = self.request.GET.get('league_id')
         if season_id and league_id:
             queryset = queryset.filter(seasons_id=season_id, league_id=league_id)
-        
-        # код для получения данных из API
-        conn = http.client.HTTPSConnection("v3.football.api-sports.io")
-        headers = {
-            'x-rapidapi-host': "v3.football.api-sports.io",
-            'x-rapidapi-key': "XxXxXxXxXxXxXxXxXxXxXxXx"
-        }
-        conn.request("GET", "/fixtures?live=all", headers=headers)
-        res = conn.getresponse()
-        data = res.read()
-        
-        # обработка полученных данных
-        fixtures_data = json.loads(data)
-        fixtures_list = fixtures_data['response']
-        for fixture in fixtures_list:
-            # создание объектов модели Fixtures на основе полученных данных
-            # и сохраняет в бд . если мы хотим чтобы просто выводидась в шаблон 
-            Fixtures.objects.create (
-                seasons_id = fixture['seasons']['id'],
-                league_id=fixture['league']['id'],
-                event_date=fixture['fixture']['date'],
-                home_team_id=fixture['teams']['home']['id'],
-                away_team_id=fixture['teams']['away']['id'],
-               
-            )
+    
+        # Получение данных из базы данных
+        fixtures_list = Fixtures.objects.all()
+    
+        # Добавление fixtures_list в словарь контекста
+        self.extra_context = {'fixtures_list': fixtures_list}
+    
         return queryset
+
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     season_id = self.request.GET.get('season_id')
+    #     league_id = self.request.GET.get('league_id')
+    #     if season_id and league_id:
+    #         queryset = queryset.filter(seasons_id=season_id, league_id=league_id)
+        
+    #     # код для получения данных из API
+    #     conn = http.client.HTTPSConnection("v3.football.api-sports.io")
+    #     headers = {
+    #         'x-rapidapi-host': "v3.football.api-sports.io",
+    #         'x-rapidapi-key': "XxXxXxXxXxXxXxXxXxXxXxXx"
+    #     }
+    #     conn.request("GET", "/fixtures?live=all", headers=headers)
+    #     res = conn.getresponse()
+    #     data = res.read()
+        
+    #     # обработка полученных данных
+    #     fixtures_data = json.loads(data)
+    #     fixtures_list = fixtures_data['response']
+    #     for fixture in fixtures_list:
+    #         # создание объектов модели Fixtures на основе полученных данных
+    #         # и сохраняет в бд . если мы хотим чтобы просто выводидась в шаблон 
+    #         Fixtures.objects.create (
+    #             seasons_id = fixture['seasons']['id'],
+    #             league_id=fixture['league']['id'],
+    #             event_date=fixture['fixture']['date'],
+    #             home_team_id=fixture['teams']['home']['id'],
+    #             away_team_id=fixture['teams']['away']['id'],
+               
+    #         )
+    #     return queryset
 
 class H2HListView(ListView):
     model = H2H
     template_name = 'h2h.html'
 
+
     def process_h2h_data(self, data):
         h2h_data = {}
-        json_data = json.loads(data)
-        #fixtures = json_data['response']['fixtures']
-        fixtures = json_data['response']
-        for fixture in fixtures:
-            h2h_id = fixture['fixture']['id']
-            date = fixture['fixture']['date']
-            league = fixture['league']['name']
-            home_team = fixture['teams']['home']['name']
-            away_team = fixture['teams']['away']['name']
-            score = fixture['goals']['home'] + '-' + fixture['goals']['away']
-            season = fixture['league']['season']
+        for item in data:
+            h2h_id = item.fixture_id
+            date = item.date
+            league = item.league
+            home_team = item.home_team
+            away_team = item.away_team
+            score = item.score
+            season = item.season
             h2h_data[f"{home_team} vs {away_team}"] = {
                 'h2h': h2h_id,
                 'date': date,
                 'league': league,
                 'fixture': f"{home_team} vs {away_team}",
                 'season': season
-         }
+            }
         return h2h_data
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        conn = http.client.HTTPSConnection("v3.football.api-sports.io")
-        headers = {
-            'x-rapidapi-host': "v3.football.api-sports.io",
-            'x-rapidapi-key': "XxXxXxXxXxXxXxXxXxXxXxXx"
-        }
-        conn.request("GET", "/fixtures/headtohead?h2h=33-34", headers=headers)
-        res = conn.getresponse()
-        data = res.read().decode("utf-8")
-        # process the data and store it in a variable called h2h_data
-        h2h_data = self.process_h2h_data(data)
+        h2h_data = self.process_h2h_data(H2H.objects.all())  # Извлекайте данные из базы данных
         context['h2h_data'] = h2h_data
         return context
+
+    # def process_h2h_data(self, data):
+    #     h2h_data = {}
+    #     json_data = json.loads(data)
+    #     #fixtures = json_data['response']['fixtures']
+    #     fixtures = json_data['response']
+    #     for fixture in fixtures:
+    #         h2h_id = fixture['fixture']['id']
+    #         date = fixture['fixture']['date']
+    #         league = fixture['league']['name']
+    #         home_team = fixture['teams']['home']['name']
+    #         away_team = fixture['teams']['away']['name']
+    #         score = fixture['goals']['home'] + '-' + fixture['goals']['away']
+    #         season = fixture['league']['season']
+    #         h2h_data[f"{home_team} vs {away_team}"] = {
+    #             'h2h': h2h_id,
+    #             'date': date,
+    #             'league': league,
+    #             'fixture': f"{home_team} vs {away_team}",
+    #             'season': season
+    #      }
+    #     return h2h_data
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     conn = http.client.HTTPSConnection("v3.football.api-sports.io")
+    #     headers = {
+    #         'x-rapidapi-host': "v3.football.api-sports.io",
+    #         'x-rapidapi-key': "XxXxXxXxXxXxXxXxXxXxXxXx"
+    #     }
+    #     conn.request("GET", "/fixtures/headtohead?h2h=33-34", headers=headers)
+    #     res = conn.getresponse()
+    #     data = res.read().decode("utf-8")
+    #     # process the data and store it in a variable called h2h_data
+    #     h2h_data = self.process_h2h_data(data)
+    #     context['h2h_data'] = h2h_data
+    #     return context
     
 
 

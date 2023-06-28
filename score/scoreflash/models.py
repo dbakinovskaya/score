@@ -96,7 +96,7 @@ class Fixtures(models.Model):
         verbose_name='Гостевая команда',
         related_name='team_away',
         on_delete=models.CASCADE)
-    date = models.DateTimeField(verbose_name='Дата игры')
+    date = models.DateTimeField(auto_now_add=True,verbose_name='Дата игры')
 
     def __str__(self):
         return f"{self.home_team_id} vs {self.away_team_id}"
