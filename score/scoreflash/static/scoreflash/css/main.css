@@ -802,6 +802,7 @@ body {
     background-position: top 105px right 15px;
     color: var(--black);
     overflow-x: hidden;
+    
 }
 .main {
     display: -webkit-box;

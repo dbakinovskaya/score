@@ -69,7 +69,7 @@
     </div>
             <div class="div_footer list_menu_line"><a href="https://fonbet.betx.su/click?pid=1177&amp;offer_id=8&amp;l=1649850849" target="_blank"><img src="{% static 'scoreflash/upload/images/other/8.png' %}"></a></div>
       </header>
-
+    <div class="main">
       <div class="middle">
         <div class="middle-row">
           <div class="middle-left">
@@ -88,29 +88,22 @@
                   </div>
                 </div>
               </div>
+              <div class="middle-right-div">
+                <div class="middle-right for-desktop">
+                  {% block content %}
+                  {% endblock %}
+                </div>
+              </div>     
             </div>
       
             <div class="events">
-
             </div>
           </div>
-          <div class="middle-right-div">
-            {% block content %}
-                {% endblock %}
-              <div class="middle-right for-desktop">
-                
-                
-                
-              
-              </div>
-                  </div>
-          
-                  
+            
         </div>
         
       </div>
       <div class="sidebar sidebar-sticky">
-        
         <div class="sb-widget">
           <div class="sb-nav">
             <a class="sb-nav__item btn js-tab active" href="javascript:void(0)" data-target="#tournaments-top" style="width:100%;border-radius:5px">ТОП турниры</a>
@@ -317,6 +310,6 @@
         
         <div class="div_footer list_fixed_div_card"><a href="https://go.ufn.su/click?pid=1177&amp;offer_id=17&amp;l=1650041448" target="_blank"><img src="{% static 'scoreflash/upload/images/other/22.jpg' %}"></a></div>
         </div>
-    
+      </div>
 </body>
 </html>
