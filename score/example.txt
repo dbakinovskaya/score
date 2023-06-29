@@ -20,6 +20,7 @@ team1 = Teams.objects.create(team_name='Real Madrid', league_id_id=1)
 team4 = Teams.objects.create(team_name = 'Liverpool',league_id_id =1)
 
 season = Seasons.objects.get(season_name='2021/2022')
+season = Seasons.objects.get(season_name='2022/2023')
 league = Leagues.objects.get(league_name='Premier League')
 home_team = Teams.objects.get(team_name='Manchester United')
 away_team = Teams.objects.get(team_name='Liverpool')
@@ -38,7 +39,7 @@ team1 = Teams.objects.get(team_name='Manchester United')
 team2 = Teams.objects.get(team_name='Liverpool')
 fixture = Fixtures.objects.filter(home_team_id=team1, away_team_id=team2)
 league = Leagues.objects.get(league_name='Premier League')
-
+fixture = Fixtures.objects.get(id=1)
 h2h = H2H(team1_id=team1, team2_id=team2, date=datetime.date.today(), fixture_id=fixture, league_id=league)
 h2h.save()
 

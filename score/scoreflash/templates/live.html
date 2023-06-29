@@ -6,8 +6,8 @@
     <thead>
 
     </thead>
-    <tbody>
       {% for live in live_data %}
+      <p>Лига <b>{{ live.fixture_id.league_id }}</b></p><br>
         <p>Играют команды <b>{{ live.fixture_id }}</b></p><br>
         <p>Счет игры: {{ live.home_score }} - {{ live.away_score }}</p>
       {% endfor %}

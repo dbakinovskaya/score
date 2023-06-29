@@ -205,5 +205,10 @@ class H2HListView(ListView):
 
 class LiveView(View):
     def get(self, request):
-        live_data = Live.objects.all()
+        
+        live_data = Live.objects.select_related('fixture_id').all()
         return render(request, 'live.html', {'live_data': live_data})    
+    # def get(self, request):
+    #     fixtures = Fixtures.objects.all()
+    #     lives = Live.objects.all()
+    #     return render(request, 'live.html', {'fixtures': fixtures, 'lives': lives})
