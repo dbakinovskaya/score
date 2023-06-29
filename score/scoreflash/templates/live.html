@@ -10,6 +10,7 @@
       <p>Лига <b>{{ live.fixture_id.league_id }}</b></p><br>
         <p>Играют команды <b>{{ live.fixture_id }}</b></p><br>
         <p>Счет игры: {{ live.home_score }} - {{ live.away_score }}</p>
+        <p><a href="{% url 'h2h' %}">H2H</a></p>>
       {% endfor %}
     </tbody>
   </table>

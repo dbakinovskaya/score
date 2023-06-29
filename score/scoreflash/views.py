@@ -142,19 +142,19 @@ class H2HListView(ListView):
     def process_h2h_data(self, data):
         h2h_data = {}
         for item in data:
-            h2h_id = item.fixture_id
+            h2h_id = item.fixture_id_id
             date = item.date
-            league = item.league
-            home_team = item.home_team
-            away_team = item.away_team
-            score = item.score
-            season = item.season
+            league = item.league_id_id
+            home_team = item.team1_id_id
+            away_team = item.team2_id_id
+            # score = item.score
+            # season = item.season
             h2h_data[f"{home_team} vs {away_team}"] = {
                 'h2h': h2h_id,
                 'date': date,
                 'league': league,
                 'fixture': f"{home_team} vs {away_team}",
-                'season': season
+                # 'season': season
             }
         return h2h_data
 
