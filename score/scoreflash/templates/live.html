@@ -7,10 +7,11 @@
 
     </thead>
       {% for live in live_data %}
+      <p><b></b><a href="{% url 'h2h' %}" style="color: green;">H2H</a></b></p><br>
       <p>Лига <b>{{ live.fixture_id.league_id }}</b></p><br>
         <p>Играют команды <b>{{ live.fixture_id }}</b></p><br>
-        <p>Счет игры: {{ live.home_score }} - {{ live.away_score }}</p>
-        <p><a href="{% url 'h2h' %}">H2H</a></p>>
+        <p>Счет игры: {{ live.home_score }} - {{ live.away_score }}</p><br>
+        <p></p>>
       {% endfor %}
     </tbody>
   </table>
