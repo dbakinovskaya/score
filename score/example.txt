@@ -18,12 +18,14 @@ league3 = Leagues.objects.create(league_name='FA Cup', country_id=country1, seas
 
 team1 = Teams.objects.create(team_name='Real Madrid', league_id_id=1)
 team4 = Teams.objects.create(team_name = 'Liverpool',league_id_id =1)
+team2 = Teams.objects.create(team_name = 'Arsenal',league_id_id =1)
+team3= Teams.objects.create(team_name = 'Manchester City',league_id_id =1)
 
 season = Seasons.objects.get(season_name='2021/2022')
 season = Seasons.objects.get(season_name='2022/2023')
 league = Leagues.objects.get(league_name='Premier League')
 home_team = Teams.objects.get(team_name='Manchester United')
-away_team = Teams.objects.get(team_name='Liverpool')
+away_team = Teams.objects.get(team_name='Manchester City')
 
 fixture = Fixtures(seasons_id=season, league_id=league, home_team_id=home_team, away_team_id=away_team, date=datetime.datetime.now())
 fixture.save()
@@ -35,8 +37,8 @@ fixture.save()
 from myapp.models import H2H, Teams, Fixtures, Leagues
 import datetime
 
-team1 = Teams.objects.get(team_name='Manchester United')
-team2 = Teams.objects.get(team_name='Liverpool')
+team1 = Teams.objects.get(team_name='Arsenal')
+team2 = Teams.objects.get(team_name='Manchester City')
 fixture = Fixtures.objects.filter(home_team_id=team1, away_team_id=team2)
 league = Leagues.objects.get(league_name='Premier League')
 fixture = Fixtures.objects.get(id=1)
