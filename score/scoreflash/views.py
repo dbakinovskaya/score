@@ -165,11 +165,35 @@ class H2HViewSet(viewsets.ViewSet):
 
 class LiveViewSet(viewsets.ViewSet):
     def list(self, request):
+        conn = http.client.HTTPSConnection("api-football-v1.p.rapidapi.com")
+
+        headers = {
+            'X-RapidAPI-Key': "2aedc6011bmsh0a810d06d659eafp102d45jsnac59d60c653c",
+            'X-RapidAPI-Host': "api-football-v1.p.rapidapi.com"
+        }
+
+        conn.request("GET", "/fixtures/live", headers=headers)
+
+        res = conn.getresponse()
+        data = res.read()
+
         live_data = Live.objects.select_related('fixture_id').all()
         serializer = LiveSerializer(live_data, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
+        conn = http.client.HTTPSConnection("api-football-v1.p.rapidapi.com")
+
+        headers = {
+            'X-RapidAPI-Key': "2aedc6011bmsh0a810d06d659eafp102d45jsnac59d60c653c",
+            'X-RapidAPI-Host': "api-football-v1.p.rapidapi.com"
+        }
+
+        conn.request("GET", "/fixtures/live", headers=headers)
+
+        res = conn.getresponse()
+        data = res.read()
+
         live_data = Live.objects.select_related('fixture_id').get(id=pk)
         serializer = LiveSerializer(live_data)
         return Response(serializer.data)
@@ -182,6 +206,18 @@ class LiveViewSet(viewsets.ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, pk=None):
+        conn = http.client.HTTPSConnection("api-football-v1.p.rapidapi.com")
+
+        headers = {
+            'X-RapidAPI-Key': "2aedc6011bmsh0a810d06d659eafp102d45jsnac59d60c653c",
+            'X-RapidAPI-Host': "api-football-v1.p.rapidapi.com"
+        }
+
+        conn.request("GET", "/fixtures/live", headers=headers)
+
+        res = conn.getresponse()
+        data = res.read()
+
         live_data = Live.objects.select_related('fixture_id').get(id=pk)
         serializer = LiveSerializer(live_data, data=request.data)
         if serializer.is_valid():
@@ -190,6 +226,34 @@ class LiveViewSet(viewsets.ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, pk=None):
+        conn = http.client.HTTPSConnection("api-football-v1.p.rapidapi.com")
+
+        headers = {
+            'X-RapidAPI-Key': "2aedc6011bmsh0a810d06d659eafp102d45jsnac59d60c653c",
+            'X-RapidAPI-Host': "api-football-v1.p.rapidapi.com"
+        }
+
+        conn.request("GET", "/fixtures/live", headers=headers)
+
+        res = conn.getresponse()
+        data = res.read()
+
         live_data = Live.objects.select_related('fixture_id').get(id=pk)
         live_data.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def get_live_data(self):
+        conn = http.client.HTTPSConnection("api-football-v1.p.rapidapi.com")
+
+        headers = {
+            'X-RapidAPI-Key': "2aedc6011bmsh0a810d06d659eafp102d45jsnac59d60c653c",
+            'X-RapidAPI-Host': "api-football-v1.p.rapidapi.com"
+        }
+
+        conn.request("GET", "/fixtures/live", headers=headers)
+
+        res = conn.getresponse()
+        data = res.read()
+
+        return data.decode("utf-8")
+    
