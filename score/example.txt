@@ -53,5 +53,5 @@ from myapp.models import Live, Fixtures
 
 fixture = Fixtures.objects.get(id=1)
 
-live = Live(fixture_id=fixture, home_score=1, away_score=0)
+live = Live(fixture_id=fixture, home_score=2, away_score=2)
 live.save()
