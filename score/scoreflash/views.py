@@ -48,7 +48,7 @@ class LeaguesViewSet(viewsets.ViewSet):
 
         headers = {
             'x-rapidapi-host': "v3.football.api-sports.io",
-            'x-rapidapi-key': "XxXxXxXxXxXxXxXxXxXxXxXx"
+            'x-rapidapi-key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528"
         }
 
         conn.request("GET", "/leagues", headers=headers)
@@ -168,7 +168,7 @@ class LiveViewSet(viewsets.ViewSet):
         conn = http.client.HTTPSConnection("api-football-v1.p.rapidapi.com")
 
         headers = {
-            'X-RapidAPI-Key': "2aedc6011bmsh0a810d06d659eafp102d45jsnac59d60c653c",
+            'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
             'X-RapidAPI-Host': "api-football-v1.p.rapidapi.com"
         }
 
@@ -185,7 +185,7 @@ class LiveViewSet(viewsets.ViewSet):
         conn = http.client.HTTPSConnection("api-football-v1.p.rapidapi.com")
 
         headers = {
-            'X-RapidAPI-Key': "2aedc6011bmsh0a810d06d659eafp102d45jsnac59d60c653c",
+            'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
             'X-RapidAPI-Host': "api-football-v1.p.rapidapi.com"
         }
 
@@ -209,7 +209,7 @@ class LiveViewSet(viewsets.ViewSet):
         conn = http.client.HTTPSConnection("api-football-v1.p.rapidapi.com")
 
         headers = {
-            'X-RapidAPI-Key': "2aedc6011bmsh0a810d06d659eafp102d45jsnac59d60c653c",
+            'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
             'X-RapidAPI-Host': "api-football-v1.p.rapidapi.com"
         }
 
@@ -229,7 +229,7 @@ class LiveViewSet(viewsets.ViewSet):
         conn = http.client.HTTPSConnection("api-football-v1.p.rapidapi.com")
 
         headers = {
-            'X-RapidAPI-Key': "2aedc6011bmsh0a810d06d659eafp102d45jsnac59d60c653c",
+            'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
             'X-RapidAPI-Host': "api-football-v1.p.rapidapi.com"
         }
 
@@ -246,7 +246,7 @@ class LiveViewSet(viewsets.ViewSet):
         conn = http.client.HTTPSConnection("api-football-v1.p.rapidapi.com")
 
         headers = {
-            'X-RapidAPI-Key': "2aedc6011bmsh0a810d06d659eafp102d45jsnac59d60c653c",
+            'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
             'X-RapidAPI-Host': "api-football-v1.p.rapidapi.com"
         }
 
