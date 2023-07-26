@@ -1,13 +1,13 @@
 import http.client
 
-conn = http.client.HTTPSConnection("api-football-v1.p.rapidapi.com")
+conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
 
 headers = {
-    'X-RapidAPI-Key': "2aedc6011bmsh0a810d06d659eafp102d45jsnac59d60c653c",
-    'X-RapidAPI-Host': "api-football-v1.p.rapidapi.com"
+    'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+    'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
 }
 
-conn.request("GET", "/fixtures/live", headers=headers)
+conn.request("GET", "/v1/events/live-list?timezone=-4&sport_id=1&locale=en_INT", headers=headers)
 
 res = conn.getresponse()
 data = res.read()

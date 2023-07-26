@@ -1,14 +1,12 @@
-from django.urls import path, include
-from .views import SeasonsViewSet,CountriesViewSet, LeaguesViewSet, FixturesViewSet,H2HViewSet, LiveViewSet
 from rest_framework.routers import DefaultRouter
+from django.urls import path, include
+
+from .views import LiveOfEventsViewSet
+
 
 router = DefaultRouter()
-router.register(r'seasons', SeasonsViewSet)
-router.register(r'fixtures', FixturesViewSet)
-router.register(r'api/leagues', LeaguesViewSet, basename='leagues')
-router.register(r'api/countries', CountriesViewSet, basename='countries')
-router.register(r'h2h', H2HViewSet, basename='h2h')
-router.register(r'live', LiveViewSet, basename='live')
+
+router.register('live-events', LiveOfEventsViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

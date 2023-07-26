@@ -1,34 +1,49 @@
 from rest_framework import serializers
+from .models import (Sport, NumberOfSportEvents, Bookmaker,Outcome, Market, Group,Events,LiveOfEvents)
 
-from .models import Seasons, Countries, Fixtures, Live, H2H, Leagues
-
-class SeasonsSerializer(serializers.ModelSerializer):
+class SportSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Seasons
-        fields = ['season_name', 'start_date', 'finish_date']
+        model = Sport
+        fields = ['sport_id', 'name']
 
-class CountriesSerializer(serializers.ModelSerializer):
+class NumberOfSportEventsSerializer(serializers.ModelSerializer):
+    sport = SportSerializer()
+
     class Meta:
-        model = Countries
-        fields = ['country_name', 'code', 'search']  
+        model = NumberOfSportEvents
+        fields = ['sport', 'events_count', 'events_count_live', 'is_popular', 'sports_name']
 
-class LeaguesSerializer(serializers.ModelSerializer):
+class BookmakerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Leagues
-        fields = ['league_name', 'country_id', 'seasons_id', 'type', 'current', 'search', 'last']    
+        model = Bookmaker
+        fields = ['bookmaker_id', 'bookmaker_name', 'locale']
 
-
-class FixturesSerializer(serializers.ModelSerializer):
+class OutcomeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Fixtures
-        fields = ['seasons_id', 'league_id', 'home_team_id', 'away_team_id', 'date']
+        model = Outcome
+        fields = ['id', 'odds_label_second', 'odds_label_third', 'locale']
 
-class H2HSerializer(serializers.ModelSerializer):
+class MarketSerializer(serializers.ModelSerializer):
     class Meta:
-        model = H2H
-        fields = ['team1_id', 'team2_id', 'date', 'fixture_id', 'league_id']
+        model = Market
+        fields = ['id', 'bookmaker', 'odd_cell_third_move', 'odd_cell_third_value', 'odds_available', 'locale']
 
-class LiveSerializer(serializers.ModelSerializer):
+class GroupSerializer(serializers.ModelSerializer):
+    outcomes = OutcomeSerializer()
+
     class Meta:
-        model = Live
-        fields = ['fixture_id', 'home_score', 'away_score']                  
+        model = Group
+        fields = ['id', 'group_name', 'outcomes', 'locale']
+
+
+class EventsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Events
+        fields = '__all__'   
+
+class LiveOfEventsSerializer(serializers.ModelSerializer):
+    events = EventsSerializer()  # использование ранее созданного сериализатора для связанной модели
+
+    class Meta:
+        model = LiveOfEvents
+        fields = '__all__'             
