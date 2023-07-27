@@ -155,3 +155,38 @@ class LiveOfEvents(models.Model):
     an = models.CharField(max_length=100)
     live_in_offer_book_id = models.IntegerField()
     live_in_offer_status = models.IntegerField()
+
+# class GroupStatics(models.Model):
+#     event = models.ForeignKey(Events, on_delete=models.CASCADE)
+#     group_label = models.CharField(max_length=50)
+
+#     def __str__(self):
+#         return self.group_label
+
+# class Item(models.Model):
+#     group = models.ForeignKey(GroupStatics, on_delete=models.CASCADE)
+#     incident_name = models.CharField(max_length=50)
+#     value_home = models.CharField(max_length=50)
+#     value_away = models.CharField(max_length=50)
+
+#     def __str__(self):
+#         return self.incident_name
+    
+
+# class Statics(models.Model):
+#     event = models.ForeignKey(Events, on_delete=models.CASCADE)
+#     group = models.ForeignKey(GroupStatics, on_delete=models.CASCADE)
+#     element = models.ForeignKey(Item, on_delete=models.CASCADE)
+
+
+# class H2H(models.Model):
+#     event_id  = models.ForeignKey(Events, on_delete=models.CASCADE)
+
+
+
+# class DetailMatch(models.Model):
+#     event_id = models.ForeignKey(Events, on_delete=models.CASCADE)
+#     h2h = models.ForeignKey(H2H, on_delete=models.CASCADE)
+#     event_statics = models.ForeignKey(Statics,on_delete=models.CASCADE)
+    # book = 
+    # event_start_lineps = 
