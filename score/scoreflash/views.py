@@ -35,7 +35,7 @@ class LiveOfEventsViewSet(viewsets.ModelViewSet):
         res = conn.getresponse()
         data = res.read()
         parsed_data = json.loads(data.decode("utf-8"))
-        
+
         for event in parsed_data['DATA']:
             for ev in event['EVENTS']:
                 event_id = ev.get('EVENT_ID')
@@ -61,7 +61,7 @@ class LiveOfEventsViewSet(viewsets.ModelViewSet):
                 home_goal_var = ev.get('HOME_GOAL_VAR')
                 home_score_current = ev.get('HOME_SCORE_CURRENT')
                 home_score_part_1 = ev.get('HOME_SCORE_PART_1')
-                home_score_part_2 = ev.get('HOME_SCORE_PART_2',None)
+                home_score_part_2 = ev.get('HOME_SCORE_PART_2', None)
                 home_images = ev.get('HOME_IMAGES')
                 imm = ev.get('IMM')
                 imw = ev.get('IMW')
@@ -81,24 +81,313 @@ class LiveOfEventsViewSet(viewsets.ModelViewSet):
                 away_images = ev.get('AWAY_IMAGES')
                 an = ev.get('AN')
                 has_live_centre = ev.get('HAS_LIVE_CENTRE')
-                bookmakers_with_live_in_offer = ev.get('BOOKMAKERS_WITH_LIVE_IN_OFFER', None)
-                live_in_offer_bookmaker_id = ev.get('LIVE_IN_OFFER_BOOKMAKER_ID', None)
+                bookmakers_with_live_in_offer = ev.get(
+                    'BOOKMAKERS_WITH_LIVE_IN_OFFER', None)
+                live_in_offer_bookmaker_id = ev.get(
+                    'LIVE_IN_OFFER_BOOKMAKER_ID', None)
                 live_in_offer_status = ev.get('LIVE_IN_OFFER_STATUS')
                 score_chance_away = ev.get('SCORE_CHANCE_AWAY', None)
                 tv_live_streaming = ev.get('TV_LIVE_STREAMING', None)
                 home_participant_name_one = ev.get('HOME_PARTICIPANT_NAME_ONE')
+                obj = Events()
+                try:
+                    if event_id:
+                        obj.event_id=event_id
+                        obj.save()  
+                except Exception as e:
+                    print("Ошибка при сохранении obj:event", str(e)) 
+                try:                 
+                    if start_time:
+                        obj.start_time = start_time
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:start_time", str(e))
+                try:            
+                    if start_utime:
+                        obj.start_utime = start_utime
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:start_utime", str(e))
+                try:             
+                    if stage_type:
+                        obj.stage_type = stage_type
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:stage_type", str(e)) 
+                try:          
+                    if merge_stage_type:
+                        obj.merge_stage_type = merge_stage_type
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:merge_stage_type", str(e)) 
+                try:           
+                    if stage:
+                        obj.stage = stage
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:stage", str(e))
+                try:            
+                    if sort:
+                        obj.sort = sort
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:sort", str(e))
+                try:           
+                    if rounds:
+                        obj.rounds = rounds
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:rounds", str(e))
+                try:           
+                    if visible_run_rate:
+                        obj.visible_run_rate = visible_run_rate
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:visible_run_rate", str(e))
+                try:            
+                    if live_mark:
+                        obj.live_mark = live_mark
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:", str(e))
+                try:    
+                    if has_lineps:
+                        obj.has_lineps = has_lineps
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:live_mark", str(e))
+                try:        
+                    if stage_start_time:
+                        obj.stage_start_time = stage_start_time
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:stage_start_time", str(e))
+                try:                
+                    if game_time:
+                        obj.game_time = game_time
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:game_time", str(e))
+                try:           
+                    if playing_on_sets:
+                        obj.playing_on_sets = playing_on_sets
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:playing_on_sets", str(e))
+                try:           
+                    if recent_overs:
+                        obj.recent_overs = recent_overs
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj: recent_overs", str(e))
+                try:           
+                    if shortname_away:
+                        obj.shortname_away = shortname_away
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:shortname_away", str(e))
+                try:            
+                    if away_participant_ids:
+                        obj.away_participant_ids = away_participant_ids
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:away_participant_ids", str(e)) 
+                try:          
+                    if away_participant_types:
+                        obj.away_participant_types = away_participant_types
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:away_participant_types", str(e))
+                try:           
+                    if away_name:
+                        obj.away_name = away_name
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:away_name", str(e))
+                try:           
+                    if away_participant_name_one:
+                        obj.away_participant_name_one = away_participant_name_one
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:away_participant_name_one", str(e))
+                try:           
+                    if away_event_participant_id:
+                        obj.away_event_participant_id = away_event_participant_id
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:away_event_participant_id", str(e))
+                try:           
+                    if away_goal_var:
+                        obj.away_goal_var = away_goal_var
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:away_goal_var", str(e))
+                try:            
+                    if away_score_current:
+                        obj.away_score_current = away_score_current
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:away_score_current", str(e))
+                try:            
+                    if away_score_full:
+                        obj.away_score_full = away_score_full
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:away_score_full", str(e))
+                try:           
+                    if away_score_part_1:
+                        obj.away_score_part_1 = away_score_part_1
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:away_score_part_1", str(e))
+                try:            
+                    if away_score_part_2:
+                        obj.away_score_part_2 = away_score_part_2
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:away_score_part_2", str(e))
+                try:            
+                    if away_images:
+                        obj.away_images = away_images
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:away_images", str(e))
+                try:            
+                    if imm:
+                        obj.imm = imm
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:imm", str(e))
+                try:           
+                    if imw:
+                        obj.imw = imw
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj: imw", str(e))
+                try:           
+                    if imp:
+                        obj.imp = imp
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:imp", str(e)) 
+                try:           
+                    if ime:
+                        obj.ime = ime
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:ime", str(e))
+                try:            
+                    if shortname_home:
+                        obj.shortname_home = shortname_home
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:shortname_home", str(e))
+                try:            
+                    if home_participant_ids:
+                        obj.home_participant_ids = home_participant_ids
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении objhome_participant_ids:", str(e))
+                try:            
+                    if home_participant_types:
+                        obj.home_participant_types = home_participant_types
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:home_participant_types", str(e))
+                try:           
+                    if home_name:
+                        obj.home_name = home_name
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:home_name", str(e))
+                try:            
+                    if home_participant_name_one:
+                        obj.home_participant_name_one = home_participant_name_one
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:home_participant_name_one", str(e))
+                try:       
+                    if home_event_participant_id:
+                        obj.home_event_participant_id = home_event_participant_id
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:home_event_participant_id", str(e))
+                try:           
+                    if home_goal_var:
+                        obj.home_goal_var = home_goal_var
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:home_goal_var", str(e))
+                try:            
+                    if home_score_current:
+                        obj.home_score_current = home_score_current
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:home_score_current", str(e))
+                try:            
+                    if home_score_part_1:
+                        obj.home_score_part_1 = home_score_part_1
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj: home_score_part_1", str(e))
+                try:           
+                    if home_score_part_2:
+                        obj.home_score_part_2 = home_score_part_2
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:home_score_part_2", str(e))
+                try:            
+                    if home_images:
+                        obj.home_images = home_images
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:home_images", str(e))
+                try:            
+                    if tv_live_streaming:
+                        obj.tv_live_streaming = tv_live_streaming
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:tv_live_streaming", str(e))
+                try:            
+                    if has_live_centre:
+                        obj.has_live_centre = has_live_centre
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:has_live_centre", str(e))
+                try:           
+                    if an:
+                        obj.an = an
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:an", str(e))
+                try:           
+                    if bookmakers_with_live_in_offer:
+                        obj.bookmakers_with_live_in_offer = bookmakers_with_live_in_offer
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj: bookmakers_with_live_in_offer", str(e))
+                try:            
+                    if live_in_offer_bookmaker_id:
+                        obj.live_in_offer_bookmaker_id = live_in_offer_bookmaker_id
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:live_in_offer_bookmaker_id", str(e))
+                try:           
+                    if live_in_offer_status:
+                        obj.live_in_offer_status = live_in_offer_status
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:live_in_offer_status", str(e))
+                try:            
+                    if score_chance_away:
+                        obj.score_chance_away = score_chance_away
+                        obj.save()
+                except Exception as e:
+                    print("Ошибка при сохранении obj:score_chance_away", str(e))        
+               
 
-                # Выполняем запрос с привязками значений
-                if event_id is not None and start_time is not None and start_utime is not None and stage_type is not None and merge_stage_type is not None and stage is not None and sort is not None and rounds is not None and visible_run_rate is not None and live_mark is not None and has_lineps is not None and stage_start_time is not None and game_time is not None and playing_on_sets is not None and recent_overs is not None and shortname_away is not None and away_participant_ids is not None and away_participant_types is not None and away_name is not None and away_participant_name_one is not None and away_event_participant_id is not None and away_goal_var is not None and away_score_current is not None and away_score_full is not None and away_score_part_1 is not None and away_score_part_2 is not None and away_images is not None and imm is not None and imw is not None and imp is not None and ime is not None and shortname_home is not None and home_participant_ids is not None and home_participant_types is not None and home_name is not None and home_participant_name_one is not None and home_event_participant_id is not None and home_goal_var is not None and home_score_current is not None and home_score_part_1 is not None and home_score_part_2 is not None and home_images is not None and tv_live_streaming is not None and has_live_centre is not None and an is not None and bookmakers_with_live_in_offer is not None and live_in_offer_bookmaker_id is not None and live_in_offer_status is not None:
-                    db_conn = sqlite3.connect('db.sqlite3')
-                    cursor = db_conn.cursor()
-                    cursor.execute("SELECT * FROM scoreflash_events WHERE event_id = ? AND start_time = ? AND start_utime = ? AND stage_type = ? AND merge_stage_type = ? AND stage = ? AND sort = ? AND rounds = ? AND visible_run_rate = ? AND live_mark = ? AND has_lineps = ? AND stage_start_time = ? AND game_time = ? AND playing_on_sets = ? AND recent_overs = ? AND shortname_away = ? AND away_participant_ids = ? AND away_participant_types = ? AND away_name = ? AND away_participant_name_one = ? AND away_event_participant_id = ? AND away_goal_var = ? AND away_score_current = ? AND away_score_full = ? AND away_score_part_1 = ? AND away_score_part_2 = ? AND away_images = ? AND imm = ? AND imw = ? AND imp = ? AND ime = ? AND shortname_home = ? AND home_participant_ids = ? AND home_participant_types = ? AND home_name = ? AND home_participant_name_one = ? AND home_event_participant_id = ? AND home_goal_var = ? AND home_score_current = ? AND home_score_part_1 = ? AND home_score_part_2 = ? AND home_images = ? AND tv_live_streaming = ? AND has_live_centre = ? AND an = ? AND bookmakers_with_live_in_offer = ? AND live_in_offer_bookmaker_id = ? AND live_in_offer_status = ? AND score_chance_away LIKE ?", (event_id, start_time, start_utime, stage_type, merge_stage_type, stage, sort, rounds, visible_run_rate, live_mark, has_lineps, stage_start_time, game_time, playing_on_sets, recent_overs, shortname_away, away_participant_ids, away_participant_types, away_name, away_participant_name_one, away_event_participant_id, away_goal_var, away_score_current, away_score_full, away_score_part_1, away_score_part_2, away_images, imm, imw, imp, ime, shortname_home, home_participant_ids, home_participant_types, home_name, home_participant_name_one, home_event_participant_id, home_goal_var, home_score_current, home_score_part_1, home_score_part_2, home_images, tv_live_streaming, has_live_centre, an, bookmakers_with_live_in_offer, live_in_offer_bookmaker_id, live_in_offer_status, '%' + score_chance_away + '%'))
-                    db_conn.commit()
-                    db_conn.close()
-                    data = cursor.fetchall()
- 
-
-    # Создание и возвращение объекта ответа
+                # Выполнение SQL-запроса и сохранение данных в базу данных
+    
                 return Response(data)
 
         # Create Event objects using the parsed data
@@ -250,7 +539,7 @@ def odds(event_id):
 
 class EventDetails(APIView):
     def get(self, request, event_id):
-        event_id = get_object_or_404(Events, events_id=event_id)
+        event_id = get_object_or_404(Events, event_id=event_id)
 
         # Вызываем функции, передавая значение event_id
         h2h_data = h2h(event_id)

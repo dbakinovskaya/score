@@ -87,55 +87,74 @@ class Teams(models.Model):
 
 
 class Events(models.Model):
-    event_id = models.CharField(max_length=255)
-    start_time = models.DateTimeField()
-    start_utime = models.DateTimeField()
-    stage_type = models.CharField(max_length=255)
-    merge_stage_type = models.CharField(max_length=255)
-    stage = models.CharField(max_length=255)
-    sort = models.CharField(max_length=255)
-    rounds = models.CharField(max_length=255)
-    visible_run_rate = models.IntegerField()
-    live_mark = models.CharField(max_length=1)
-    has_lineps = models.IntegerField()
-    stage_start_time = models.DateTimeField()
-    game_time = models.CharField(max_length=255, null=True)
-    playing_on_sets = models.CharField(max_length=255, null=True)
-    recent_overs = models.CharField(max_length=255, null=True)
-    shortname_away = models.CharField(max_length=255)
-    away_participant_ids = models.TextField()
-    away_participant_types = models.TextField()
-    away_name = models.CharField(max_length=255)
-    away_participant_name_one = models.CharField(max_length=255)
-    away_event_participant_id = models.CharField(max_length=255)
-    away_goal_var = models.IntegerField()
-    away_score_current = models.CharField(max_length=255)
-    away_score_full = models.IntegerField()
-    away_score_part_1 = models.CharField(max_length=255)
-    away_score_part_2 = models.CharField(max_length=255)
-    away_images = models.TextField()
-    imm = models.CharField(max_length=255)
-    imw = models.CharField(max_length=255)
-    imp = models.CharField(max_length=255)
-    ime = models.CharField(max_length=255)
-    shortname_home = models.CharField(max_length=255)
-    home_participant_ids = models.TextField()
-    home_participant_types = models.TextField()
-    home_name = models.CharField(max_length=255)
-    home_participant_name_one = models.CharField(max_length=255)
-    home_event_participant_id = models.CharField(max_length=255)
-    home_goal_var = models.IntegerField()
-    home_score_current = models.CharField(max_length=255)
-    home_score_part_1 = models.CharField(max_length=255)
-    home_score_part_2 = models.CharField(max_length=255)
-    home_images = models.TextField()
-    tv_live_streaming = models.TextField()
-    has_live_centre = models.IntegerField()
-    an = models.CharField(max_length=1)
-    bookmakers_with_live_in_offer = models.TextField()
-    live_in_offer_bookmaker_id = models.IntegerField()
-    live_in_offer_status = models.IntegerField()
-    score_chance_away = models.CharField(max_length=255)
+    event_id = models.TextField(null=True)
+    start_time = models.TextField(null=True)
+    start_utime =models.TextField(null=True)
+    stage_type =models.TextField(null=True)
+    merge_stage_type = models.TextField(null=True)
+    stage = models.TextField(null=True)
+    sort = models.TextField(null=True)
+    rounds = models.TextField(null=True)
+    visible_run_rate = models.TextField(null=True)
+    live_mark = models.TextField(null=True)
+    has_lineps = models.TextField(null=True)
+    stage_start_time = models.TextField(null=True)
+    game_time = models.TextField(null=True)
+    playing_on_sets = models.TextField(null=True)
+    recent_overs = models.TextField(null=True)
+    shortname_away = models.TextField(null=True)
+    away_participant_ids = models.TextField(null=True)
+    away_participant_types = models.TextField(null=True)
+    away_name = models.TextField(null=True)
+    away_participant_name_one = models.TextField(null=True)
+    away_event_participant_id = models.TextField(null=True)
+    away_goal_var = models.TextField(null=True)
+    away_score_current = models.TextField(null=True)
+    away_score_full = models.TextField(null=True)
+    away_score_part_1 = models.TextField(null=True)
+    away_score_part_2 = models.TextField(null=True)
+    away_images = models.TextField(null=True)
+    imm = models.TextField(null=True)
+    imw = models.TextField(null=True)
+    imp = models.TextField(null=True)
+    ime = models.TextField(null=True)
+    shortname_home = models.TextField(null=True)
+    home_participant_ids = models.TextField(null=True)
+    home_participant_types = models.TextField(null=True)
+    home_name = models.TextField(null=True)
+    home_participant_name_one = models.TextField(null=True)
+    home_event_participant_id = models.TextField(null=True)
+    home_goal_var = models.TextField(null=True)
+    home_score_current = models.TextField(null=True)
+    home_score_part_1 = models.TextField(null=True)
+    home_score_part_2 = models.TextField(null=True)
+    home_images = models.TextField(null=True)
+    tv_live_streaming = models.TextField(null=True)
+    has_live_centre = models.TextField(null=True)
+    an = models.TextField(null=True)
+    bookmakers_with_live_in_offer = models.TextField(null=True)
+    live_in_offer_bookmaker_id = models.TextField(null=True)
+    live_in_offer_status = models.TextField(null=True)
+    score_chance_away = models.TextField(null=True)
+
+    def save(self, *args, **kwargs):
+        if not isinstance(self.visible_run_rate, int):
+            self.visible_run_rate = None
+        if not isinstance(self.has_lineps, int):
+            self.has_lineps = None
+        if not isinstance(self.away_goal_var, int):
+            self.away_goal_var = None
+        if not isinstance(self.away_score_full, int):
+            self.away_score_full = None
+        if not isinstance(self.home_goal_var, int):
+            self.home_goal_var = None
+        if not isinstance(self.has_live_centre, int):
+            self.has_live_centre = None
+        if not isinstance(self.live_in_offer_bookmaker_id, int):
+            self.live_in_offer_bookmaker_id = None
+        if not isinstance(self.live_in_offer_status, int):
+            self.live_in_offer_status = None
+        super().save(*args, **kwargs)
 
 
 
@@ -162,10 +181,8 @@ class LiveOfEvents(models.Model):
     zku = models.CharField(max_length=100)
     tournamet_season_id = models.CharField(max_length=100)
     category_name = models.CharField(max_length=100)
-    events = models.ForeignKey(Events, on_delete=models.CASCADE)
-    an = models.CharField(max_length=100)
-    live_in_offer_book_id = models.IntegerField()
-    live_in_offer_status = models.IntegerField()
+    event_id = models.ForeignKey(Events, on_delete=models.CASCADE)
+    
 
 # class GroupStatics(models.Model):
 #     event = models.ForeignKey(Events, on_delete=models.CASCADE)
