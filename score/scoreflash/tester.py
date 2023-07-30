@@ -1,5 +1,5 @@
 import requests
-from .scoreflash.models import Events
+from .models import Events
 
 
 url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
