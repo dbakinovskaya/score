@@ -1,18 +1,47 @@
-
+from urllib.parse import quote
 import http.client
 import sqlite3
+import re
 import json
+from django.db import connection
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 
-from .models import LiveOfEvents, Events
-from .serialaizers import LiveOfEventsSerializer, EventsSerializer
+from .models import LiveOfEvents, Events, EventId
+from .serialaizers import LiveOfEventsSerializer, EventsSerializer, EventLiveIdSerializer
 import http.client
+
+
+class EventIdViewSet(viewsets.ModelViewSet):
+    queryset = EventId.objects.all()
+    serializer_class = EventLiveIdSerializer
+
+    def list(self, request):
+        conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+        headers = {
+            'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+            'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+        }
+        conn.request(
+            "GET", "/v1/events/live-list?timezone=-4&sport_id=1&locale=en_INT", headers=headers)
+        res = conn.getresponse()
+        data = res.read()
+        parsed_data = json.loads(data.decode("utf-8"))
+        print(type(parsed_data))
+
+        for item in parsed_data['DATA']:
+            for event in item['EVENTS']:
+                live_event = EventId(live_event_id=event['EVENT_ID'])
+                live_event.save()
+
+        return Response(parsed_data)
 
 
 class EventsViewSet(viewsets.ModelViewSet):
@@ -37,7 +66,8 @@ class LiveOfEventsViewSet(viewsets.ModelViewSet):
         parsed_data = json.loads(data.decode("utf-8"))
 
         for event in parsed_data['DATA']:
-            for ev in event['EVENTS']:
+            events = event['EVENTS']
+            for ev in events:
                 event_id = ev.get('EVENT_ID')
                 start_time = ev.get('START_TIME')
                 start_utime = ev.get('START_UTIME')
@@ -91,189 +121,32 @@ class LiveOfEventsViewSet(viewsets.ModelViewSet):
                 home_participant_name_one = ev.get('HOME_PARTICIPANT_NAME_ONE')
                 try:
                     obj = Events()
-                    if event_id:
-                        obj.event_id=event_id
-                    if start_time:
-                        obj.start_time = start_time
-                    if start_utime:
-                        obj.start_utime = start_utime      
-                    if stage_type:
-                        obj.stage_type = stage_type     
-                    if merge_stage_type:
-                        obj.merge_stage_type = merge_stage_type     
-                    if stage:
-                        obj.stage = stage        
-                    if sort:
-                        obj.sort = sort        
-                    if rounds:
-                        obj.rounds = rounds    
-                    if visible_run_rate:
-                        obj.visible_run_rate = visible_run_rate 
-                    if live_mark:
-                        obj.live_mark = live_mark
-                    if has_lineps:
-                        obj.has_lineps = has_lineps
-                    if stage_start_time:
-                        obj.stage_start_time = stage_start_time          
-                    if game_time:
-                        obj.game_time = game_time      
-                    if playing_on_sets:
-                        obj.playing_on_sets = playing_on_sets    
-                    if recent_overs:
-                        obj.recent_overs = recent_overs      
-                    if shortname_away:
-                        obj.shortname_away = shortname_away       
-                    if away_participant_ids:
-                        obj.away_participant_ids = away_participant_ids
-                    if away_participant_types:
-                        obj.away_participant_types = away_participant_types    
-                    if away_name:
-                        obj.away_name = away_name
-                    if away_participant_name_one:
-                        obj.away_participant_name_one = away_participant_name_one     
-                    if away_event_participant_id:
-                        obj.away_event_participant_id = away_event_participant_id  
-                    if away_goal_var:
-                        obj.away_goal_var = away_goal_var
-                    if away_score_current:
-                        obj.away_score_current = away_score_current
-                    if away_score_full:
-                        obj.away_score_full = away_score_full    
-                    if away_score_part_1:
-                        obj.away_score_part_1 = away_score_part_1
-                    if away_score_part_2:
-                        obj.away_score_part_2 = away_score_part_2   
-                    if away_images:
-                        obj.away_images = away_images     
-                    if imm:
-                        obj.imm = imm 
-                    if imw:
-                        obj.imw = imw
-                    if imp:
-                        obj.imp = imp      
-                    if ime:
-                        obj.ime = ime    
-                    if shortname_home:
-                        obj.shortname_home = shortname_home
-                    if home_participant_ids:
-                        obj.home_participant_ids = home_participant_ids         
-                    if home_participant_types:
-                        obj.home_participant_types = home_participant_types      
-                    if home_name:
-                        obj.home_name = home_name
-                    if home_participant_name_one:
-                        obj.home_participant_name_one = home_participant_name_one
-                    if home_event_participant_id:
-                        obj.home_event_participant_id = home_event_participant_id     
-                    if home_goal_var:
-                        obj.home_goal_var = home_goal_var       
-                    if home_score_current:
-                        obj.home_score_current = home_score_current
-                    if home_score_part_1:
-                        obj.home_score_part_1 = home_score_part_1       
-                    if home_score_part_2:
-                        obj.home_score_part_2 = home_score_part_2         
-                    if home_images:
-                        obj.home_images = home_images         
-                    if tv_live_streaming:
-                        obj.tv_live_streaming = tv_live_streaming     
-                    if has_live_centre:
-                            obj.has_live_centre = has_live_centre         
-                    if an:
-                        obj.an = an       
-                    if bookmakers_with_live_in_offer:
-                            obj.bookmakers_with_live_in_offer = bookmakers_with_live_in_offer      
-                    if live_in_offer_bookmaker_id:
-                        obj.live_in_offer_bookmaker_id = live_in_offer_bookmaker_id 
-                    if live_in_offer_status:
-                        obj.live_in_offer_status = live_in_offer_status
-                    if score_chance_away:
-                        obj.score_chance_away = score_chance_away
-                    obj.save()      
+                    obj = Events(event_id=event_id, start_time=start_time,
+                                 start_utime=start_utime, stage_type=stage_type,
+                                 merge_stage_type=merge_stage_type, stage=stage, sort=sort,
+                                 rounds=rounds, visible_run_rate=visible_run_rate, live_mark=live_mark,
+                                 has_lineps=has_lineps, stage_start_time=stage_start_time, game_time=game_time,
+                                 playing_on_sets=playing_on_sets, recent_overs=recent_overs, shortname_home=shortname_home,
+                                 home_participant_ids=home_participant_ids, home_participant_types=home_participant_types,
+                                 home_name=home_name, home_event_participant_id=home_event_participant_id,
+                                 home_goal_var=home_goal_var, home_score_current=home_score_current,
+                                 home_score_part_1=home_score_part_1, home_score_part_2=home_score_part_2,
+                                 home_images=home_images, imm=imm, imw=imw, imp=imp, ime=ime, shortname_away=shortname_away,
+                                 away_participant_ids=away_participant_ids, away_participant_types=away_participant_types,
+                                 away_name=away_name, away_participant_name_one=away_participant_name_one,
+                                 away_event_participant_id=away_event_participant_id, away_goal_var=away_goal_var,
+                                 away_score_current=away_score_current, away_score_full=away_score_full,
+                                 away_score_part_1=away_score_part_1, away_score_part_2=away_score_part_2,
+                                 away_images=away_images, an=an, has_live_centre=has_live_centre,
+                                 bookmakers_with_live_in_offer=bookmakers_with_live_in_offer,
+                                 live_in_offer_bookmaker_id=live_in_offer_bookmaker_id, live_in_offer_status=live_in_offer_status,
+                                 score_chance_away=score_chance_away, tv_live_streaming=tv_live_streaming,
+                                 home_participant_name_one=home_participant_name_one)
+                    obj.save()
                 except Exception as e:
-                    print("Ошибка при сохранении ", str(e))        
-               
-                
-                # Выполнение SQL-запроса и сохранение данных в базу данных
-    
-                return Response(data)
+                    print("Ошибка при сохранении ", str(e))
 
-        # Create Event objects using the parsed data
-        # event_data = parsed_data
-        # event = Events.objects.create(
-        #     events_id=event_data['events_id'],
-        #     strat_time=event_data['strat_time'],
-        #     start_utime=event_data['start_utime'],
-        #     stage_type=event_data['stage_type'],
-        #     merge_stage_type=event_data['merge_stage_type'],
-        #     stage=event_data['stage'],
-        #     sort=event_data['sort'],
-        #     visibale_run_rate=event_data['visibale_run_rate'],
-        #     live_mark=event_data['live_mark'],
-        #     has_lineps=event_data['has_lineps'],
-        #     stage_start_time=event_data['stage_start_time'],
-        #     game_time=event_data['game_time'],
-        #     playing_onset=event_data['playing_onset'],
-        #     recents_overs=event_data['recents_overs'],
-        #     short_name_home=event_data['short_name_home'],
-        #     HOME_PARTICIPANT_IDS=event_data['HOME_PARTICIPANT_IDS'],
-        #     HOME_PARTICIPANT_TYPES=event_data['HOME_PARTICIPANT_TYPES'],
-        #     home_name=event_data['home_name'],
-        #     home_par_name_one=event_data['home_par_name_one'],
-        #     home_event_par_id=event_data['home_event_par_id'],
-        #     home_goal_var=event_data['home_goal_var'],
-        #     home_score_current=event_data['home_score_current'],
-        #     home_score_part_1=event_data['home_score_part_1'],
-        #     home_images=event_data['home_images'],
-        #     imm=event_data['imm'],
-        #     imw=event_data['imw'],
-        #     imp=event_data['imp'],
-        #     ime=event_data['ime'],
-        #     short_name_away=event_data['short_name_away'],
-        #     away_par_ids=event_data['away_par_ids'],
-        #     away_par_types=event_data['away_par_types'],
-        #     away_name=event_data['away_name'],
-        #     away_par_name_one=event_data['away_par_name_one'],
-        #     away_event_par_id=event_data['away_event_par_id'],
-        #     away_goal_var=event_data['away_goal_var'],
-        #     away_score_current=event_data['away_score_current'],
-        #     away_score_full=event_data['away_score_full'],
-        #     away_score_part_1=event_data['away_score_part_1'],
-        #     away_images=event_data['away_images']
-        # )
-
-        # Create LiveOfEvents object using the created Event object
-
-        # live_event = LiveOfEvents.objects.create(
-        #     name=event_data['name'],
-        #     headers=event_data['headers'],
-        #     name_part_1=event_data['name_part_1'],
-        #     name_part_2=event_data['name_part_2'],
-        #     tournament_tamplete_id=event_data['tournament_tamplete_id'],
-        #     country_id=event_data['country_id'],
-        #     country_name=event_data['country_name'],
-        #     tournament_stage_id=event_data['tournament_stage_id'],
-        #     source_type=event_data['source_type'],
-        #     has_live_table=event_data['has_live_table'],
-        #     standing_info=event_data['standing_info'],
-        #     tamplate_id=event_data['tamplate_id'],
-        #     tournament_stage_type=event_data['tournament_stage_type'],
-        #     short_name=event_data['short_name'],
-        #     url=event_data['url'],
-        #     tourmanet_url=event_data['tourmanet_url'],
-        #     sort=event_data['sort'],
-        #     stage_count=event_data['stage_count'],
-        #     zkl=event_data['zkl'],
-        #     zku=event_data['zku'],
-        #     tournamet_season_id=event_data['tournamet_season_id'],
-        #     category_name=event_data['category_name'],
-        #     events=Events.objects.get(id=event_data['events']),
-        #     an=event_data['an'],
-        #     live_in_offer_book_id=event_data['live_in_offer_book_id'],
-        #     live_in_offer_status=event_data['live_in_offer_status']
-        # )
-
-        # return Response(data.decode("utf-8"), status=status.HTTP_200_OK)
+            return Response(data)
 
 
 def h2h(event_id):
@@ -284,8 +157,9 @@ def h2h(event_id):
         'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
     }
 
+    # encoded_event_id = quote(event_id, safe='')
     conn.request(
-        "GET", f"/v1/events/h2h?locale=en_INT&event_id={event_id}", headers=headers)
+        "GET", f"/v1/events/h2h?locale=en_INT&event_id=82yYGQB9", headers=headers)
 
     res = conn.getresponse()
     data = res.read()
@@ -293,56 +167,75 @@ def h2h(event_id):
     print(data.decode("utf-8"))
 
 
-def events_statistic(event_id):
-    conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+# def events_statistic(event_id):
+#     conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
 
-    headers = {
-        'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-        'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
-    }
+#     headers = {
+#         'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+#         'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+#     }
+#     encoded_event_id = quote(event_id.encode('utf-8'), safe='')
+#     conn.request(
+#         "GET", f"/v1/events/statistics?event_id={encoded_event_id}&locale=en_INT", headers=headers)
 
-    conn.request(
-        "GET", f"/v1/events/statistics?event_id={event_id}&locale=en_INT", headers=headers)
+#     res = conn.getresponse()
+#     data = res.read()
 
-    res = conn.getresponse()
-    data = res.read()
-
-    print(data.decode("utf-8"))
-
-
-def events_start_lineps(event_id):
-
-    conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
-
-    headers = {
-        'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-        'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
-    }
-
-    conn.request(
-        "GET", f"/v1/events/lineups?event_id={event_id}&locale=en_INT", headers=headers)
-
-    res = conn.getresponse()
-    data = res.read()
-
-    print(data.decode("utf-8"))
+#     print(data.decode("utf-8"))
 
 
-def odds(event_id):
-    conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+# def events_statistic(event_id):
+#     conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
 
-    headers = {
-        'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-        'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
-    }
+#     headers = {
+#         'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+#         'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+#     }
 
-    conn.request(
-        "GET", f"/v1/events/odds?event_id={event_id}&locale=en_INT", headers=headers)
+#     encoded_event_id = quote(event_id.encode('utf-8'), safe='')
+#     conn.request(
+#         "GET", f"/v1/events/statistics?event_id={encoded_event_id}&locale=en_INT", headers=headers)
 
-    res = conn.getresponse()
-    data = res.read()
+#     res = conn.getresponse()
+#     data = res.read()
 
-    print(data.decode("utf-8"))
+#     print(data.decode("utf-8"))
+
+
+# def events_start_lineps(event_id):
+
+#     conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+
+#     headers = {
+#         'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+#         'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+#     }
+#     encoded_event_id = quote(event_id.encode('utf-8'), safe='')
+#     conn.request(
+#         "GET", f"/v1/events/lineups?event_id={encoded_event_id}&locale=en_INT", headers=headers)
+
+#     res = conn.getresponse()
+#     data = res.read()
+
+#     print(data.decode("utf-8"))
+
+
+# def odds(event_id):
+#     conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+
+#     headers = {
+#         'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+#         'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+#     }
+
+#     encoded_event_id = quote(event_id.encode('utf-8'), safe='')
+#     conn.request(
+#         "GET", f"/v1/events/odds?event_id={encoded_event_id}&locale=en_INT", headers=headers)
+
+#     res = conn.getresponse()
+#     data = res.read()
+
+#     print(data.decode("utf-8"))
 
 
 class EventDetails(APIView):
@@ -351,24 +244,24 @@ class EventDetails(APIView):
 
         # Вызываем функции, передавая значение event_id
         h2h_data = h2h(event_id)
-        events_statistic_data = events_statistic(event_id)
-        events_start_lineps_data = events_start_lineps(event_id)
-        odds_data = odds(event_id)
+        # events_statistic_data = events_statistic(event_id)
+        # events_start_lineps_data = events_start_lineps(event_id)
+        # odds_data = odds(event_id)
 
         # Выводим данные на экран
-        print('Event ID:', event_id)
+        # print('Event ID:', event_id)
         print('H2H Data:', h2h_data)
-        print('Events Statistic Data:', events_statistic_data)
-        print('Events Start Lineps Data:', events_start_lineps_data)
-        print('Odds Data:', odds_data)
+        # print('Events Statistic Data:', events_statistic_data)
+        # print('Events Start Lineps Data:', events_start_lineps_data)
+        # print('Odds Data:', odds_data)
 
         # Создаем JSON-ответ
         response = {
-            'event_id': event_id,
+            # 'event_id': event_id,
             'h2h_data': h2h_data,
-            'events_statistic_data': events_statistic_data,
-            'events_start_lineps_data': events_start_lineps_data,
-            'odds_data': odds_data
+            # 'events_statistic_data': events_statistic_data,
+            # 'events_start_lineps_data': events_start_lineps_data,
+            # 'odds_data': odds_data
         }
 
         # Возвращаем JSON-ответ

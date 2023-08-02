@@ -1,30 +1,24 @@
-import requests
-from .models import Events
+ def created():
+        conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+        headers = {
+            'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+            'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+        }
+        conn.request(
+            "GET", "/v1/events/live-list?timezone=-4&sport_id=1&locale=en_INT", headers=headers)
+        res = conn.getresponse()
+        data = res.read()
+        parsed_data = json.loads(data.decode("utf-8"))
 
+        try:
+            with open("data.txt", "x") as file:
+                file.write(str(parsed_data))
+        except FileExistsError:
+            with open("data.txt", "w") as file:
+                file.write(str(parsed_data))
 
-url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
-querystring = {
-    "timezone": "-4",
-    "sport_id": "1",
-    "locale": "en_INT"
-}
-headers = {
-    'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-    'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
-}
+        pattern = r'"EVENT_ID":"([^"]+)"'
+        matches = re.findall(pattern, str(parsed_data))
+        print(matches)
 
-response = requests.get(url, headers=headers, params=querystring)
-data = response.json()
-
-dict_list = data['data']
-event_list = []
-
-for event_dict in dict_list:
-    event_id = event_dict['EVENT_ID']
-    event = Events(event_id)
-    
-    for key, value in event_dict.items():
-        setattr(event, key.lower(), value)
-    
-    event_list.append(event)
-print(event_list)    
+        return Response(parsed_data)

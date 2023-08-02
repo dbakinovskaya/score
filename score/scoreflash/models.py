@@ -86,6 +86,9 @@ class Teams(models.Model):
     sport_id = models.ForeignKey(Sport, on_delete=models.CASCADE)
 
 
+class EventId(models.Model):
+    live_event_id = models.TextField(null=True)
+
 class Events(models.Model):
     event_id = models.TextField(null=True)
     start_time = models.TextField(null=True)

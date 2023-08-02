@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import (Sport, NumberOfSportEvents, Bookmaker,Outcome, Market, Group,Events,LiveOfEvents)
+from .models import (Sport, NumberOfSportEvents, Bookmaker,Outcome, Market, Group,Events,LiveOfEvents,EventId)
 
 class SportSerializer(serializers.ModelSerializer):
     class Meta:
@@ -47,3 +47,8 @@ class LiveOfEventsSerializer(serializers.ModelSerializer):
     class Meta:
         model = LiveOfEvents
         fields = '__all__'             
+
+class EventLiveIdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= EventId
+        fields = '__all__'
