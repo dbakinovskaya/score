@@ -57,6 +57,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'score.wsgi.application'
+# ASGI_APPLICATION = 'score.routing.application'
+
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             'hosts': [('localhost', 6379)],
+#         },
+#     },
+# }
 
 
 # Database

@@ -1,6 +1,6 @@
 from urllib.parse import quote
 import http.client
-import sqlite3
+import asyncio
 import re
 import json
 from django.db import connection
@@ -16,14 +16,19 @@ from rest_framework.response import Response
 
 from .models import LiveOfEvents, Events, EventId
 from .serialaizers import LiveOfEventsSerializer, EventsSerializer, EventLiveIdSerializer
+from .permissions import IsAdminOrReadOnly
 import http.client
 
 
 class EventIdViewSet(viewsets.ModelViewSet):
     queryset = EventId.objects.all()
     serializer_class = EventLiveIdSerializer
+    permission_classes = IsAdminOrReadOnly
 
     def list(self, request):
+        # Удаление данных из таблицы
+        EventId.objects.all().delete()
+
         conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
         headers = {
             'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
@@ -42,6 +47,19 @@ class EventIdViewSet(viewsets.ModelViewSet):
                 live_event.save()
 
         return Response(parsed_data)
+
+    async def send_request(self):
+        self.list(None)
+
+    async def schedule_request(self):
+        while True:
+            await self.send_request()  # Выполняем запрос
+            await asyncio.sleep(0.33)  # Подождать 0.33 секунды
+
+    def start_scheduling(self):
+        loop = asyncio.get_event_loop()
+        loop.create_task(self.schedule_request())
+        loop.run_forever()
 
 
 class EventsViewSet(viewsets.ModelViewSet):
@@ -126,6 +144,8 @@ def odds(live_event_id):
 
 
 class EventDetails(APIView):
+    permission_classes = IsAdminOrReadOnly
+    
     def get(self, request, live_event_id):
         event = get_object_or_404(EventId, live_event_id=live_event_id)
         h2h_data = h2h(event.live_event_id)
@@ -134,6 +154,6 @@ class EventDetails(APIView):
         odd = odds(event.live_event_id)
 
         serialized_data = json.dumps(
-            {'h2h_data': h2h_data, 'statistics_data': statistics_data, 'lineups': lineups,'odds':odd})
+            {'h2h_data': h2h_data, 'statistics_data': statistics_data, 'lineups': lineups, 'odds': odd})
 
         return Response(serialized_data)
