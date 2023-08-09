@@ -163,50 +163,67 @@ class TournamentViewSet(viewsets.ModelViewSet):
     serializer_class = TourmanetSerializer
 
     def list(self, request):
-        conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
-        headers = {
-            'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-            'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
-        }
-        conn.request(
-            "GET", "/v1/events/live-list?timezone=-4&sport_id=1&locale=en_INT", headers=headers)
-        res = conn.getresponse()
-        data = res.read()
-        parsed_data = json.loads(data.decode("utf-8"))
-        for item in parsed_data['DATA']:
-            tournament = Tournament()
-            tournament.name = item['NAME']
-            tournament.tournament_stage_type = item['TOURNAMENT_STAGE_TYPE']
-            tournament.tournament_imng = item['TOURNAMENT_IMAGE']
-            
-            for event in item['EVENTS']:
-                data = {
-                    'event_id': event['EVENT_ID'],
-                    'start_time': event['START_TIME'],
-                    'start_utime': event['START_UTIME'],
-                    'game_time': event['GAME_TIME'],
-                    'short_name_away': event['SHORT_NAME_AWAY'],
-                    'away_name': event['AWAY_NAME'],
-                    'away_score_current': event['AWAY_SCORE_CURRENT'],
-                    'away_score_part_1': event['AWAY_SCORE_PART_1'],
-                    'away_score_part_2': event['AWAY_SCORE_PART_2'],
-                    'away_images': event['AWAY_IMAGES'],
-                    'short_name_home': event['SHORT_NAME_HOME'],
-                    'home_name': event['HOME_NAME'],
-                    'home_score_current': event['HOME_SCORE_CURRENT'],
-                    'home_score_part_1': event['HOME_SCORE_PART_1'],
-                    'home_score_part_2': event['HOME_SCORE_PART_2'],
-                    'home_images': event['HOME_IMAGES']
-                }
-                serializer = EventsSerializer(data=data)
-                if serializer.is_valid():
-                    event_object = serializer.save()
-                    tournament.events.add(event_object)
-                else:
-                    print(serializer.errors)
-            
-            tournament.save()
-        tournaments = Tournament.objects.all()
-        serialized_tournaments = TourmanetSerializer(tournaments, many=True).data
+        async def send_request():
+            Events.objects.all().delete()
+            Tournament.objects.all().delete()
+            conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+            headers = {
+                'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+                'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+            }
+            conn.request(
+                "GET", "/v1/events/live-list?timezone=-4&sport_id=1&locale=en_INT", headers=headers)
+            res = conn.getresponse()
+            data = res.read()
+            parsed_data = json.loads(data.decode("utf-8"))
+            for item in parsed_data['DATA']:
+                tournament = Tournament()
+                tournament.name = item['NAME']
+                tournament.tournament_stage_type = item['TOURNAMENT_STAGE_TYPE']
+                tournament.tournament_imng = item['TOURNAMENT_IMAGE']
+                
+                for event in item['EVENTS']:
+                    data = {
+                        'event_id': event['EVENT_ID'],
+                        'start_time': event['START_TIME'],
+                        'start_utime': event['START_UTIME'],
+                        'game_time': event['GAME_TIME'],
+                        'short_name_away': event['SHORT_NAME_AWAY'],
+                        'away_name': event['AWAY_NAME'],
+                        'away_score_current': event['AWAY_SCORE_CURRENT'],
+                        'away_score_part_1': event['AWAY_SCORE_PART_1'],
+                        'away_score_part_2': event['AWAY_SCORE_PART_2'],
+                        'away_images': event['AWAY_IMAGES'],
+                        'short_name_home': event['SHORT_NAME_HOME'],
+                        'home_name': event['HOME_NAME'],
+                        'home_score_current': event['HOME_SCORE_CURRENT'],
+                        'home_score_part_1': event['HOME_SCORE_PART_1'],
+                        'home_score_part_2': event['HOME_SCORE_PART_2'],
+                        'home_images': event['HOME_IMAGES']
+                    }
+                    serializer = EventsSerializer(data=data)
+                    if serializer.is_valid():
+                        event_object = serializer.save()
+                        tournament.events.add(event_object)
+                    else:
+                        print(serializer.errors)
+                
+                tournament.save()
+            tournaments = Tournament.objects.all()
+            serialized_tournaments = TourmanetSerializer(tournaments, many=True).data
 
-        return JsonResponse(serialized_tournaments, safe=False)    
+            return JsonResponse(serialized_tournaments, safe=False)
+
+        async def schedule_request():
+            while True:
+                await send_request()  # Выполняем запрос
+                await asyncio.sleep(0.33)  # Подождать 0.33 секунды
+
+        def start_scheduling(self):
+            loop = asyncio.get_event_loop()
+            loop.create_task(schedule_request())
+            loop.run_forever()
+
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(send_request())
+        start_scheduling()
