@@ -1,32 +1,41 @@
 from rest_framework import serializers
-from .models import (Sport, NumberOfSportEvents, Bookmaker,Outcome, Market, Group,Events,LiveOfEvents,EventId)
+from .models import (Sport, NumberOfSportEvents, Bookmaker,
+                     Outcome, Market, Group, Events, LiveOfEvents, EventId, Tournament)
+
 
 class SportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sport
         fields = ['sport_id', 'name']
 
+
 class NumberOfSportEventsSerializer(serializers.ModelSerializer):
     sport = SportSerializer()
 
     class Meta:
         model = NumberOfSportEvents
-        fields = ['sport', 'events_count', 'events_count_live', 'is_popular', 'sports_name']
+        fields = ['sport', 'events_count',
+                  'events_count_live', 'is_popular', 'sports_name']
+
 
 class BookmakerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bookmaker
         fields = ['bookmaker_id', 'bookmaker_name', 'locale']
 
+
 class OutcomeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Outcome
         fields = ['id', 'odds_label_second', 'odds_label_third', 'locale']
 
+
 class MarketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Market
-        fields = ['id', 'bookmaker', 'odd_cell_third_move', 'odd_cell_third_value', 'odds_available', 'locale']
+        fields = ['id', 'bookmaker', 'odd_cell_third_move',
+                  'odd_cell_third_value', 'odds_available', 'locale']
+
 
 class GroupSerializer(serializers.ModelSerializer):
     outcomes = OutcomeSerializer()
@@ -39,16 +48,29 @@ class GroupSerializer(serializers.ModelSerializer):
 class EventsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Events
-        fields = '__all__'   
+        fields = ['event_id', 'start_time', 'start_utime', 'game_time', 'short_name_away',
+                  'away_name', 'away_score_current', 'away_score_part_1', 'away_score_part_2', 'away_images', 'short_name_home',
+                  'home_name', 'home_score_current', 'home_score_part_1', 'home_score_part_2', 'home_images']
+
 
 class LiveOfEventsSerializer(serializers.ModelSerializer):
-    events = EventsSerializer()  # использование ранее созданного сериализатора для связанной модели
+    # использование ранее созданного сериализатора для связанной модели
+    events = EventsSerializer()
 
     class Meta:
         model = LiveOfEvents
-        fields = '__all__'             
+        fields = '__all__'
+
 
 class EventLiveIdSerializer(serializers.ModelSerializer):
     class Meta:
-        model= EventId
+        model = EventId
         fields = '__all__'
+
+
+class TourmanetSerializer(serializers.ModelSerializer):
+    events = EventsSerializer()
+
+    class Meta:
+        model = Tournament
+        fields = ['name', 'tournament_stage_type', 'tournament_imng', 'events']

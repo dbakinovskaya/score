@@ -12,10 +12,10 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 
-
-from .models import LiveOfEvents, Events, EventId
-from .serialaizers import LiveOfEventsSerializer, EventsSerializer, EventLiveIdSerializer
+from .models import LiveOfEvents, Events, EventId, Tournament
+from .serialaizers import LiveOfEventsSerializer, EventsSerializer, EventLiveIdSerializer,TourmanetSerializer
 from .permissions import IsAdminOrReadOnly
 import http.client
 
@@ -23,7 +23,7 @@ import http.client
 class EventIdViewSet(viewsets.ModelViewSet):
     queryset = EventId.objects.all()
     serializer_class = EventLiveIdSerializer
-    permission_classes = IsAdminOrReadOnly
+    # permission_classes = AllowAny
 
     def list(self, request):
         # Удаление данных из таблицы
@@ -39,7 +39,7 @@ class EventIdViewSet(viewsets.ModelViewSet):
         res = conn.getresponse()
         data = res.read()
         parsed_data = json.loads(data.decode("utf-8"))
-        print(type(parsed_data))
+        # print(type(parsed_data))
 
         for item in parsed_data['DATA']:
             for event in item['EVENTS']:
@@ -144,8 +144,8 @@ def odds(live_event_id):
 
 
 class EventDetails(APIView):
-    permission_classes = IsAdminOrReadOnly
-    
+    # permission_classes = AllowAny
+
     def get(self, request, live_event_id):
         event = get_object_or_404(EventId, live_event_id=live_event_id)
         h2h_data = h2h(event.live_event_id)
@@ -157,3 +157,56 @@ class EventDetails(APIView):
             {'h2h_data': h2h_data, 'statistics_data': statistics_data, 'lineups': lineups, 'odds': odd})
 
         return Response(serialized_data)
+
+class TournamentViewSet(viewsets.ModelViewSet):
+    queryset = Tournament.objects.all()
+    serializer_class = TourmanetSerializer
+
+    def list(self, request):
+        conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+        headers = {
+            'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+            'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+        }
+        conn.request(
+            "GET", "/v1/events/live-list?timezone=-4&sport_id=1&locale=en_INT", headers=headers)
+        res = conn.getresponse()
+        data = res.read()
+        parsed_data = json.loads(data.decode("utf-8"))
+        for item in parsed_data['DATA']:
+            tournament = Tournament()
+            tournament.name = item['NAME']
+            tournament.tournament_stage_type = item['TOURNAMENT_STAGE_TYPE']
+            tournament.tournament_imng = item['TOURNAMENT_IMAGE']
+            
+            for event in item['EVENTS']:
+                data = {
+                    'event_id': event['EVENT_ID'],
+                    'start_time': event['START_TIME'],
+                    'start_utime': event['START_UTIME'],
+                    'game_time': event['GAME_TIME'],
+                    'short_name_away': event['SHORT_NAME_AWAY'],
+                    'away_name': event['AWAY_NAME'],
+                    'away_score_current': event['AWAY_SCORE_CURRENT'],
+                    'away_score_part_1': event['AWAY_SCORE_PART_1'],
+                    'away_score_part_2': event['AWAY_SCORE_PART_2'],
+                    'away_images': event['AWAY_IMAGES'],
+                    'short_name_home': event['SHORT_NAME_HOME'],
+                    'home_name': event['HOME_NAME'],
+                    'home_score_current': event['HOME_SCORE_CURRENT'],
+                    'home_score_part_1': event['HOME_SCORE_PART_1'],
+                    'home_score_part_2': event['HOME_SCORE_PART_2'],
+                    'home_images': event['HOME_IMAGES']
+                }
+                serializer = EventsSerializer(data=data)
+                if serializer.is_valid():
+                    event_object = serializer.save()
+                    tournament.events.add(event_object)
+                else:
+                    print(serializer.errors)
+            
+            tournament.save()
+        tournaments = Tournament.objects.all()
+        serialized_tournaments = TourmanetSerializer(tournaments, many=True).data
+
+        return JsonResponse(serialized_tournaments, safe=False)    
