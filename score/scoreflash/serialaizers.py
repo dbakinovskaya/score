@@ -46,11 +46,13 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class EventsSerializer(serializers.ModelSerializer):
+    away_images = serializers.URLField()
+    home_images = serializers.URLField()
     class Meta:
         model = Events
         fields = ['event_id', 'start_time', 'start_utime', 'game_time', 'short_name_away',
-                  'away_name', 'away_score_current', 'away_score_part_1', 'away_score_part_2', 'away_images', 'short_name_home',
-                  'home_name', 'home_score_current', 'home_score_part_1', 'home_score_part_2', 'home_images']
+                  'away_name', 'away_score_current', 'away_score_part_1', 'away_images', 'short_name_home',
+                  'home_name', 'home_score_current', 'home_score_part_1', 'home_images']
 
 
 class LiveOfEventsSerializer(serializers.ModelSerializer):

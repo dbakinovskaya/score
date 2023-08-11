@@ -57,7 +57,6 @@ class Match(models.Model):
     locale = models.CharField(max_length=255, blank=False, null=True)
 
 
-
 class Teams(models.Model):
     team_id = models.IntegerField()
     layout = models.CharField(max_length=100)
@@ -89,10 +88,18 @@ class Teams(models.Model):
 class EventId(models.Model):
     live_event_id = models.TextField(null=True)
 
+
+class Tournament(models.Model):
+    name = models.TextField(null=True)
+    tournament_stage_type = models.TextField(null=True)
+    tournament_imng = models.TextField(null=True)
+    TOURNAMENT_TEMPLATE_ID = models.TextField(null=True)
+    TOURNAMENT_IMAGE = models.URLField(null=True)
+
 class Events(models.Model):
     event_id = models.TextField(null=True)
     start_time = models.TextField(null=True)
-    start_utime =models.TextField(null=True)
+    start_utime = models.TextField(null=True)
     game_time = models.TextField(null=True)
     short_name_away = models.TextField(null=True)
     away_name = models.TextField(null=True)
@@ -106,13 +113,6 @@ class Events(models.Model):
     home_score_part_1 = models.TextField(null=True)
     home_score_part_2 = models.TextField(null=True)
     home_images = models.TextField(null=True)
-
-class Tournament(models.Model):
-    name =  models.TextField(null=True)
-    tournament_stage_type =  models.TextField(null=True)
-    tournament_imng =  models.TextField(null=True)
-    events = models.ForeignKey(Events, on_delete=models.CASCADE)
-
 
 class LiveOfEvents(models.Model):
     name = models.CharField(max_length=100)
@@ -138,6 +138,6 @@ class LiveOfEvents(models.Model):
     tournamet_season_id = models.CharField(max_length=100)
     category_name = models.CharField(max_length=100)
     event_id = models.ForeignKey(Events, on_delete=models.CASCADE)
-    
+
 
 # class Players(models.Model):
