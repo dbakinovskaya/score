@@ -16,11 +16,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
 from .models import LiveOfEvents, Events, EventId, Tournament
-<<<<<<< HEAD
 from .serialaizers import LiveOfEventsSerializer, EventsSerializer, EventLiveIdSerializer,TournamentSerializer
-=======
-from .serialaizers import LiveOfEventsSerializer, EventsSerializer, EventLiveIdSerializer, TourmanetSerializer
->>>>>>> 535e70bca4d1d82bff33db1c9643aea0783d4365
 from .permissions import IsAdminOrReadOnly
 import http.client
 
