@@ -64,3 +64,29 @@ class TournamentViewSet(viewsets.ModelViewSet):
             loop.run_until_complete(schedule_request())  # Запускаем цикл событий
 
         start_scheduling()
+
+
+        javascript
+function updateData() {
+  // Отправить AJAX-запрос для получения новых данных
+  $.ajax({
+    url: 'your-api-endpoint',
+    method: 'GET',
+    success: function(response) {
+      // Очистить предыдущие данные
+      $('#data-container').empty();
+      
+      // Отобразить новые данные
+      response.forEach(function(item) {
+        $('#data-container').append('<p>' + item.name + '</p>');
+      });
+    },
+    complete: function() {
+      // Запустить обновление данных через 7 секунд
+      setTimeout(updateData, 7000);
+    }
+  });
+}
+
+// Запустить обновление данных
+updateData();
