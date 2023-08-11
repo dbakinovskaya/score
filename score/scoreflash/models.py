@@ -97,6 +97,7 @@ class Tournament(models.Model):
     TOURNAMENT_IMAGE = models.URLField(null=True)
 
 class Events(models.Model):
+    tournament = models.ForeignKey(Tournament, related_name='events', on_delete=models.CASCADE,null=True)
     event_id = models.TextField(null=True)
     start_time = models.TextField(null=True)
     start_utime = models.TextField(null=True)
@@ -106,13 +107,13 @@ class Events(models.Model):
     away_score_current = models.TextField(null=True)
     away_score_part_1 = models.TextField(null=True)
     away_score_part_2 = models.TextField(null=True)
-    away_images = models.TextField(null=True)
+    # away_images = models.URLField(null=True)
     short_name_home = models.TextField(null=True)
     home_name = models.TextField(null=True)
     home_score_current = models.TextField(null=True)
     home_score_part_1 = models.TextField(null=True)
     home_score_part_2 = models.TextField(null=True)
-    home_images = models.TextField(null=True)
+    # home_images = models.URLField(null=True)
 
 class LiveOfEvents(models.Model):
     name = models.CharField(max_length=100)
