@@ -3,7 +3,7 @@ import http.client
 import asyncio
 import requests
 import json
-from django.db import connection
+from threading import Thread
 from django.db import transaction
 from asgiref.sync import sync_to_async
 from rest_framework import viewsets, status
@@ -164,7 +164,11 @@ class TournamentViewSet(viewsets.ModelViewSet):
     queryset = Tournament.objects.all()
     serializer_class = TournamentSerializer
 
-    async def send_request(self):
+    def start_scheduling(self):
+        thread = Thread(target=self.send_request)
+        thread.start()
+
+    def send_request(self):
         with transaction.atomic():
             Tournament.objects.all().delete()
             Events.objects.all().delete()
@@ -216,21 +220,12 @@ class TournamentViewSet(viewsets.ModelViewSet):
                     else:
                         print(serializer.errors)
 
-    async def schedule_request(self):
-        while True:
-            await self.send_request()
-            await asyncio.sleep(10)
-
-    def start_scheduling(self):
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop.run_until_complete(self.schedule_request())
-
     def list(self, request):
+        self.start_scheduling()
+
         tournaments = Tournament.objects.all()
         serializer = self.serializer_class(tournaments, many=True)
         return Response(serializer.data)
-
 
 
 class TournamentEventsViewSet(viewsets.ModelViewSet):
