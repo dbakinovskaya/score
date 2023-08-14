@@ -46,8 +46,8 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class EventsSerializer(serializers.ModelSerializer):
-    home_images = serializers.ListField(serializers.CharField(), required=False)
-    away_images = serializers.ListField(serializers.CharField(), required=False)
+    home_images = serializers.ListField(allow_null=True, required=False)
+    away_images = serializers.ListField(allow_null=True, required=False)
 
     class Meta:
         model = Events
@@ -55,19 +55,6 @@ class EventsSerializer(serializers.ModelSerializer):
                   'away_name', 'away_score_current', 'away_score_part_1', 'short_name_home',
                   'home_name', 'home_score_current', 'home_score_part_1', 'home_images','away_images']
 
-    def create(self, validated_data):
-        home_images = validated_data.pop('home_images', [])
-        away_images = validated_data.pop('away_images', [])
-
-        event = Events.objects.create(**validated_data)
-
-        for image_url in home_images:
-            event.home_images.create(image_url=image_url)
-
-        for image_url in away_images:
-            event.away_images.create(image_url=image_url)
-
-        return event
 
 
 class LiveOfEventsSerializer(serializers.ModelSerializer):

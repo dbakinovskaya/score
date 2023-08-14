@@ -211,6 +211,8 @@ class TournamentViewSet(viewsets.ModelViewSet):
                         'home_score_current': event['HOME_SCORE_CURRENT'],
                         'home_score_part_1': event['HOME_SCORE_PART_1'],
                         'home_score_part_2': event.get('HOME_SCORE_PART_2', ''),
+                        'home_images': event.get('HOME_IMAGES'),
+                        'away_images': event.get('AWAY_IMAGES'),
                     }
                     serializer = EventsSerializer(data=data)
                     if serializer.is_valid():
