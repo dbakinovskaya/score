@@ -49,12 +49,23 @@ class EventsSerializer(serializers.ModelSerializer):
     home_images = serializers.ListField(allow_null=True, required=False)
     away_images = serializers.ListField(allow_null=True, required=False)
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        home_images = representation.get('home_images', [])
+        home_images_string = ''.join(home_images)
+        representation['home_images'] = home_images_string
+
+        away_images = representation.get('away_images', [])
+        away_images_string = ''.join(away_images)
+        representation['away_images'] = away_images_string
+
+        return representation
+
     class Meta:
         model = Events
         fields = ['event_id', 'start_time', 'start_utime', 'game_time', 'short_name_away',
                   'away_name', 'away_score_current', 'away_score_part_1', 'short_name_home',
-                  'home_name', 'home_score_current', 'home_score_part_1', 'home_images','away_images']
-
+                  'home_name', 'home_score_current', 'home_score_part_1', 'home_images', 'away_images']
 
 
 class LiveOfEventsSerializer(serializers.ModelSerializer):
