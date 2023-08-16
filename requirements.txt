@@ -14,3 +14,4 @@ sqlparse ==0.4.4
 tzdata==2023.3
 websockets==11.0.3
 wheel==0.41.0
+django-cors-headers==3.7.0
