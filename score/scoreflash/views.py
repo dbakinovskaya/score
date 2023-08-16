@@ -30,24 +30,15 @@ class EventIdViewSet(viewsets.ModelViewSet):
         # Удаление данных из таблицы
         EventId.objects.all().delete()
 
-        conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
-        headers = {
-            'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-            'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
-        }
-        conn.request(
-            "GET", "/v1/events/live-list?timezone=-4&sport_id=1&locale=en_INT", headers=headers)
-        res = conn.getresponse()
-        data = res.read()
-        parsed_data = json.loads(data.decode("utf-8"))
-        # print(type(parsed_data))
+        # Получение event_id из таблицы Events
+        event_ids = Events.objects.values_list('event_id', flat=True)
 
-        for item in parsed_data['DATA']:
-            for event in item['EVENTS']:
-                live_event = EventId(live_event_id=event['EVENT_ID'])
-                live_event.save()
+        # Сохранение event_id в таблицу EventId
+        for event_id in event_ids:
+            live_event = EventId(live_event_id=event_id)
+            live_event.save()
 
-        return Response(parsed_data)
+        return Response("Event IDs saved successfully")
 
     async def send_request(self):
         self.list(None)
@@ -145,6 +136,7 @@ def odds(live_event_id):
 
 
 class EventDetails(APIView):
+    '''Вью для деталей матча '''
     # permission_classes = AllowAny
 
     def get(self, request, live_event_id):
@@ -161,6 +153,7 @@ class EventDetails(APIView):
 
 
 class TournamentViewSet(viewsets.ModelViewSet):
+    ''' Основаной вью для лайва'''
     queryset = Tournament.objects.all()
     serializer_class = TournamentSerializer
 
