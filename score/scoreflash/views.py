@@ -28,15 +28,13 @@ class EventIdViewSet(viewsets.ModelViewSet):
     queryset = EventId.objects.all()
     serializer_class = EventLiveIdSerializer
 
-    def list(self, request):
+    def list_ev(self, request):
         # Удаление данных из таблицы
         EventId.objects.all().delete()
         event_ids = Events.objects.values_list('event_id', flat=True)
         for event_id in event_ids:
             live_event = EventId(live_event_id=event_id)
             live_event.save()
-
-        return Response("Event IDs saved successfully")
 
     async def send_request(self):
         self.list(None)
@@ -223,6 +221,8 @@ class TournamentViewSet(viewsets.ModelViewSet):
 
         tournaments = Tournament.objects.all()
         serializer = self.serializer_class(tournaments, many=True)
+        event_viewset = EventIdViewSet()
+        event_viewset.list_ev(request)
         return Response(serializer.data)
 
 
