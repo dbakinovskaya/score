@@ -16,3 +16,4 @@ websockets==11.0.3
 wheel==0.41.0
 django-cors-headers==3.7.0
 requests==2.31.0
+schedule==1.1.0
