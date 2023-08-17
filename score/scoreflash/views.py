@@ -1,8 +1,10 @@
 from urllib.parse import quote
 import http.client
 import asyncio
+import threading
 import requests
 import json
+import time
 from threading import Thread
 from django.db import transaction
 from asgiref.sync import sync_to_async
@@ -157,10 +159,6 @@ class TournamentViewSet(viewsets.ModelViewSet):
     queryset = Tournament.objects.all()
     serializer_class = TournamentSerializer
 
-    def start_scheduling(self):
-        thread = Thread(target=self.send_request)
-        thread.start()
-
     def send_request(self):
         with transaction.atomic():
             Tournament.objects.all().delete()
@@ -215,8 +213,13 @@ class TournamentViewSet(viewsets.ModelViewSet):
                     else:
                         print(serializer.errors)
 
+    def start_scheduling(self):
+        while True:
+            self.send_request()
+            time.sleep(5)
+
     def list(self, request):
-        self.start_scheduling()
+        threading.Thread(target=self.start_scheduling).start()
 
         tournaments = Tournament.objects.all()
         serializer = self.serializer_class(tournaments, many=True)
