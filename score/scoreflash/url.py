@@ -1,7 +1,9 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 
-from .views import EventDetails, EventIdViewSet,TournamentViewSet,TournamentEventsViewSet
+from .views import (EventDetails, EventIdViewSet,
+                    TournamentViewSet,
+                    TournamentEventsViewSet, HockeyView)
 
 
 router = DefaultRouter()
@@ -17,4 +19,5 @@ urlpatterns = [
     path('api/events/live/', EventIdViewSet.as_view({'get': 'list'})),
     path('live-events/event-details/<str:live_event_id>/',
          EventDetails.as_view(), name='event-details'),
+    path('api/live/hockey/', HockeyView.as_view({'get': 'list'}),)
 ]

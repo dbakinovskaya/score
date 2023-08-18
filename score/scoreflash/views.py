@@ -218,13 +218,11 @@ class TournamentViewSet(viewsets.ModelViewSet):
         # Запускаем поток для выполнения start_scheduling
         thread = threading.Thread(target=self.start_scheduling)
         thread.start()
-
         tournaments = Tournament.objects.all()
         serializer = self.serializer_class(tournaments, many=True)
         event_viewset = EventIdViewSet()
         event_viewset.list_ev(request)
         return Response(serializer.data)
-
 
 
 class TournamentEventsViewSet(viewsets.ModelViewSet):
@@ -301,3 +299,22 @@ class TournamentEventsViewSet(viewsets.ModelViewSet):
         tournaments = Tournament.objects.all()
         serializer = self.serializer_class(tournaments, many=True)
         return Response(serializer.data)
+
+
+class HockeyView(viewsets.ModelViewSet):
+    def get_list(self, request):
+        url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
+        headers = {
+            'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+            'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+        }
+        params = {
+            'timezone': '-4',
+            'sport_id': '4',
+            'locale': 'en_INT'
+        }
+
+        response = requests.get(url, headers=headers, params=params)
+        parsed_data = response.json()
+
+        return Response(parsed_data)

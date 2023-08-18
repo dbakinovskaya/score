@@ -7,7 +7,8 @@ headers = {
     'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
 }
 
-conn.request("GET", "/v1/rankings/list?sport_id=1&locale=en_INT", headers=headers)
+conn.request(
+    "GET", "/v1/events/live-list?timezone=-4&sport_id=4&locale=en_INT", headers=headers)
 
 res = conn.getresponse()
 data = res.read()
