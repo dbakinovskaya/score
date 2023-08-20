@@ -96,8 +96,10 @@ class Tournament(models.Model):
     TOURNAMENT_TEMPLATE_ID = models.TextField(null=True)
     TOURNAMENT_IMAGE = models.URLField(null=True)
 
+
 class Events(models.Model):
-    tournament = models.ForeignKey(Tournament, related_name='events', on_delete=models.CASCADE,null=True)
+    tournament = models.ForeignKey(
+        Tournament, related_name='events', on_delete=models.CASCADE, null=True)
     event_id = models.TextField(null=True)
     start_time = models.TextField(null=True)
     start_utime = models.TextField(null=True)
@@ -114,6 +116,7 @@ class Events(models.Model):
     home_score_part_1 = models.TextField(null=True)
     home_score_part_2 = models.TextField(null=True)
     home_images = models.URLField(null=True)
+
 
 class LiveOfEvents(models.Model):
     name = models.CharField(max_length=100)
@@ -141,4 +144,52 @@ class LiveOfEvents(models.Model):
     event_id = models.ForeignKey(Events, on_delete=models.CASCADE)
 
 
-# class Players(models.Model):
+class TournamentHockey(models.Model):
+    name = models.TextField(null=True)
+    tournament_stage_type = models.TextField(null=True)
+    tournament_imng = models.TextField(null=True)
+    TOURNAMENT_TEMPLATE_ID = models.TextField(null=True)
+    TOURNAMENT_IMAGE = models.URLField(null=True)
+
+
+class HockeyLiveEvents(models.Model):
+    tournament = models.ForeignKey(
+        TournamentHockey, related_name='events_hockey', on_delete=models.CASCADE, null=True)
+    EVENT_ID = models.TextField(null=True)
+    START_TIME = models.TextField(null=True)
+    START_UTIME = models.TextField(null=True)
+    STAGE_TYPE = models.TextField(null=True)
+    MERGE_STAGE_TYPE = models.TextField(null=True)
+    STAGE = models.TextField(null=True)
+    SORT = models.TextField(null=True)
+    LIVE_MARK = models.TextField(null=True)
+    HAS_LINEPS = models.TextField(null=True)
+    STAGE_START_TIME = models.TextField(null=True)
+    GAME_TIME = models.TextField(null=True)
+    PLAYING_ON_SETS = models.TextField(null=True)
+    RECENT_OVERS = models.TextField(null=True)
+    SHORTNAME_HOME = models.TextField(null=True)
+    HOME_PARTICIPANT_IDS = models.TextField(null=True)
+    HOME_PARTICIPANT_TYPES = models.TextField(null=True)
+    HOME_NAME = models.TextField(null=True)
+    HOME_PARTICIPANT_NAME_ONE = models.TextField(null=True)
+    HOME_EVENT_PARTICIPANT_ID = models.TextField(null=True)
+    HOME_GOAL_VAR = models.TextField(null=True)
+    HOME_SCORE_CURRENT = models.TextField(null=True)
+    HOME_SCORE_PART_1 = models.TextField(null=True)
+    HOME_SCORE_PART_2 = models.TextField(null=True)
+    HOME_SCORE_PART_3 = models.TextField(null=True)
+    HOME_IMAGES = models.TextField(null=True)
+    SHORTNAME_AWAY = models.TextField(null=True)
+    AWAY_PARTICIPANT_IDS = models.TextField(null=True)
+    AWAY_PARTICIPANT_TYPES = models.TextField(null=True)
+    AWAY_NAME = models.TextField(null=True)
+    AWAY_PARTICIPANT_NAME_ONE = models.TextField(null=True)
+    AWAY_EVENT_PARTICIPANT_ID = models.TextField(null=True)
+    AWAY_GOAL_VAR = models.TextField(null=True)
+    AWAY_SCORE_CURRENT = models.TextField(null=True)
+    AWAY_SCORE_FULL = models.TextField(null=True)
+    AWAY_SCORE_PART_1 = models.TextField(null=True)
+    AWAY_SCORE_PART_2 = models.TextField(null=True)
+    AWAY_SCORE_PART_3 = models.TextField(null=True)
+    AWAY_IMAGES = models.TextField(null=True)
