@@ -1,4 +1,3 @@
-from urllib.parse import quote
 import http.client
 import asyncio
 import requests
@@ -6,21 +5,19 @@ import time
 import schedule
 import threading
 import json
-from threading import Thread
+
 from django.db import transaction
 from asgiref.sync import sync_to_async
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from rest_framework.response import Response
-from django.http import JsonResponse
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
 
-from .models import LiveOfEvents, Events, EventId, Tournament
-from .serialaizers import LiveOfEventsSerializer, EventsSerializer, EventLiveIdSerializer, TournamentSerializer
-from .permissions import IsAdminOrReadOnly
+from .models import  Events, EventId, Tournament,HockeyLiveEvents, TournamentHockey
+from .serialaizers import  (EventsSerializer, EventLiveIdSerializer,
+                             TournamentSerializer,TournamentHockeySerializer)
+
 import http.client
 
 
@@ -302,19 +299,97 @@ class TournamentEventsViewSet(viewsets.ModelViewSet):
 
 
 class HockeyView(viewsets.ModelViewSet):
-    def get_list(self, request):
-        url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
-        headers = {
-            'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-            'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
-        }
-        params = {
-            'timezone': '-4',
-            'sport_id': '4',
-            'locale': 'en_INT'
-        }
+    '''Основной вью для хоккея'''
+    queryset = TournamentHockey.objects.all()
+    serializer_class = TournamentHockeySerializer
 
-        response = requests.get(url, headers=headers, params=params)
-        parsed_data = response.json()
+    def start_scheduling(self):
+        # Запускаем функцию send_request каждые 5 секунд
+        schedule.every(5).seconds.do(self.send_request)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
 
-        return Response(parsed_data)
+    def send_request(self):
+        with transaction.atomic():
+            url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
+            headers = {
+                'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+                'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+            }
+            params = {
+                'timezone': '-4',
+                'sport_id': '4',
+                'locale': 'en_INT'
+            }
+
+            response = requests.get(url, headers=headers, params=params)
+            parsed_data = response.json()
+            for item in parsed_data['DATA']:
+                    tournament =TournamentHockey ()
+                    tournament.name = item['NAME']
+                    tournament.tournament_stage_type = item['TOURNAMENT_STAGE_TYPE']
+                    tournament.tournament_imng = item['TOURNAMENT_IMAGE']
+                    tournament.TOURNAMENT_TEMPLATE_ID = item['TOURNAMENT_TEMPLATE_ID']
+                    tournament.save()
+                    for event in item['EVENTS']:
+                        data = {
+                            'event_id': event['EVENT_ID'],
+                            'start_time': event['START_TIME'],
+                            'start_utime': event['START_UTIME'],
+                            'game_time': event['GAME_TIME'],
+                            'shortname_away': event['SHORTNAME_AWAY'],
+                            'away_name': event['AWAY_NAME'],
+                            'away_score_current': event['AWAY_SCORE_CURRENT'],
+                            'away_score_part_1': event['AWAY_SCORE_PART_1'],
+                            'away_score_part_2': event.get('AWAY_SCORE_PART_2', ''),
+                            'away_images': event.get('AWAY_IMAGES', ''),
+                            'shortname_home': event['SHORTNAME_HOME'],
+                            'home_name': event['HOME_NAME'],
+                            'home_score_current': event['HOME_SCORE_CURRENT'],
+                            'home_score_part_1': event['HOME_SCORE_PART_1'],
+                            'home_score_part_2': event.get('HOME_SCORE_PART_2', ''),
+                            'home_images': event.get('HOME_IMAGES', ''),
+                            'STAGE_TYPE': event['STAGE_TYPE'],
+                            'MERGE_STAGE_TYPE':event['MERGE_STAGE_TYPE'],
+                            'STAGE':event['STAGE'],
+                            'SORT':event['SORT'],
+                            'LIVE_MARK':event['LIVE_MARK'],
+                            'HAS_LINEPS':event['HAS_LINEPS'],
+                            'STAGE_START_TIME':event['STAGE_START_TIME'],
+                            'PLAYING_ON_SETS':event['PLAYING_ON_SETS'],
+                            'RECENT_OVERS':event['RECENT_OVERS'],
+                            'HOME_PARTICIPANT_IDS':event['HOME_PARTICIPANT_IDS'],
+                            'HOME_PARTICIPANT_TYPES':event['HOME_PARTICIPANT_TYPES'],
+                            'HOME_PARTICIPANT_NAME_ONE':event['HOME_PARTICIPANT_NAME_ONE'],
+                            'HOME_EVENT_PARTICIPANT_ID':event['HOME_EVENT_PARTICIPANT_ID'],
+                            'HOME_GOAL_VAR':event['HOME_GOAL_VAR'],
+                            'HOME_SCORE_PART_3':event.get('HOME_SCORE_PART_3',''),
+                            'AWAY_PARTICIPANT_IDS': event['AWAY_PARTICIPANT_IDS'],
+                            'AWAY_PARTICIPANT_TYPES': event['AWAY_PARTICIPANT_TYPES'],
+                            'AWAY_PARTICIPANT_NAME_ONE':event['AWAY_PARTICIPANT_NAME_ONE'],
+                            'AWAY_EVENT_PARTICIPANT_ID':event['AWAY_EVENT_PARTICIPANT_ID'],
+                            'AWAY_GOAL_VAR': event['AWAY_GOAL_VAR'],
+                            'AWAY_SCORE_FULL':event['AWAY_SCORE_FULL'],
+                            'AWAY_SCORE_PART_3':event.get('AWAY_SCORE_PART_3','')
+                        }
+                        serializer = HockeyLiveEvents(data=data)
+                        if serializer.is_valid():
+                            event_object = serializer.create(
+                                serializer.validated_data)
+                            tournament.events_hockey.add(event_object)
+                        else:
+                            print(serializer.errors)
+
+        
+    def list(self, request):
+        # Запускаем поток для выполнения start_scheduling
+        thread = threading.Thread(target=self.start_scheduling)
+        thread.start()
+        tournaments = TournamentHockey.objects.all()
+        serializer = self.serializer_class(tournaments, many=True)
+        event_viewset = EventIdViewSet()
+        event_viewset.list_ev(request)
+        return Response(serializer.data)
+
+
