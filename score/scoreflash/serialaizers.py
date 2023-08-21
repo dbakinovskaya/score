@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import (Sport, NumberOfSportEvents, Bookmaker,
-                     Outcome, Market, Group, Events, LiveOfEvents, EventId, Tournament)
+                     Outcome, Market, Group, Events, LiveOfEvents, EventId, Tournament, HockeyLiveEvents,TournamentHockey)
 
 
 class SportSerializer(serializers.ModelSerializer):
@@ -88,4 +88,34 @@ class TournamentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tournament
-        fields = ['id', 'name', 'tournament_stage_type', 'tournament_imng', 'TOURNAMENT_TEMPLATE_ID', 'TOURNAMENT_IMAGE', 'events']
+        fields = ['id', 'name', 'tournament_stage_type', 'tournament_imng',
+                  'TOURNAMENT_TEMPLATE_ID', 'TOURNAMENT_IMAGE', 'events']
+
+
+
+class HockeyLiveEventsSerializer(serializers.ModelSerializer):
+    HOME_IMAGES = serializers.ListField(allow_null=True, required=False)
+    AWAY_IMAGES = serializers.ListField(allow_null=True, required=False)
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        home_images = representation.get('HOME_IMAGES', [])
+        home_images_string = ''.join(home_images)
+        representation['HOME_IMAGES'] = home_images_string
+
+        away_images = representation.get('AWAY_IMAGES', [])
+        away_images_string = ''.join(away_images)
+        representation['AWAY_IMAGES'] = away_images_string
+
+        return representation
+    
+    class Meta:
+        model = HockeyLiveEvents
+        fields = '__all__'
+
+class TournamentHockeySerializer(serializers.ModelSerializer):
+    events_hockey = HockeyLiveEventsSerializer(many=True)
+
+    class Meta:
+        model = TournamentHockey
+        fields = ['id', 'name', 'tournament_stage_type', 'tournament_imng', 'TOURNAMENT_TEMPLATE_ID', 'TOURNAMENT_IMAGE', 'events_hockey']
