@@ -302,12 +302,6 @@ class TournamentEventsViewSet(viewsets.ModelViewSet):
 
 
 class HockeyView(viewsets.ModelViewSet):
-<<<<<<< HEAD
-    queryset = Tournament.objects.all()
-    serializer_class = TournamentSerializer
-
-=======
->>>>>>> 7a4faf31f61e130355deb7ec7473e8d7493acf58
     def get_list(self, request):
         url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
         headers = {
@@ -322,9 +316,5 @@ class HockeyView(viewsets.ModelViewSet):
 
         response = requests.get(url, headers=headers, params=params)
         parsed_data = response.json()
-<<<<<<< HEAD
-        print(parsed_data)
-=======
->>>>>>> 7a4faf31f61e130355deb7ec7473e8d7493acf58
 
         return Response(parsed_data)
