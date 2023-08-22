@@ -7,7 +7,7 @@ headers = {
     'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
 }
 
-conn.request("GET", "/v1/search/multi-search?query=avangard&locale=en_INT", headers=headers)
+conn.request("GET", "/v1/events/statistics?event_id=4lyUcmiL&locale=en_INT", headers=headers)
 
 res = conn.getresponse()
 data = res.read()
