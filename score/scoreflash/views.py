@@ -14,9 +14,10 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 
-from .models import Events, EventId, Tournament, HockeyLiveEvents, TournamentHockey
+from .models import Events, EventId, Tournament, HockeyLiveEvents, TournamentHockey, Cards
 from .serialaizers import (EventsSerializer, EventLiveIdSerializer,
-                           TournamentSerializer, TournamentHockeySerializer, HockeyLiveEventsSerializer)
+                           TournamentSerializer, TournamentHockeySerializer, HockeyLiveEventsSerializer,
+                           CardsSerializer)
 
 import http.client
 
@@ -314,3 +315,29 @@ class HockeyView(viewsets.ModelViewSet):
         # event_viewset = EventIdViewSet()
         # event_viewset.list_ev(request)
         return Response(serializer.data)
+
+
+class CardsViewSet(viewsets.ModelViewSet):
+    queryset = Cards.objects.all()
+    serializer_class = CardsSerializer
+
+    conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+    headers = {
+        'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+        'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+    }
+    events = Cards.objects.all()  # Получаем все объекты модели Cards
+    for event in events:
+        url = f"/v1/events/statistics?event_id={event.live_event_id}&locale=en_INT"
+        url = url.replace(" ", "")
+        conn.request("GET", url, headers=headers)
+        res = conn.getresponse()
+        data = res.read()
+        
+        # Здесь вы можете обработать полученные данные и сохранить нужные параметры в модели Cards
+        # Например:
+        event.away_yellow = data['away_yellow']
+        event.away_red = data['away_red']
+        event.home_yellow = data['home_yellow']
+        event.home_red = data['home_red']
+        event.save()  # Сохраняем изменения в модели Cards
