@@ -193,13 +193,3 @@ class HockeyLiveEvents(models.Model):
     AWAY_SCORE_PART_2 = models.TextField(null=True)
     AWAY_SCORE_PART_3 = models.TextField(null=True)
     AWAY_IMAGES = models.TextField(null=True)
-
-
-class Cards(models.Model):
-    events_id = models.ForeignKey(
-        EventId, related_name='events_cards', on_delete=models.CASCADE, null=True)
-    away_yellow = models.TextField(null=True)
-    away_red = models.TextField(null=True)
-    home_yellow = models.TextField(null=True)
-    home_red = models.TextField(null=True)
-

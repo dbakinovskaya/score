@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import (Sport, NumberOfSportEvents, Bookmaker,
-                     Outcome, Market, Group, Events, LiveOfEvents, EventId, Tournament,
-                       HockeyLiveEvents,TournamentHockey,Cards)
+                     Outcome, Market, Group, Events, LiveOfEvents, EventId, Tournament, HockeyLiveEvents,TournamentHockey)
 
 
 class SportSerializer(serializers.ModelSerializer):
@@ -124,14 +123,3 @@ class TournamentHockeySerializer(serializers.ModelSerializer):
     class Meta:
         model = TournamentHockey
         fields = ['id', 'name', 'tournament_stage_type', 'tournament_imng', 'TOURNAMENT_TEMPLATE_ID', 'TOURNAMENT_IMAGE', 'events_hockey']
-
-
-class CardsSerializer(serializers.ModelSerializer):
-    away_yellow = serializers.CharField(allow_null=True, required=False)
-    away_red = serializers.CharField(allow_null=True, required=False)
-    home_yellow = serializers.CharField(allow_null=True, required=False)
-    home_red = serializers.CharField(allow_null=True, required=False)
-
-    class Meta:
-        model = Cards
-        fields = '__all__'
