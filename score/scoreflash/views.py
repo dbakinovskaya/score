@@ -18,6 +18,7 @@ from .models import Events, EventId, Tournament, HockeyLiveEvents, TournamentHoc
 from .serialaizers import (EventsSerializer, EventLiveIdSerializer,
                            TournamentSerializer, TournamentHockeySerializer, HockeyLiveEventsSerializer,
                            CardsSerializer)
+from .task import send_request
 
 import http.client
 
@@ -153,64 +154,10 @@ class TournamentViewSet(viewsets.ModelViewSet):
 
     def start_scheduling(self):
         # Запускаем функцию send_request каждые 5 секунд
-        schedule.every(5).seconds.do(self.send_request)
+        schedule.every(5).seconds.do(send_request)
         while True:
             schedule.run_pending()
-            time.sleep(1)
-
-    def send_request(self):
-        with transaction.atomic():
-            Tournament.objects.all().delete()
-            Events.objects.all().delete()
-
-            url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
-            headers = {
-                'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-                'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
-            }
-            params = {
-                'timezone': '-4',
-                'sport_id': '1',
-                'locale': 'en_INT'
-            }
-
-            response = requests.get(url, headers=headers, params=params)
-            parsed_data = response.json()
-            print(parsed_data)
-            for item in parsed_data['DATA']:
-                tournament = Tournament()
-                tournament.name = item['NAME']
-                tournament.tournament_stage_type = item['TOURNAMENT_STAGE_TYPE']
-                tournament.tournament_imng = item['TOURNAMENT_IMAGE']
-                tournament.TOURNAMENT_TEMPLATE_ID = item['TOURNAMENT_TEMPLATE_ID']
-                tournament.save()
-
-                for event in item['EVENTS']:
-                    data = {
-                        'event_id': event['EVENT_ID'],
-                        'start_time': event['START_TIME'],
-                        'start_utime': event['START_UTIME'],
-                        'game_time': event['GAME_TIME'],
-                        'short_name_away': event['SHORTNAME_AWAY'],
-                        'away_name': event['AWAY_NAME'],
-                        'away_score_current': event['AWAY_SCORE_CURRENT'],
-                        'away_score_part_1': event['AWAY_SCORE_PART_1'],
-                        'away_score_part_2': event.get('AWAY_SCORE_PART_2', ''),
-                        'short_name_home': event['SHORTNAME_HOME'],
-                        'home_name': event['HOME_NAME'],
-                        'home_score_current': event['HOME_SCORE_CURRENT'],
-                        'home_score_part_1': event['HOME_SCORE_PART_1'],
-                        'home_score_part_2': event.get('HOME_SCORE_PART_2', ''),
-                        'home_images': event.get('HOME_IMAGES'),
-                        'away_images': event.get('AWAY_IMAGES'),
-                    }
-                    serializer = EventsSerializer(data=data)
-                    if serializer.is_valid():
-                        event_object = serializer.create(
-                            serializer.validated_data)
-                        tournament.events.add(event_object)
-                    else:
-                        print(serializer.errors)
+            time.sleep(5)
 
     def list(self, request):
         # Запускаем поток для выполнения start_scheduling
@@ -218,11 +165,9 @@ class TournamentViewSet(viewsets.ModelViewSet):
         thread.start()
         tournaments = Tournament.objects.all()
         serializer = self.serializer_class(tournaments, many=True)
-        event_viewset = EventIdViewSet()
-        event_viewset.list_ev(request)
+        # event_viewset = EventIdViewSet()
+        # event_viewset.list_ev(request)
         return Response(serializer.data)
-
-
 
 
 class HockeyView(viewsets.ModelViewSet):
@@ -317,27 +262,27 @@ class HockeyView(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class CardsViewSet(viewsets.ModelViewSet):
-    queryset = Cards.objects.all()
-    serializer_class = CardsSerializer
+# class CardsViewSet(viewsets.ModelViewSet):
+#     queryset = Cards.objects.all()
+#     serializer_class = CardsSerializer
 
-    conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
-    headers = {
-        'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-        'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
-    }
-    events = Cards.objects.all()  # Получаем все объекты модели Cards
-    for event in events:
-        url = f"/v1/events/statistics?event_id={event.live_event_id}&locale=en_INT"
-        url = url.replace(" ", "")
-        conn.request("GET", url, headers=headers)
-        res = conn.getresponse()
-        data = res.read()
+#     conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+#     headers = {
+#         'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+#         'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+#     }
+#     events = Cards.objects.all()  # Получаем все объекты модели Cards
+#     for event in events:
+#         url = f"/v1/events/statistics?event_id={event.live_event_id}&locale=en_INT"
+#         url = url.replace(" ", "")
+#         conn.request("GET", url, headers=headers)
+#         res = conn.getresponse()
+#         data = res.read()
         
-        # Здесь вы можете обработать полученные данные и сохранить нужные параметры в модели Cards
-        # Например:
-        event.away_yellow = data['away_yellow']
-        event.away_red = data['away_red']
-        event.home_yellow = data['home_yellow']
-        event.home_red = data['home_red']
-        event.save()  # Сохраняем изменения в модели Cards
+#         # Здесь вы можете обработать полученные данные и сохранить нужные параметры в модели Cards
+#         # Например:
+#         event.away_yellow = data['away_yellow']
+#         event.away_red = data['away_red']
+#         event.home_yellow = data['home_yellow']
+#         event.home_red = data['home_red']
+#         event.save()  # Сохраняем изменения в модели Cards
