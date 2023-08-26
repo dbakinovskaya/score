@@ -7,7 +7,6 @@ import threading
 import json
 
 from django.db import transaction
-from asgiref.sync import sync_to_async
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView

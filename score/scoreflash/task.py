@@ -9,8 +9,8 @@ from celery import shared_task
 @shared_task
 def send_request():
     with transaction.atomic():
-        Tournament.objects.all().delete()
-        Events.objects.all().delete()
+        tournaments = Tournament.objects.all()
+        events = Events.objects.all()
 
         url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
         headers = {
@@ -26,8 +26,7 @@ def send_request():
         response = requests.get(url, headers=headers, params=params)
         parsed_data = response.json()
         for item in parsed_data['DATA']:
-            tournament = Tournament()
-            tournament.name = item['NAME']
+            tournament, _ = Tournament.objects.get_or_create(name=item['NAME'])
             tournament.tournament_stage_type = item['TOURNAMENT_STAGE_TYPE']
             tournament.tournament_imng = item['TOURNAMENT_IMAGE']
             tournament.TOURNAMENT_TEMPLATE_ID = item['TOURNAMENT_TEMPLATE_ID']
@@ -54,7 +53,12 @@ def send_request():
                 }
                 serializer = EventsSerializer(data=data)
                 if serializer.is_valid():
-                    event_object = serializer.create(serializer.validated_data)
+                    event_object, _ = Events.objects.get_or_create(event_id=event['EVENT_ID'])
+                    serializer.update(event_object, serializer.validated_data)
                     tournament.events.add(event_object)
                 else:
                     print(serializer.errors)
+
+        # Удаление объектов модели Tournament и связанных объектов модели Events, которых нет в полученных данных
+        tournaments.exclude(name__in=[item['NAME'] for item in parsed_data['DATA']]).delete()
+        events.exclude(event_id__in=[event['EVENT_ID'] for item in parsed_data['DATA'] for event in item['EVENTS']]).delete()
