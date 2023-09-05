@@ -1,48 +1,6 @@
 from rest_framework import serializers
-from .models import (Sport, NumberOfSportEvents, Bookmaker,
-                     Outcome, Market, Group, Events, LiveOfEvents, EventId, Tournament, HockeyLiveEvents,TournamentHockey)
-
-
-class SportSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Sport
-        fields = ['sport_id', 'name']
-
-
-class NumberOfSportEventsSerializer(serializers.ModelSerializer):
-    sport = SportSerializer()
-
-    class Meta:
-        model = NumberOfSportEvents
-        fields = ['sport', 'events_count',
-                  'events_count_live', 'is_popular', 'sports_name']
-
-
-class BookmakerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Bookmaker
-        fields = ['bookmaker_id', 'bookmaker_name', 'locale']
-
-
-class OutcomeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Outcome
-        fields = ['id', 'odds_label_second', 'odds_label_third', 'locale']
-
-
-class MarketSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Market
-        fields = ['id', 'bookmaker', 'odd_cell_third_move',
-                  'odd_cell_third_value', 'odds_available', 'locale']
-
-
-class GroupSerializer(serializers.ModelSerializer):
-    outcomes = OutcomeSerializer()
-
-    class Meta:
-        model = Group
-        fields = ['id', 'group_name', 'outcomes', 'locale']
+from .models import (Events, LiveOfEvents, EventId,
+                     Tournament, HockeyLiveEvents, TournamentHockey)
 
 
 class EventsSerializer(serializers.ModelSerializer):
@@ -92,7 +50,6 @@ class TournamentSerializer(serializers.ModelSerializer):
                   'TOURNAMENT_TEMPLATE_ID', 'TOURNAMENT_IMAGE', 'events']
 
 
-
 class HockeyLiveEventsSerializer(serializers.ModelSerializer):
     HOME_IMAGES = serializers.ListField(allow_null=True, required=False)
     AWAY_IMAGES = serializers.ListField(allow_null=True, required=False)
@@ -112,14 +69,16 @@ class HockeyLiveEventsSerializer(serializers.ModelSerializer):
         representation['AWAY_IMAGES'] = away_images_string
 
         return representation
-    
+
     class Meta:
         model = HockeyLiveEvents
         fields = '__all__'
+
 
 class TournamentHockeySerializer(serializers.ModelSerializer):
     events_hockey = HockeyLiveEventsSerializer(many=True)
 
     class Meta:
         model = TournamentHockey
-        fields = ['id', 'name', 'tournament_stage_type', 'tournament_imng', 'TOURNAMENT_TEMPLATE_ID', 'TOURNAMENT_IMAGE', 'events_hockey']
+        fields = ['id', 'name', 'tournament_stage_type', 'tournament_imng',
+                  'TOURNAMENT_TEMPLATE_ID', 'TOURNAMENT_IMAGE', 'events_hockey']
