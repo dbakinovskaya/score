@@ -185,8 +185,8 @@ class HockeyView(viewsets.ModelViewSet):
         # Запускаем поток для выполнения start_scheduling
         thread = threading.Thread(target=self.start_scheduling)
         thread.start()
-        tournaments = TournamentHockey.objects.all()
-        serializer = self.serializer_class(tournaments, many=True)
+        tournaments_hockey = TournamentHockey.objects.all()
+        serializer = self.serializer_class(tournaments_hockey, many=True)
         # event_viewset = EventIdViewSet()
         # event_viewset.list_ev(request)
         return Response(serializer.data)
