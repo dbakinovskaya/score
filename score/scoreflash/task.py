@@ -1,4 +1,5 @@
 import requests
+import time
 
 from .models import Events, Tournament, HockeyLiveEvents, TournamentHockey
 from .serialaizers import EventsSerializer, HockeyLiveEventsSerializer
@@ -9,8 +10,9 @@ from celery import shared_task
 @shared_task
 def send_request():
     with transaction.atomic():
-        tournaments = Tournament.objects.all()
-        events = Events.objects.all()
+        Tournament.objects.all().delete()
+        Events.objects.all().delete()
+        time.sleep(2)
 
         url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
         headers = {
@@ -60,18 +62,17 @@ def send_request():
                 else:
                     print(serializer.errors)
 
-        # Удаление объектов модели Tournament и связанных объектов модели Events, которых нет в полученных данных
-        tournaments.exclude(name__in=[item['NAME']
-                            for item in parsed_data['DATA']]).delete()
-        events.exclude(event_id__in=[
-                       event['EVENT_ID'] for item in parsed_data['DATA'] for event in item['EVENTS']]).delete()
-
 
 @shared_task
 def send_request_hockey():
     with transaction.atomic():
-        tournament_hockey = TournamentHockey.objects.all()
-        hockey_events = HockeyLiveEvents.objects.all()
+        # tournament_hockey = TournamentHockey.objects.all()
+        # hockey_events = HockeyLiveEvents.objects.all()
+        TournamentHockey.objects.all().delete()
+        HockeyLiveEvents.objects.all().delete()
+        # time.sleep(3)
+
+    with transaction.atomic():
         url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
         headers = {
             'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
@@ -134,7 +135,7 @@ def send_request_hockey():
                         EVENT_ID=event['EVENT_ID'])
                     serializer.update(event_object, serializer.validated_data)
                     tournament.events_hockey.add(event_object)
-        tournament_hockey.exclude(name__in=[item['NAME'] for item in parsed_data['DATA']]).delete()
-        hockey_events.exclude(EVENT_ID__in=[event['EVENT_ID'] for item in parsed_data['DATA'] for event in item['EVENTS']]).delete()
+        # tournament_hockey.exclude(name__in=[item['NAME'] for item in parsed_data['DATA']]).delete()
+        # hockey_events.exclude(EVENT_ID__in=[event['EVENT_ID'] for item in parsed_data['DATA'] for event in item['EVENTS']]).delete()
         
 
