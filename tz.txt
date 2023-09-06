@@ -1,1 +1,54 @@
 "DATA":[{"NAME":"Kazakhstan: Kazakhstan Cup","HEADER":"Kazakhstan: Kazakhstan Cup;175;CzBnlhqO","NAME_PART_1":"Kazakhstan","NAME_PART_2":"Kazakhstan Cup","TOURNAMENT_TEMPLATE_ID":"nwLBAT18","COUNTRY_ID":102,"COUNTRY_NAME":"Kazakhstan","TOURNAMENT_STAGE_ID":"CzBnlhqO","TOURNAMENT_TYPE":"p","TOURNAMENT_ID":"OOSUhOR2","SOURCE_TYPE":0,"HAS_LIVE_TABLE":1,"STANDING_INFO":1,"TEMPLATE_ID":"102_nwLBAT18","TOURNAMENT_STAGE_TYPE":2,"SHORT_NAME":"Kazakhstan Cup","URL":"/hockey/kazakhstan/kazakhstan-cup/","TOURNAMENT_IMAGE":"https://www.flashscore.com/res/image/data/zTffiRU1-tYsonWuI.png","SORT":"03Kazakhstan  010khstan0030000000001000Kazakhstan C014an Cup000","STAGES_COUNT":0,"ZKL":"","ZKU":"","TOURNAMENT_SEASON_ID":"OOSUhOR2","CATEGORY_NAME":"Kazakhstan","EVENTS":[{"EVENT_ID":"YZqbRyw6","START_TIME":1692685800,"START_UTIME":1692685800,"STAGE_TYPE":"LIVE","MERGE_STAGE_TYPE":"LIVE","STAGE":"PENALTIES","SORT":"Aktobe","VISIBLE_RUN_RATE":0,"LIVE_MARK":"y","HAS_LINEPS":0,"STAGE_START_TIME":1692695001,"GAME_TIME":"-1","PLAYING_ON_SETS":null,"RECENT_OVERS":null,"SHORTNAME_HOME":"AKT","HOME_PARTICIPANT_IDS":["48Q4yoof"],"HOME_PARTICIPANT_TYPES":[1],"HOME_NAME":"Aktobe","HOME_PARTICIPANT_NAME_ONE":"Aktobe","HOME_EVENT_PARTICIPANT_ID":"tva4rutS","HOME_GOAL_VAR":0,"HOME_SCORE_CURRENT":"2","HOME_SCORE_FULL":2,"HOME_SCORE_PART_4":"0","HOME_SCORE_PART_5":"1","HOME_SCORE_PART_1":"0","HOME_SCORE_PART_2":"2","HOME_SCORE_PART_3":"0","HOME_IMAGES":["https://www.flashscore.com/res/image/data/GSeE2Qkl-ltB92yKu.png"],"IMM":"MBVvIzk3","IMW":"100","IMP":"2yozBIg5-ltB92yKu.png","IME":"","SHORTNAME_AWAY":"KUL","AWAY_PARTICIPANT_IDS":["MBVvIzk3"],"AWAY_PARTICIPANT_TYPES":[1],"AWAY_NAME":"Kulager","AWAY_PARTICIPANT_NAME_ONE":"Kulager","AWAY_EVENT_PARTICIPANT_ID":"bJoWwalq","AWAY_GOAL_VAR":0,"AWAY_SCORE_CURRENT":"2","AWAY_SCORE_FULL":2,"AWAY_SCORE_PART_4":"0","AWAY_SCORE_PART_5":"1","AWAY_SCORE_PART_1":"1","AWAY_SCORE_PART_2":"1","AWAY_SCORE_PART_3":"0","AWAY_IMAGES":["https://www.flashscore.com/res/image/data/2yozBIg5-ltB92yKu.png"],"TV_LIVE_STREAMING":{"2":[{"BU":"/bookmaker/417/?from=live-streaming&sport=4","IU":"/res/image/data/bookmakers/17-417.png","BN":"1xBet","BI":417}],"HP":[{"HPI":1,"HPN":"YouTube","HPR":"1692685612|"}]},"AN":"n","BOOKMAKERS_WITH_LIVE_IN_OFFER":["28","417","38"],"LIVE_IN_OFFER_BOOKMAKER_ID":43,"LIVE_IN_OFFER_STATUS":0}]},
+
+Для заполнения данных в модели EndedMatch вам нужно создать экземпляр этой модели и присвоить ему значения полей из найденных событий. Вот пример кода, который показывает, как это можно сделать:
+
+python
+from myapp.models import EndedMatch
+
+# Получаем список всех events со stage_type = FINISHED
+finished_events = [event for event in data["DATA"][0]["EVENTS"] if event["STAGE_TYPE"] == "FINISHED"]
+
+# Создаем экземпляр модели и заполняем его поля значениями из найденных событий
+for event in finished_events:
+    ended_match = EndedMatch()
+    ended_match.tournamet = event.get("TOURNAMENT")
+    ended_match.event_id = event.get("EVENT_ID")
+    ended_match.stage_type = event.get("STAGE_TYPE")
+    ended_match.round = event.get("ROUND")
+    ended_match.shortname_home = event.get("SHORTNAME_HOME")
+    ended_match.home_name = event.get("HOME_NAME")
+    ended_match.home_score_current = event.get("HOME_SCORE_CURRENT")
+    ended_match.home_score_part_1 = event.get("HOME_SCORE_PART_1")
+    ended_match.home_score_part_2 = event.get("HOME_SCORE_PART_2")
+    ended_match.home_images = event.get("HOME_IMAGES")
+    ended_match.shortname_away = event.get("SHORTNAME_AWAY")
+    ended_match.name_away = event.get("AWAY_NAME")
+    ended_match.away_score_current = event.get("AWAY_SCORE_CURRENT")
+    ended_match.away_score_full = event.get("AWAY_SCORE_FULL")
+    ended_match.away_score_part_1 = event.get("AWAY_SCORE_PART_1")
+    ended_match.away_score_part_2 = event.get("AWAY_SCORE_PART_2")
+    ended_match.away_images = event.get("AWAY_IMAGES")
+    
+    # Сохраняем экземпляр модели в базе данных
+    ended_match.save()
+
+    if event.get("STAGE_TYPE") == "FINISHED":
+    ended_match = EndedMatch()
+    ended_match.tournamet = event.get("TOURNAMENT")
+    ended_match.event_id = event.get("EVENT_ID")
+    ended_match.stage_type = event.get("STAGE_TYPE")
+    ended_match.round = event.get("ROUND")
+    ended_match.shortname_home = event.get("SHORTNAME_HOME")
+    ended_match.home_name = event.get("HOME_NAME")
+    ended_match.home_score_current = event.get("HOME_SCORE_CURRENT")
+    ended_match.home_score_part_1 = event.get("HOME_SCORE_PART_1")
+    ended_match.home_score_part_2 = event.get("HOME_SCORE_PART_2")
+    ended_match.home_images = event.get("HOME_IMAGES")
+    ended_match.shortname_away = event.get("SHORTNAME_AWAY")
+    ended_match.name_away = event.get("NAME_AWAY")
+    ended_match.away_score_current = event.get("AWAY_SCORE_CURRENT")
+    ended_match.away_score_full = event.get("AWAY_SCORE_FULL")
+    ended_match.away_score_part_1 = event.get("AWAY_SCORE_PART_1")
+    ended_match.away_score_part_2 = event.get("AWAY_SCORE_PART_2")
+    ended_match.away_images = event.get("AWAY_IMAGES")
+    ended_match.save()

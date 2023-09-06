@@ -82,3 +82,10 @@ class TournamentHockeySerializer(serializers.ModelSerializer):
         model = TournamentHockey
         fields = ['id', 'name', 'tournament_stage_type', 'tournament_imng',
                   'TOURNAMENT_TEMPLATE_ID', 'TOURNAMENT_IMAGE', 'events_hockey']
+        
+
+class EndedMatchSerializer(serializers.ModelSerializer):
+    pass      
+
+class ScheduledSerializer(serializers.ModelSerializer):
+    pass
