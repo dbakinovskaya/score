@@ -1,7 +1,7 @@
 import requests
 import time
 
-from .models import Events, Tournament, HockeyLiveEvents, TournamentHockey,EndedMatch
+from .models import Events, Tournament, HockeyLiveEvents, TournamentHockey,EndedMatch,Scheduled
 from .serialaizers import EventsSerializer, HockeyLiveEventsSerializer
 from django.db import transaction
 from celery import shared_task
@@ -12,7 +12,7 @@ def send_request():
     with transaction.atomic():
         Tournament.objects.all().delete()
         Events.objects.all().delete()
-        time.sleep(2)
+    with transaction.atomic():
 
         url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
         headers = {
@@ -144,6 +144,7 @@ def send_request_hockey():
 def send_request_endedmatch():
     with transaction.atomic():
         EndedMatch.objects.all().delete()
+    time.sleep(2)       
     with transaction.atomic():
         url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
         querystring = {"timezone": "-4", "indent_days": "-1",
@@ -179,3 +180,37 @@ def send_request_endedmatch():
     
                     ended_match.save()
 
+
+@shared_task
+def send_request_scheluded():
+    with transaction.atomic():
+        Scheduled.objects.all().delete()
+    time.sleep(2)    
+    with transaction.atomic():
+        url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
+        querystring = {"timezone": "-4", "indent_days": "-1",
+                       "locale": "en_INT", "sport_id": "1"}
+        headers = {
+            "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+            "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
+        }
+        response = requests.get(url, headers=headers, params=querystring)
+        parsed_data = response.json()
+        for item in parsed_data['DATA']:
+            try:
+                scheduled_match = Scheduled.objects.get(tournament=item['NAME'])
+            except Scheduled.DoesNotExist:
+                scheduled_match = Scheduled.objects.create(tournament=item['NAME'])
+            scheduled_match.tournament_stage_type = item['TOURNAMENT_STAGE_TYPE']
+            scheduled_match.tournament_imng = item['TOURNAMENT_IMAGE']
+            for event in item['EVENTS']:
+                if event.get("STAGE_TYPE") == "SCHEDULED":
+                    scheduled_match.start_time = event.get('START_TIME')
+                    scheduled_match.start_utime = event.get('START_UTIME')
+                    scheduled_match.shortname_home = event.get('SHORTNAME_HOME')
+                    scheduled_match.home_name = event.get('HOME_NAME')
+                    scheduled_match.home_images = event.get('HOME_IMAGES', '')
+                    scheduled_match.shortname_away = event.get('SHORTNAME_AWAY')
+                    scheduled_match.name_away = event.get('AWAY_NAME')
+                    scheduled_match.away_images = event.get('AWAY_IMAGES', '')
+                    scheduled_match.save()

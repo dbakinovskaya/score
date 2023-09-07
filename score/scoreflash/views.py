@@ -16,7 +16,7 @@ from rest_framework.response import Response
 from .models import Events, EventId, Tournament, TournamentHockey,EndedMatch,Scheduled
 from .serialaizers import (EventsSerializer, EventLiveIdSerializer,
                            TournamentSerializer, TournamentHockeySerializer,EndedMatchSerializer,ScheduledSerializer)
-from .task import send_request, send_request_hockey, send_request_endedmatch
+from .task import send_request, send_request_hockey, send_request_endedmatch, send_request_scheluded
 
 import http.client
 
@@ -198,7 +198,7 @@ class EndedMatchView(viewsets.ModelViewSet):
 
     def start_scheduling(self):
         # Запускаем функцию send_request каждые 5 секунд
-        schedule.every(5).seconds.do(send_request_endedmatch)
+        schedule.every(50).seconds.do(send_request_endedmatch)
         while True:
             schedule.run_pending()
             time.sleep(1)
@@ -218,8 +218,18 @@ class ScheduledView(viewsets.ModelViewSet):
     serializer_class = ScheduledSerializer
 
     def start_scheduling(self):
-        pass
+        # Запускаем функцию send_request каждые 5 секунд
+        schedule.every(50).seconds.do(send_request_scheluded)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
     
 
     def list(self, request):
-        pass
+         # Запускаем поток для выполнения start_scheduling
+        thread = threading.Thread(target=self.start_scheduling)
+        thread.start()
+        tournaments = Scheduled.objects.all()
+        serializer = self.serializer_class(tournaments, many=True)
+
+        return Response(serializer.data)
