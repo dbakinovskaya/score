@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import (Events, LiveOfEvents, EventId,
-                     Tournament, HockeyLiveEvents, TournamentHockey, EndedMatch,Scheduled)
+                     Tournament, HockeyLiveEvents, TournamentHockey, EndedMatch, Scheduled)
 
 
 class EventsSerializer(serializers.ModelSerializer):
@@ -82,7 +82,7 @@ class TournamentHockeySerializer(serializers.ModelSerializer):
         model = TournamentHockey
         fields = ['id', 'name', 'tournament_stage_type', 'tournament_imng',
                   'TOURNAMENT_TEMPLATE_ID', 'TOURNAMENT_IMAGE', 'events_hockey']
-        
+
 
 class EndedMatchSerializer(serializers.ModelSerializer):
     home_images = serializers.ListField(allow_null=True, required=False)
@@ -100,7 +100,8 @@ class EndedMatchSerializer(serializers.ModelSerializer):
         if away_images_list is not None:
             away_images_string = ''.join(away_images_list)
             representation['away_images'] = away_images_string
-        return representation    
+        return representation
+
     class Meta:
         model = EndedMatch
         fields = '__all__'

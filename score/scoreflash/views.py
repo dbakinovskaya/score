@@ -13,10 +13,10 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 
-from .models import Events, EventId, Tournament, TournamentHockey, EndedMatch,Scheduled
+from .models import Events, EventId, Tournament, TournamentHockey,EndedMatch,Scheduled
 from .serialaizers import (EventsSerializer, EventLiveIdSerializer,
                            TournamentSerializer, TournamentHockeySerializer,EndedMatchSerializer,ScheduledSerializer)
-from .task import send_request, send_request_hockey
+from .task import send_request, send_request_hockey, send_request_endedmatch
 
 import http.client
 

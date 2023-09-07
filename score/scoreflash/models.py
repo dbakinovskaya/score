@@ -112,7 +112,7 @@ class HockeyLiveEvents(models.Model):
 
 
 class EndedMatch(models.Model):
-    tournamet = models.TextField(null=True)
+    tournamet_name = models.TextField(null=True)
     tournament_stage_type = models.TextField(null=True)
     tournament_imng = models.TextField(null=True)
     event_id = models.TextField(null=True)

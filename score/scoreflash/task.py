@@ -1,7 +1,7 @@
 import requests
 import time
 
-from .models import Events, Tournament, HockeyLiveEvents, TournamentHockey, EndedMatch
+from .models import Events, Tournament, HockeyLiveEvents, TournamentHockey,EndedMatch
 from .serialaizers import EventsSerializer, HockeyLiveEventsSerializer
 from django.db import transaction
 from celery import shared_task
@@ -153,14 +153,29 @@ def send_request_endedmatch():
             "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
         }
         response = requests.get(url, headers=headers, params=querystring)
-
         parsed_data = response.json()
-
         for item in parsed_data['DATA']:
-            ended_match , _ = EndedMatch.objects.get_or_create(name=item['NAME'])
+            ended_match, _ = EndedMatch.objects.get_or_create(tournamet_name=item['NAME'])
             ended_match.tournament_imng = item['TOURNAMENT_IMAGE']
             ended_match.stage_tyoe = item['TOURNAMENT_STAGE_TYPE']
             for event in item['EVENTS']:
-                  if event.get("STAGE_TYPE") == "FINISHED":
-                      
-                    pass
+                if event.get("STAGE_TYPE") == "FINISHED":
+                    # ended_match.tournamet_name = event.get("TOURNAMENT")
+                    ended_match.event_id = event.get("EVENT_ID")
+                    ended_match.round = event.get("ROUND")
+                    ended_match.shortname_home = event.get("SHORTNAME_HOME")
+                    ended_match.home_name = event.get("HOME_NAME")
+                    ended_match.home_score_current = event.get("HOME_SCORE_CURRENT")
+                    ended_match.home_score_part_1 = event.get("HOME_SCORE_PART_1")
+                    ended_match.home_score_part_2 = event.get("HOME_SCORE_PART_2",'')
+                    ended_match.home_images = event.get("HOME_IMAGES")
+                    ended_match.shortname_away = event.get("SHORTNAME_AWAY")
+                    ended_match.name_away = event.get("AWAY_NAME")
+                    ended_match.away_score_current = event.get("AWAY_SCORE_CURRENT")
+                    ended_match.away_score_full = event.get("AWAY_SCORE_FULL")
+                    ended_match.away_score_part_1 = event.get("AWAY_SCORE_PART_1")
+                    ended_match.away_score_part_2 = event.get("AWAY_SCORE_PART_2",'')
+                    ended_match.away_images = event.get("AWAY_IMAGES")
+    
+                    ended_match.save()
+

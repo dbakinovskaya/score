@@ -1,8 +1,8 @@
--- Database: db
+--- Database: db_3
 
--- DROP DATABASE IF EXISTS db;
+-- DROP DATABASE IF EXISTS db_3;
 
-CREATE DATABASE db
+CREATE DATABASE db_3
     WITH
     OWNER = postgres
     ENCODING = 'UTF8'

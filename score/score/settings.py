@@ -71,7 +71,7 @@ WSGI_APPLICATION = 'score.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db',
+        'NAME': 'db_3',
         'USER': 'postgres',
         'PASSWORD': 'user',
         'HOST': 'localhost',
