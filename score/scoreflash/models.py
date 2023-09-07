@@ -113,6 +113,8 @@ class HockeyLiveEvents(models.Model):
 
 class EndedMatch(models.Model):
     tournamet = models.TextField(null=True)
+    tournament_stage_type = models.TextField(null=True)
+    tournament_imng = models.TextField(null=True)
     event_id = models.TextField(null=True)
     stage_tyoe = models.TextField(null=True)
     round = models.TextField(null=True)
@@ -132,6 +134,8 @@ class EndedMatch(models.Model):
 
 class Scheduled(models.Model):
     tournament = models.TextField(null=True)
+    tournament_stage_type = models.TextField(null=True)
+    tournament_imng = models.TextField(null=True)
     event_id = models.TextField(null=True)
     start_time = models.TextField(null=True)
     start_utime = models.TextField(null=True)

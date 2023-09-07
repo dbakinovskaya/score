@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import (Events, LiveOfEvents, EventId,
-                     Tournament, HockeyLiveEvents, TournamentHockey)
+                     Tournament, HockeyLiveEvents, TournamentHockey, EndedMatch,Scheduled)
 
 
 class EventsSerializer(serializers.ModelSerializer):
@@ -85,7 +85,31 @@ class TournamentHockeySerializer(serializers.ModelSerializer):
         
 
 class EndedMatchSerializer(serializers.ModelSerializer):
-    pass      
+    home_images = serializers.ListField(allow_null=True, required=False)
+    away_images = serializers.ListField(allow_null=True, required=False)
+    away_score_part_2 = serializers.CharField(allow_null=True, required=False)
+    home_score_part_2 = serializers.CharField(allow_null=True, required=False)
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        home_images_list = representation.get('home_images', [])
+        if home_images_list is not None:
+            home_images_string = ''.join(home_images_list)
+            representation['home_images'] = home_images_string
+        away_images_list = representation.get('away_images', [])
+        if away_images_list is not None:
+            away_images_string = ''.join(away_images_list)
+            representation['away_images'] = away_images_string
+        return representation    
+    class Meta:
+        model = EndedMatch
+        fields = '__all__'
+
 
 class ScheduledSerializer(serializers.ModelSerializer):
-    pass
+    home_images = serializers.ListField(allow_null=True, required=False)
+    away_images = serializers.ListField(allow_null=True, required=False)
+
+    class Meta:
+        model = Scheduled
+        fields = '__all__'

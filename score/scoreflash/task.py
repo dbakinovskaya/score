@@ -1,7 +1,7 @@
 import requests
 import time
 
-from .models import Events, Tournament, HockeyLiveEvents, TournamentHockey
+from .models import Events, Tournament, HockeyLiveEvents, TournamentHockey, EndedMatch
 from .serialaizers import EventsSerializer, HockeyLiveEventsSerializer
 from django.db import transaction
 from celery import shared_task
@@ -139,3 +139,28 @@ def send_request_hockey():
         # hockey_events.exclude(EVENT_ID__in=[event['EVENT_ID'] for item in parsed_data['DATA'] for event in item['EVENTS']]).delete()
         
 
+
+@shared_task
+def send_request_endedmatch():
+    with transaction.atomic():
+        EndedMatch.objects.all().delete()
+    with transaction.atomic():
+        url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
+        querystring = {"timezone": "-4", "indent_days": "-1",
+                       "locale": "en_INT", "sport_id": "1"}
+        headers = {
+            "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+            "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
+        }
+        response = requests.get(url, headers=headers, params=querystring)
+
+        parsed_data = response.json()
+
+        for item in parsed_data['DATA']:
+            ended_match , _ = EndedMatch.objects.get_or_create(name=item['NAME'])
+            ended_match.tournament_imng = item['TOURNAMENT_IMAGE']
+            ended_match.stage_tyoe = item['TOURNAMENT_STAGE_TYPE']
+            for event in item['EVENTS']:
+                  if event.get("STAGE_TYPE") == "FINISHED":
+                      
+                    pass
