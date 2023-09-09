@@ -3,7 +3,7 @@ import time
 
 from django.utils import timezone
 
-from .models import Events, Tournament, HockeyLiveEvents, TournamentHockey,EndedMatch,Scheduled
+from .models import Events, Tournament, HockeyLiveEvents, TournamentHockey, EndedMatch, Scheduled
 from .serialaizers import EventsSerializer, HockeyLiveEventsSerializer
 from django.db import transaction
 from celery import shared_task
@@ -60,18 +60,21 @@ def send_request():
                         }
                         serializer = EventsSerializer(data=data)
                         if serializer.is_valid():
-                            event_objects = Events.objects.filter(event_id=event['EVENT_ID'])
+                            event_objects = Events.objects.filter(
+                                event_id=event['EVENT_ID'])
                             if event_objects.exists():
                                 event_object = event_objects.first()
-                                serializer.update(event_object, serializer.validated_data)
+                                serializer.update(
+                                    event_object, serializer.validated_data)
                             else:
-                                event_object = Events.objects.create(**serializer.validated_data)
+                                event_object = Events.objects.create(
+                                    **serializer.validated_data)
                             tournament.events.add(event_object)
                         else:
                             print(serializer.errors)
             except KeyError:
                 pass
-    except Exception:    
+    except Exception:
         pass
 
 
@@ -98,12 +101,17 @@ def send_request_hockey():
             parsed_data = response.json()
             try:
                 for item in parsed_data['DATA']:
-                    tournament, _ = TournamentHockey.objects.get_or_create(
+                    tournament = TournamentHockey.objects.filter(
                         name=item['NAME'])
-                    tournament.tournament_stage_type = item['TOURNAMENT_STAGE_TYPE']
-                    tournament.tournament_imng = item['TOURNAMENT_IMAGE']
-                    tournament.TOURNAMENT_TEMPLATE_ID = item['TOURNAMENT_TEMPLATE_ID']
-                    tournament.save()
+                    if tournament.exists():
+                        tournament = tournament.first()
+                    else:
+                        tournament = TournamentHockey.objects.create(
+                            name=item['NAME'],
+                            tournament_stage_type=item['TOURNAMENT_STAGE_TYPE'],
+                            tournament_imng=item['TOURNAMENT_IMAGE'],
+                            TOURNAMENT_TEMPLATE_ID=item['TOURNAMENT_TEMPLATE_ID']
+                        )
                     for event in item['EVENTS']:
                         data = {
                             'EVENT_ID': event['EVENT_ID'],
@@ -143,12 +151,20 @@ def send_request_hockey():
                         }
                         serializer = HockeyLiveEventsSerializer(data=data)
                         if serializer.is_valid():
-                            event_object, _ = HockeyLiveEvents.objects.get_or_create(
+                            event_objects = HockeyLiveEvents.objects.filter(
                                 EVENT_ID=event['EVENT_ID'])
-                            serializer.update(event_object, serializer.validated_data)
+                            if event_objects.exists():
+                                event_object = event_objects.first()
+                                serializer.update(
+                                    event_object, serializer.validated_data)
+                            else:
+                                event_object = HockeyLiveEvents.objects.create(
+                                    **serializer.validated_data)
                             tournament.events_hockey.add(event_object)
-            except  KeyError:
-                pass          
+                        else:
+                            print(serializer.errors)
+            except KeyError:
+                pass
     except Exception:
         pass
 
@@ -160,7 +176,7 @@ def send_request_endedmatch():
             EndedMatch.objects.all().delete()
             url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
             querystring = {"timezone": "-4", "indent_days": "-1",
-                        "locale": "en_INT", "sport_id": "1"}
+                           "locale": "en_INT", "sport_id": "1"}
             headers = {
                 "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
                 "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
@@ -169,33 +185,44 @@ def send_request_endedmatch():
             parsed_data = response.json()
             try:
                 for item in parsed_data['DATA']:
-                    ended_match, _ = EndedMatch.objects.get_or_create(tournamet_name=item['NAME'])
+                    ended_match, _ = EndedMatch.objects.get_or_create(
+                        tournamet_name=item['NAME'])
                     ended_match.tournament_imng = item['TOURNAMENT_IMAGE']
                     ended_match.stage_tyoe = item['TOURNAMENT_STAGE_TYPE']
                     for event in item['EVENTS']:
                         if event.get("STAGE_TYPE") == "FINISHED":
                             ended_match.event_id = event.get("EVENT_ID")
                             ended_match.round = event.get("ROUND")
-                            ended_match.shortname_home = event.get("SHORTNAME_HOME")
+                            ended_match.shortname_home = event.get(
+                                "SHORTNAME_HOME")
                             ended_match.home_name = event.get("HOME_NAME")
-                            ended_match.home_score_current = event.get("HOME_SCORE_CURRENT")
-                            ended_match.home_score_part_1 = event.get("HOME_SCORE_PART_1")
-                            ended_match.home_score_part_2 = event.get("HOME_SCORE_PART_2",'')
+                            ended_match.home_score_current = event.get(
+                                "HOME_SCORE_CURRENT")
+                            ended_match.home_score_part_1 = event.get(
+                                "HOME_SCORE_PART_1")
+                            ended_match.home_score_part_2 = event.get(
+                                "HOME_SCORE_PART_2", '')
                             ended_match.home_images = event.get("HOME_IMAGES")
-                            ended_match.shortname_away = event.get("SHORTNAME_AWAY")
+                            ended_match.shortname_away = event.get(
+                                "SHORTNAME_AWAY")
                             ended_match.name_away = event.get("AWAY_NAME")
-                            ended_match.away_score_current = event.get("AWAY_SCORE_CURRENT")
-                            ended_match.away_score_full = event.get("AWAY_SCORE_FULL")
-                            ended_match.away_score_part_1 = event.get("AWAY_SCORE_PART_1")
-                            ended_match.away_score_part_2 = event.get("AWAY_SCORE_PART_2",'')
+                            ended_match.away_score_current = event.get(
+                                "AWAY_SCORE_CURRENT")
+                            ended_match.away_score_full = event.get(
+                                "AWAY_SCORE_FULL")
+                            ended_match.away_score_part_1 = event.get(
+                                "AWAY_SCORE_PART_1")
+                            ended_match.away_score_part_2 = event.get(
+                                "AWAY_SCORE_PART_2", '')
                             ended_match.away_images = event.get("AWAY_IMAGES")
-        
+
                             ended_match.save()
             except KeyError:
-                # Обработка ошибки KeyError    
+                # Обработка ошибки KeyError
                 pass
     except Exception:
-        pass    
+        pass
+
 
 @shared_task
 def send_request_scheluded():
@@ -212,7 +239,8 @@ def send_request_scheluded():
     try:
         for item in parsed_data['DATA']:
             try:
-                scheduled_match = Scheduled.objects.get(tournament=item['NAME'])
+                scheduled_match = Scheduled.objects.get(
+                    tournament=item['NAME'])
             except Scheduled.DoesNotExist:
                 scheduled_match = Scheduled(tournament=item['NAME'])
             scheduled_match.tournament_stage_type = item['TOURNAMENT_STAGE_TYPE']
@@ -224,10 +252,12 @@ def send_request_scheluded():
                         continue
                     scheduled_match.start_time = event.get('START_TIME')
                     scheduled_match.start_utime = event.get('START_UTIME')
-                    scheduled_match.shortname_home = event.get('SHORTNAME_HOME')
+                    scheduled_match.shortname_home = event.get(
+                        'SHORTNAME_HOME')
                     scheduled_match.home_name = event.get('HOME_NAME')
                     scheduled_match.home_images = event.get('HOME_IMAGES', '')
-                    scheduled_match.shortname_away = event.get('SHORTNAME_AWAY')
+                    scheduled_match.shortname_away = event.get(
+                        'SHORTNAME_AWAY')
                     scheduled_match.name_away = event.get('AWAY_NAME')
                     scheduled_match.away_images = event.get('AWAY_IMAGES', '')
                     new_scheduled_objects.append(scheduled_match)

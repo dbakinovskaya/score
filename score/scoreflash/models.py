@@ -93,8 +93,8 @@ class HockeyLiveEvents(models.Model):
     HOME_GOAL_VAR = models.TextField(null=True)
     HOME_SCORE_CURRENT = models.TextField(null=True)
     HOME_SCORE_PART_1 = models.TextField(null=True)
-    HOME_SCORE_PART_2 = models.TextField(null=True)
-    HOME_SCORE_PART_3 = models.TextField(null=True)
+    HOME_SCORE_PART_2 = models.TextField(null=True,blank=True)
+    HOME_SCORE_PART_3 = models.TextField(null=True,blank=True)
     HOME_IMAGES = models.TextField(null=True)
     SHORTNAME_AWAY = models.TextField(null=True)
     AWAY_PARTICIPANT_IDS = models.TextField(null=True)
@@ -106,8 +106,8 @@ class HockeyLiveEvents(models.Model):
     AWAY_SCORE_CURRENT = models.TextField(null=True)
     AWAY_SCORE_FULL = models.TextField(null=True)
     AWAY_SCORE_PART_1 = models.TextField(null=True)
-    AWAY_SCORE_PART_2 = models.TextField(null=True)
-    AWAY_SCORE_PART_3 = models.TextField(null=True)
+    AWAY_SCORE_PART_2 = models.TextField(null=True,blank=True)
+    AWAY_SCORE_PART_3 = models.TextField(null=True,blank=True)
     AWAY_IMAGES = models.TextField(null=True)
 
 
