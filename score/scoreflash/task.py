@@ -173,7 +173,7 @@ def send_request_hockey():
 def send_request_endedmatch():
     try:
         with transaction.atomic():
-            EndedMatch.objects.all().delete()
+            EndedMatch.objects.all().select_for_update().delete()
             url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
             querystring = {"timezone": "-4", "indent_days": "-1",
                            "locale": "en_INT", "sport_id": "1"}
@@ -185,10 +185,16 @@ def send_request_endedmatch():
             parsed_data = response.json()
             try:
                 for item in parsed_data['DATA']:
-                    ended_match, _ = EndedMatch.objects.get_or_create(
+                    ended_match = EndedMatch.objects.filter(
                         tournamet_name=item['NAME'])
-                    ended_match.tournament_imng = item['TOURNAMENT_IMAGE']
-                    ended_match.stage_tyoe = item['TOURNAMENT_STAGE_TYPE']
+                    if ended_match.exists():
+                        ended_match = ended_match.first()
+                    else:
+                        ended_match = EndedMatch.objects.create(
+                            tournamet_name=item['NAME'],
+                            tournament_imng=item['TOURNAMENT_IMAGE'],
+                            stage_tyoe=item['TOURNAMENT_STAGE_TYPE']
+                        )
                     for event in item['EVENTS']:
                         if event.get("STAGE_TYPE") == "FINISHED":
                             ended_match.event_id = event.get("EVENT_ID")
@@ -226,44 +232,47 @@ def send_request_endedmatch():
 
 @shared_task
 def send_request_scheluded():
-    url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
-    querystring = {"timezone": "-4", "indent_days": "-1",
-                   "locale": "en_INT", "sport_id": "1"}
-    headers = {
-        "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-        "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
-    }
-    response = requests.get(url, headers=headers, params=querystring)
-    parsed_data = response.json()
-    new_scheduled_objects = []
     try:
-        for item in parsed_data['DATA']:
-            try:
-                scheduled_match = Scheduled.objects.get(
-                    tournament=item['NAME'])
-            except Scheduled.DoesNotExist:
-                scheduled_match = Scheduled(tournament=item['NAME'])
-            scheduled_match.tournament_stage_type = item['TOURNAMENT_STAGE_TYPE']
-            scheduled_match.tournament_imng = item['TOURNAMENT_IMAGE']
-            for event in item['EVENTS']:
-                if event.get("STAGE_TYPE") == "SCHEDULED":
-                    scheduled_match.event_id = event.get('EVENT_ID')
-                    if scheduled_match.event_id is None:
-                        continue
-                    scheduled_match.start_time = event.get('START_TIME')
-                    scheduled_match.start_utime = event.get('START_UTIME')
-                    scheduled_match.shortname_home = event.get(
-                        'SHORTNAME_HOME')
-                    scheduled_match.home_name = event.get('HOME_NAME')
-                    scheduled_match.home_images = event.get('HOME_IMAGES', '')
-                    scheduled_match.shortname_away = event.get(
-                        'SHORTNAME_AWAY')
-                    scheduled_match.name_away = event.get('AWAY_NAME')
-                    scheduled_match.away_images = event.get('AWAY_IMAGES', '')
-                    new_scheduled_objects.append(scheduled_match)
         with transaction.atomic():
-            Scheduled.objects.bulk_create(new_scheduled_objects)
-            Scheduled.objects.all().delete()
-    except KeyError:
-        # Обработка ошибки KeyError
+            Scheduled.objects.all().select_for_update().delete()
+            url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
+            querystring = {"timezone": "-4", "indent_days": "-1",
+                           "locale": "en_INT", "sport_id": "1"}
+            headers = {
+                "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+                "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
+            }
+            response = requests.get(url, headers=headers, params=querystring)
+            parsed_data = response.json()
+            try:
+                for item in parsed_data['DATA']:
+                    scheduled_match = Scheduled.objects.filter(
+                        tournamet=item['NAME'])
+                    if scheduled_match.exists():
+                        scheduled_match = scheduled_match.first()
+                    else:
+                        scheduled_match = Scheduled.objects.create(
+                            tournamet=item['NAME'],
+                            tournament_imng=item['TOURNAMENT_IMAGE'],
+                            stage_type=item['TOURNAMENT_STAGE_TYPE']
+                        )
+                    for event in item['EVENTS']:
+                        if event.get("STAGE_TYPE") == "SCHEDULED":
+                            scheduled_match.event_id = event.get('EVENT_ID')
+                            scheduled_match.start_time = event.get('START_TIME')
+                            scheduled_match.start_utime = event.get('START_UTIME')
+                            scheduled_match.shortname_home = event.get(
+                                'SHORTNAME_HOME')
+                            scheduled_match.home_name = event.get('HOME_NAME')
+                            scheduled_match.home_images = event.get('HOME_IMAGES', '')
+                            scheduled_match.shortname_away = event.get(
+                                'SHORTNAME_AWAY')
+                            scheduled_match.name_away = event.get('AWAY_NAME')
+                            scheduled_match.away_images = event.get('AWAY_IMAGES', '')
+
+                            scheduled_match.save()
+            except KeyError:
+                # Обработка ошибки KeyError
+                pass
+    except Exception:
         pass
