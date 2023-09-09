@@ -25,7 +25,6 @@ def send_request():
                 'sport_id': '1',
                 'locale': 'en_INT'
             }
-
             response = requests.get(url, headers=headers, params=params)
             parsed_data = response.json()
             try:
@@ -82,9 +81,8 @@ def send_request_hockey():
         with transaction.atomic():
             # tournament_hockey = TournamentHockey.objects.all()
             # hockey_events = HockeyLiveEvents.objects.all()
-            TournamentHockey.objects.all().delete()
-            HockeyLiveEvents.objects.all().delete()
-            # time.sleep(3)
+            TournamentHockey.objects.all().select_for_update().delete()
+            HockeyLiveEvents.objects.all().select_for_update().delete()
 
             url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
             headers = {
@@ -151,8 +149,6 @@ def send_request_hockey():
                             tournament.events_hockey.add(event_object)
             except  KeyError:
                 pass          
-        # tournament_hockey.exclude(name__in=[item['NAME'] for item in parsed_data['DATA']]).delete()
-        # hockey_events.exclude(EVENT_ID__in=[event['EVENT_ID'] for item in parsed_data['DATA'] for event in item['EVENTS']]).delete()
     except Exception:
         pass
 
@@ -203,44 +199,41 @@ def send_request_endedmatch():
 
 @shared_task
 def send_request_scheluded():
+    url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
+    querystring = {"timezone": "-4", "indent_days": "-1",
+                   "locale": "en_INT", "sport_id": "1"}
+    headers = {
+        "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+        "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
+    }
+    response = requests.get(url, headers=headers, params=querystring)
+    parsed_data = response.json()
+    new_scheduled_objects = []
     try:
-        url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
-        querystring = {"timezone": "-4", "indent_days": "-1",
-                    "locale": "en_INT", "sport_id": "1"}
-        headers = {
-            "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-            "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
-        }
-        response = requests.get(url, headers=headers, params=querystring)
-        parsed_data = response.json()
-        new_scheduled_objects = []
-        try:
-            for item in parsed_data['DATA']:
-                try:
-                    scheduled_match = Scheduled.objects.get(tournament=item['NAME'])
-                except Scheduled.DoesNotExist:
-                    scheduled_match = Scheduled(tournament=item['NAME'])
-                scheduled_match.tournament_stage_type = item['TOURNAMENT_STAGE_TYPE']
-                scheduled_match.tournament_imng = item['TOURNAMENT_IMAGE']
-                for event in item['EVENTS']:
-                    if event.get("STAGE_TYPE") == "SCHEDULED":
-                        scheduled_match.event_id = event.get('EVENT_ID')
-                        if scheduled_match.event_id is None:
-                            continue
-                        scheduled_match.start_time = event.get('START_TIME')
-                        scheduled_match.start_utime = event.get('START_UTIME')
-                        scheduled_match.shortname_home = event.get('SHORTNAME_HOME')
-                        scheduled_match.home_name = event.get('HOME_NAME')
-                        scheduled_match.home_images = event.get('HOME_IMAGES', '')
-                        scheduled_match.shortname_away = event.get('SHORTNAME_AWAY')
-                        scheduled_match.name_away = event.get('AWAY_NAME')
-                        scheduled_match.away_images = event.get('AWAY_IMAGES', '')
-                        new_scheduled_objects.append(scheduled_match)
-            with transaction.atomic():
-                Scheduled.objects.bulk_create(new_scheduled_objects)
-                Scheduled.objects.all().delete()
-        except KeyError:
-            # Обработка ошибки KeyError
-            pass
-    except Exception:
+        for item in parsed_data['DATA']:
+            try:
+                scheduled_match = Scheduled.objects.get(tournament=item['NAME'])
+            except Scheduled.DoesNotExist:
+                scheduled_match = Scheduled(tournament=item['NAME'])
+            scheduled_match.tournament_stage_type = item['TOURNAMENT_STAGE_TYPE']
+            scheduled_match.tournament_imng = item['TOURNAMENT_IMAGE']
+            for event in item['EVENTS']:
+                if event.get("STAGE_TYPE") == "SCHEDULED":
+                    scheduled_match.event_id = event.get('EVENT_ID')
+                    if scheduled_match.event_id is None:
+                        continue
+                    scheduled_match.start_time = event.get('START_TIME')
+                    scheduled_match.start_utime = event.get('START_UTIME')
+                    scheduled_match.shortname_home = event.get('SHORTNAME_HOME')
+                    scheduled_match.home_name = event.get('HOME_NAME')
+                    scheduled_match.home_images = event.get('HOME_IMAGES', '')
+                    scheduled_match.shortname_away = event.get('SHORTNAME_AWAY')
+                    scheduled_match.name_away = event.get('AWAY_NAME')
+                    scheduled_match.away_images = event.get('AWAY_IMAGES', '')
+                    new_scheduled_objects.append(scheduled_match)
+        with transaction.atomic():
+            Scheduled.objects.bulk_create(new_scheduled_objects)
+            Scheduled.objects.all().delete()
+    except KeyError:
+        # Обработка ошибки KeyError
         pass
