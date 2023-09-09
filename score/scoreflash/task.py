@@ -13,70 +13,67 @@ from celery import shared_task
 def send_request():
     try:
         with transaction.atomic():
-            Tournament.objects.all().delete()
-            Events.objects.all().delete()
-    except Exception as e:
-        # Обработка ошибки удаления
-        print(f"Ошибка при удалении: {e}")
-    with transaction.atomic():   
-        url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
-        headers = {
-            'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-            'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
-        }
-        params = {
-            'timezone': '-4',
-            'sport_id': '1',
-            'locale': 'en_INT'
-        }
+            Tournament.objects.all().select_for_update().delete()
+            Events.objects.all().select_for_update().delete()
+            url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
+            headers = {
+                'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+                'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+            }
+            params = {
+                'timezone': '-4',
+                'sport_id': '1',
+                'locale': 'en_INT'
+            }
 
-        response = requests.get(url, headers=headers, params=params)
-        parsed_data = response.json()
-        try:
-            for item in parsed_data['DATA']:
-                tournaments = Tournament.objects.filter(name=item['NAME'])
-                if tournaments.exists():
-                    tournament = tournaments.first()
-                else:
-                    tournament = Tournament.objects.create(
-                        name=item['NAME'],
-                        tournament_stage_type=item['TOURNAMENT_STAGE_TYPE'],
-                        tournament_imng=item['TOURNAMENT_IMAGE'],
-                        TOURNAMENT_TEMPLATE_ID=item['TOURNAMENT_TEMPLATE_ID']
-                    )
-                for event in item['EVENTS']:
-                    data = {
-                        'event_id': event['EVENT_ID'],
-                        'start_time': event['START_TIME'],
-                        'start_utime': event['START_UTIME'],
-                        'game_time': event['GAME_TIME'],
-                        'short_name_away': event['SHORTNAME_AWAY'],
-                        'away_name': event['AWAY_NAME'],
-                        'away_score_current': event['AWAY_SCORE_CURRENT'],
-                        'away_score_part_1': event['AWAY_SCORE_PART_1'],
-                        'away_score_part_2': event.get('AWAY_SCORE_PART_2', ''),
-                        'short_name_home': event['SHORTNAME_HOME'],
-                        'home_name': event['HOME_NAME'],
-                        'home_score_current': event['HOME_SCORE_CURRENT'],
-                        'home_score_part_1': event['HOME_SCORE_PART_1'],
-                        'home_score_part_2': event.get('HOME_SCORE_PART_2', ''),
-                        'home_images': event.get('HOME_IMAGES'),
-                        'away_images': event.get('AWAY_IMAGES'),
-                    }
-                    serializer = EventsSerializer(data=data)
-                    if serializer.is_valid():
-                        event_objects = Events.objects.filter(event_id=event['EVENT_ID'])
-                        if event_objects.exists():
-                            event_object = event_objects.first()
-                            serializer.update(event_object, serializer.validated_data)
-                        else:
-                            event_object = Events.objects.create(**serializer.validated_data)
-                        tournament.events.add(event_object)
+            response = requests.get(url, headers=headers, params=params)
+            parsed_data = response.json()
+            try:
+                for item in parsed_data['DATA']:
+                    tournaments = Tournament.objects.filter(name=item['NAME'])
+                    if tournaments.exists():
+                        tournament = tournaments.first()
                     else:
-                        print(serializer.errors)
-        except KeyError:
-            pass
-
+                        tournament = Tournament.objects.create(
+                            name=item['NAME'],
+                            tournament_stage_type=item['TOURNAMENT_STAGE_TYPE'],
+                            tournament_imng=item['TOURNAMENT_IMAGE'],
+                            TOURNAMENT_TEMPLATE_ID=item['TOURNAMENT_TEMPLATE_ID']
+                        )
+                    for event in item['EVENTS']:
+                        data = {
+                            'event_id': event['EVENT_ID'],
+                            'start_time': event['START_TIME'],
+                            'start_utime': event['START_UTIME'],
+                            'game_time': event['GAME_TIME'],
+                            'short_name_away': event['SHORTNAME_AWAY'],
+                            'away_name': event['AWAY_NAME'],
+                            'away_score_current': event['AWAY_SCORE_CURRENT'],
+                            'away_score_part_1': event['AWAY_SCORE_PART_1'],
+                            'away_score_part_2': event.get('AWAY_SCORE_PART_2', ''),
+                            'short_name_home': event['SHORTNAME_HOME'],
+                            'home_name': event['HOME_NAME'],
+                            'home_score_current': event['HOME_SCORE_CURRENT'],
+                            'home_score_part_1': event['HOME_SCORE_PART_1'],
+                            'home_score_part_2': event.get('HOME_SCORE_PART_2', ''),
+                            'home_images': event.get('HOME_IMAGES'),
+                            'away_images': event.get('AWAY_IMAGES'),
+                        }
+                        serializer = EventsSerializer(data=data)
+                        if serializer.is_valid():
+                            event_objects = Events.objects.filter(event_id=event['EVENT_ID'])
+                            if event_objects.exists():
+                                event_object = event_objects.first()
+                                serializer.update(event_object, serializer.validated_data)
+                            else:
+                                event_object = Events.objects.create(**serializer.validated_data)
+                            tournament.events.add(event_object)
+                        else:
+                            print(serializer.errors)
+            except KeyError:
+                pass
+    except Exception:    
+        pass
 
 
 @shared_task
