@@ -145,3 +145,26 @@ class Scheduled(models.Model):
     shortname_away = models.TextField(null=True)
     name_away = models.TextField(null=True)
     away_images = models.TextField(null=True)
+
+
+
+class All(models.Model):
+    tournamet_name = models.TextField(null=True)
+    tournament_stage_type = models.TextField(null=True)
+    tournament_imng = models.TextField(null=True)
+    event_id = models.TextField(null=True)
+    stage_type = models.TextField(null=True)
+    round = models.TextField(null=True)
+    shortname_home = models.TextField(null=True)
+    home_name =  models.TextField(null=True)
+    home_score_current = models.TextField(null=True)
+    home_score_part_1 = models.TextField(null=True)
+    home_score_part_2 = models.TextField(null=True)
+    home_images = models.TextField(null=True)
+    shortname_away = models.TextField(null=True)
+    name_away = models.TextField(null=True)
+    away_score_current = models.TextField(null=True)
+    away_score_full = models.TextField(null=True)
+    away_score_part_1 = models.TextField(null=True)
+    away_score_part_2 = models.TextField(null=True)
+    away_images = models.TextField(null=True)
