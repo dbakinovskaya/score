@@ -3,7 +3,9 @@ import time
 
 from django.utils import timezone
 
-from .models import Events, Tournament, HockeyLiveEvents, TournamentHockey, EndedMatch, Scheduled, All
+from .models import (Events, Tournament, HockeyLiveEvents,
+                     TournamentHockey, EndedMatch, Scheduled, All, AllHockey,
+                     ScheduledHockey,EndedHockey)
 from .serialaizers import EventsSerializer, HockeyLiveEventsSerializer
 from django.db import transaction
 from celery import shared_task
@@ -196,7 +198,7 @@ def send_request_endedmatch():
                             stage_type=item['TOURNAMENT_STAGE_TYPE']
                         )
                     for event in item['EVENTS']:
-                        if event.get("STAGE_TYPE") == "FINISHED":
+                        if event.get("STAGE_TYPE") == "FINISHED" or event.get("STAGE_TYPE") == "3":
                             ended_match.event_id = event.get("EVENT_ID")
                             ended_match.round = event.get("ROUND")
                             ended_match.shortname_home = event.get(
@@ -256,7 +258,7 @@ def send_request_scheluded():
                             tournament_imng=item['TOURNAMENT_IMAGE']
                         )
                     for event in item['EVENTS']:
-                        if event.get("STAGE_TYPE") == "SCHEDULED":
+                        if event.get("STAGE_TYPE") == "SCHEDULED" or event.get("STAGE_TYPE") == "1":
                             scheduled_match.event_id = event.get('EVENT_ID')
                             scheduled_match.start_time = event.get(
                                 'START_TIME')
@@ -279,6 +281,7 @@ def send_request_scheluded():
                 pass
     except Exception:
         pass
+
 
 @shared_task
 def request_all():
@@ -333,6 +336,183 @@ def request_all():
                         ended_match.away_images = event.get("AWAY_IMAGES")
 
                         ended_match.save()
+            except KeyError:
+                # Обработка ошибки KeyError
+                pass
+    except Exception:
+        pass
+
+@shared_task
+def request_all_hockey():
+    try:
+        with transaction.atomic():
+            AllHockey.objects.all().select_for_update().delete()
+            url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
+            querystring = {"timezone": "-4", "indent_days": "-1",
+                           "locale": "en_INT", "sport_id": "4"}
+            headers = {
+                "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+                "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
+            }
+            response = requests.get(url, headers=headers, params=querystring)
+            parsed_data = response.json()
+            try:
+                for item in parsed_data['DATA']:
+                    ended_match = AllHockey.objects.filter(
+                        tournamet_name=item['NAME'])
+                    if ended_match.exists():
+                        ended_match = ended_match.first()
+                    else:
+                        ended_match = AllHockey.objects.create(
+                            tournamet_name=item['NAME'],
+                            tournament_imng=item['TOURNAMENT_IMAGE'],
+                            stage_type=item['TOURNAMENT_STAGE_TYPE']
+                        )
+                    for event in item['EVENTS']:
+                        ended_match.event_id = event.get("EVENT_ID")
+                        ended_match.round = event.get("ROUND")
+                        ended_match.shortname_home = event.get(
+                            "SHORTNAME_HOME")
+                        ended_match.home_name = event.get("HOME_NAME")
+                        ended_match.home_score_current = event.get(
+                            "HOME_SCORE_CURRENT")
+                        ended_match.home_score_part_1 = event.get(
+                            "HOME_SCORE_PART_1")
+                        ended_match.home_score_part_2 = event.get(
+                            "HOME_SCORE_PART_2", '')
+                        ended_match.home_images = event.get("HOME_IMAGES")
+                        ended_match.shortname_away = event.get(
+                            "SHORTNAME_AWAY")
+                        ended_match.name_away = event.get("AWAY_NAME")
+                        ended_match.away_score_current = event.get(
+                            "AWAY_SCORE_CURRENT")
+                        ended_match.away_score_full = event.get(
+                            "AWAY_SCORE_FULL")
+                        ended_match.away_score_part_1 = event.get(
+                            "AWAY_SCORE_PART_1")
+                        ended_match.away_score_part_2 = event.get(
+                            "AWAY_SCORE_PART_2", '')
+                        ended_match.away_score_part_3 = event.get(
+                            "AWAY_SCORE_PART_3", '')
+                        ended_match.away_images = event.get("AWAY_IMAGES")
+                        ended_match.home_score_part_3 = event.get(
+                            "HOME_SCORE_PART_3", '')
+
+                        ended_match.save()
+            except KeyError:
+                # Обработка ошибки KeyError
+                pass
+    except Exception:
+        pass
+
+@shared_task
+def request_scheduled_hockey():
+    try:
+        with transaction.atomic():
+            ScheduledHockey.objects.all().select_for_update().delete()
+            url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
+            querystring = {"timezone": "-4", "indent_days": "-1",
+                           "locale": "en_INT", "sport_id": "4"}
+            headers = {
+                "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+                "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
+            }
+            response = requests.get(url, headers=headers, params=querystring)
+            parsed_data = response.json()
+            try:
+                for item in parsed_data['DATA']:
+                    scheduled_match = ScheduledHockey.objects.filter(
+                        tournament=item['NAME'])
+                    if scheduled_match.exists():
+                        scheduled_match = scheduled_match.first()
+                    else:
+                        scheduled_match = ScheduledHockey.objects.create(
+                            tournament=item['NAME'],
+                            tournament_imng=item['TOURNAMENT_IMAGE']
+                        )
+                    for event in item['EVENTS']:
+                        if event.get("STAGE_TYPE") == "SCHEDULED" or event.get("STAGE_TYPE") == "1":
+                            scheduled_match.event_id = event.get('EVENT_ID')
+                            scheduled_match.start_time = event.get(
+                                'START_TIME')
+                            scheduled_match.start_utime = event.get(
+                                'START_UTIME')
+                            scheduled_match.shortname_home = event.get(
+                                'SHORTNAME_HOME')
+                            scheduled_match.home_name = event.get('HOME_NAME')
+                            scheduled_match.home_images = event.get(
+                                'HOME_IMAGES', '')
+                            scheduled_match.shortname_away = event.get(
+                                'SHORTNAME_AWAY')
+                            scheduled_match.name_away = event.get('AWAY_NAME')
+                            scheduled_match.away_images = event.get(
+                                'AWAY_IMAGES', '')
+
+                            scheduled_match.save()
+            except KeyError:
+                # Обработка ошибки KeyError
+                pass
+    except Exception:
+        pass
+
+@shared_task
+def request_ended_hockey():
+    try:
+        with transaction.atomic():
+            EndedHockey.objects.all().select_for_update().delete()
+            url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
+            querystring = {"timezone": "-4", "indent_days": "-1",
+                           "locale": "en_INT", "sport_id": "1"}
+            headers = {
+                "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+                "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
+            }
+            response = requests.get(url, headers=headers, params=querystring)
+            parsed_data = response.json()
+            try:
+                for item in parsed_data['DATA']:
+                    ended_match = EndedHockey.objects.filter(
+                        tournamet_name=item['NAME'])
+                    if ended_match.exists():
+                        ended_match = ended_match.first()
+                    else:
+                        ended_match = EndedHockey.objects.create(
+                            tournamet_name=item['NAME'],
+                            tournament_imng=item['TOURNAMENT_IMAGE'],
+                            stage_type=item['TOURNAMENT_STAGE_TYPE']
+                        )
+                    for event in item['EVENTS']:
+                        if event.get("STAGE_TYPE") == "FINISHED" or event.get("STAGE_TYPE") == "3":
+                            ended_match.event_id = event.get("EVENT_ID")
+                            ended_match.round = event.get("ROUND")
+                            ended_match.shortname_home = event.get(
+                                "SHORTNAME_HOME")
+                            ended_match.home_name = event.get("HOME_NAME")
+                            ended_match.home_score_current = event.get(
+                                "HOME_SCORE_CURRENT")
+                            ended_match.home_score_part_1 = event.get(
+                                "HOME_SCORE_PART_1")
+                            ended_match.home_score_part_2 = event.get(
+                                "HOME_SCORE_PART_2", '')
+                            ended_match.home_score_part_3 = event.get(
+                                "HOME_SCORE_PART_3", '')
+                            ended_match.home_images = event.get("HOME_IMAGES")
+                            ended_match.shortname_away = event.get(
+                                "SHORTNAME_AWAY")
+                            ended_match.name_away = event.get("AWAY_NAME")
+                            ended_match.away_score_current = event.get(
+                                "AWAY_SCORE_CURRENT")
+                            ended_match.away_score_full = event.get(
+                                "AWAY_SCORE_FULL")
+                            ended_match.away_score_part_1 = event.get(
+                                "AWAY_SCORE_PART_1")
+                            ended_match.away_score_part_2 = event.get(
+                                "AWAY_SCORE_PART_2", '')
+                            ended_match.away_score_part_3 = event.get(
+                                "AWAY_SCORE_PART_3", '')
+                            ended_match.away_images = event.get("AWAY_IMAGES")
+
+                            ended_match.save()
             except KeyError:
                 # Обработка ошибки KeyError
                 pass

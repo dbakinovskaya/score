@@ -13,12 +13,15 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 
-from .models import Events, EventId, Tournament, TournamentHockey, EndedMatch, Scheduled,All
+from .models import (Events, EventId, Tournament, TournamentHockey, EndedMatch,
+                     Scheduled, All, AllHockey, ScheduledHockey, EndedHockey)
 from .serialaizers import (EventsSerializer, EventLiveIdSerializer,
                            TournamentSerializer, TournamentHockeySerializer, EndedMatchSerializer,
-                           ScheduledSerializer, AllSerializer)
+                           ScheduledSerializer, AllSerializer, AllHockeySerializer,
+                           ScheduledHockeySerializer, EndedHockeySerializer)
 from .task import (send_request, send_request_hockey,
-                   send_request_endedmatch, send_request_scheluded,request_all)
+                   send_request_endedmatch, send_request_scheluded, request_all,
+                   request_all_hockey, request_scheduled_hockey)
 
 import http.client
 
@@ -251,6 +254,69 @@ class AllView(viewsets.ModelViewSet):
         thread = threading.Thread(target=self.start_scheduling)
         thread.start()
         tournaments = All.objects.all()
+        serializer = self.serializer_class(tournaments, many=True)
+
+        return Response(serializer.data)
+
+
+class AllHockeyView(viewsets.ModelViewSet):
+    queryset = AllHockey.objects.all()
+    serializer_class = AllHockeySerializer
+
+    def start_scheduling(self):
+        # Запускаем функцию send_request каждые 5 секунд
+        schedule.every(50).seconds.do(request_all_hockey)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+
+    def list(self, request):
+        # Запускаем поток для выполнения start_scheduling
+        thread = threading.Thread(target=self.start_scheduling)
+        thread.start()
+        tournaments = AllHockey.objects.all()
+        serializer = self.serializer_class(tournaments, many=True)
+
+        return Response(serializer.data)
+
+
+class ScheduledHockeyView(viewsets.ModelViewSet):
+    queryset = ScheduledHockey.objects.all()
+    serializer_class = ScheduledHockeySerializer
+
+    def start_scheduling(self):
+        # Запускаем функцию send_request каждые 5 секунд
+        schedule.every(50).seconds.do(request_scheduled_hockey)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+
+    def list(self, request):
+        # Запускаем поток для выполнения start_scheduling
+        thread = threading.Thread(target=self.start_scheduling)
+        thread.start()
+        tournaments = ScheduledHockey.objects.all()
+        serializer = self.serializer_class(tournaments, many=True)
+
+        return Response(serializer.data)
+
+
+class EndedHockeyView(viewsets.ModelViewSet):
+    queryset = EndedHockey.objects.all()
+    serializer_class = EndedHockeySerializer
+
+    def start_scheduling(self):
+        # Запускаем функцию send_request каждые 5 секунд
+        schedule.every(50).seconds.do(request_scheduled_hockey)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+
+    def list(self, request):
+        # Запускаем поток для выполнения start_scheduling
+        thread = threading.Thread(target=self.start_scheduling)
+        thread.start()
+        tournaments = EndedHockey.objects.all()
         serializer = self.serializer_class(tournaments, many=True)
 
         return Response(serializer.data)

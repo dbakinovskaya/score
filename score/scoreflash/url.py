@@ -3,7 +3,7 @@ from django.urls import path, include
 
 from .views import (EventDetails, EventIdViewSet,
                     TournamentViewSet, HockeyView, EndedMatchView,
-                    ScheduledView, AllView
+                    ScheduledView, AllView,AllHockeyView,ScheduledHockeyView,EndedHockeyView
                     )
 
 
@@ -16,7 +16,6 @@ router.register(r'event-ids', EventIdViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('api/live/', TournamentViewSet.as_view({'get': 'list'})),
-
     path('api/events/live/', EventIdViewSet.as_view({'get': 'list'})),
     path('live-events/event-details/<str:live_event_id>/',
          EventDetails.as_view(), name='event-details'),
@@ -24,5 +23,7 @@ urlpatterns = [
     path('api/ended/', EndedMatchView.as_view({'get': 'list'})),
     path('api/scheduled/', ScheduledView.as_view({'get': 'list'})),
     path('api/all/', AllView.as_view({'get': 'list'})),
-
+    path('api/all_hockey/', AllHockeyView.as_view({'get': 'list'})),
+    path('api/scheduled_hockey/', ScheduledHockeyView.as_view({'get': 'list'})),
+    path('api/ended_hockey/', EndedHockeyView.as_view({'get': 'list'})),
 ]
