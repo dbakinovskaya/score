@@ -237,7 +237,7 @@ def send_request_scheluded():
             Scheduled.objects.all().select_for_update().delete()
             url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
             querystring = {"timezone": "-4", "indent_days": "-1",
-                           "locale": "en_INT", "sport_id": "1"}
+                        "locale": "en_INT", "sport_id": "1"}
             headers = {
                 "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
                 "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
@@ -247,14 +247,13 @@ def send_request_scheluded():
             try:
                 for item in parsed_data['DATA']:
                     scheduled_match = Scheduled.objects.filter(
-                        tournamet=item['NAME'])
+                        tournament=item['NAME'])
                     if scheduled_match.exists():
                         scheduled_match = scheduled_match.first()
                     else:
                         scheduled_match = Scheduled.objects.create(
-                            tournamet=item['NAME'],
-                            tournament_imng=item['TOURNAMENT_IMAGE'],
-                            stage_type=item['TOURNAMENT_STAGE_TYPE']
+                            tournament=item['NAME'],
+                            tournament_imng=item['TOURNAMENT_IMAGE']
                         )
                     for event in item['EVENTS']:
                         if event.get("STAGE_TYPE") == "SCHEDULED":
@@ -264,15 +263,17 @@ def send_request_scheluded():
                             scheduled_match.shortname_home = event.get(
                                 'SHORTNAME_HOME')
                             scheduled_match.home_name = event.get('HOME_NAME')
-                            scheduled_match.home_images = event.get('HOME_IMAGES', '')
+                            scheduled_match.home_images = event.get(
+                                'HOME_IMAGES', '')
                             scheduled_match.shortname_away = event.get(
                                 'SHORTNAME_AWAY')
                             scheduled_match.name_away = event.get('AWAY_NAME')
-                            scheduled_match.away_images = event.get('AWAY_IMAGES', '')
+                            scheduled_match.away_images = event.get(
+                                'AWAY_IMAGES', '')
 
                             scheduled_match.save()
             except KeyError:
                 # Обработка ошибки KeyError
                 pass
-    except Exception:
-        pass
+    except  Exception:
+        pass    
