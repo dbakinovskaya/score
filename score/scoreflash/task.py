@@ -78,36 +78,38 @@ def send_request():
                             print(serializer.errors)
             except KeyError:
                 pass
-            # event_ids = Events.objects.values_list('event_id', flat=True)
-            # print(event_ids)
-            # conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+            event_ids = Events.objects.values_list('event_id', flat=True)
+            print(event_ids)
+            conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
 
-            # headers = {
-            #     'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-            #     'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
-            # }
+            headers = {
+                'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+                'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+            }
 
-            # for event_idss in event_ids:
-            #     # print(event_idss)
-            #     conn.request("GET", f"/v1/events/statistics?event_id={event_idss}&locale=en_INT", headers=headers)
-            #     res = conn.getresponse()
-            #     data = res.read()
-                
-            #     # Обработка данных и добавление полей в модель Event
-            #     json_data = json.loads(data)
-            #     print(json_data)
-            #     # Получение значений поля yellow_cards_home из json_data
-            #     yellow_cards_home = json_data['DATA'][0]['GROUPS'][0]['ITEMS'][11]['VALUE_HOME']
-                
-            #     # Получение значений поля yellow_cards_away из json_data
-            #     yellow_cards_away = json_data['DATA'][0]['GROUPS'][0]['ITEMS'][11]['VALUE_AWAY']
-                
-            #     # Обновление записи в модели Event с соответствующим event_id
-            #     event = Events.objects.get(event_id=event_idss)
-            #     event.yellow_cards_home = yellow_cards_home
-            #     event.yellow_cards_away = yellow_cards_away
-            #     event.save()
-                            
+            for event_idss in event_ids:
+                # print(event_idss)
+                try:
+                    conn.request("GET", f"/v1/events/statistics?event_id={event_idss}&locale=en_INT", headers=headers)
+                    res = conn.getresponse()
+                    data = res.read()
+                    
+                    # Обработка данных и добавление полей в модель Event
+                    json_data = json.loads(data)
+                    print(json_data)
+                    # Получение значений поля yellow_cards_home из json_data
+                    yellow_cards_home = json_data['DATA'][0]['GROUPS'][0]['ITEMS'][11]['VALUE_HOME']
+                    
+                    # Получение значений поля yellow_cards_away из json_data
+                    yellow_cards_away = json_data['DATA'][0]['GROUPS'][0]['ITEMS'][11]['VALUE_AWAY']
+                    
+                    # Обновление записи в модели Event с соответствующим event_id
+                    event = Events.objects.get(event_id=event_idss)
+                    event.yellow_cards_home = yellow_cards_home
+                    event.yellow_cards_away = yellow_cards_away
+                    event.save()
+                except Exception:
+                    pass           
     except Exception:
         pass
 
