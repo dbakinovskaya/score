@@ -80,7 +80,8 @@ def send_request():
                 pass
             event_ids = Events.objects.values_list('event_id', flat=True)
             print(event_ids)
-            conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+            conn = http.client.HTTPSConnection(
+                "flashlive-sports.p.rapidapi.com")
 
             headers = {
                 'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
@@ -90,26 +91,38 @@ def send_request():
             for event_idss in event_ids:
                 # print(event_idss)
                 try:
-                    conn.request("GET", f"/v1/events/statistics?event_id={event_idss}&locale=en_INT", headers=headers)
+                    conn.request(
+                        "GET", f"/v1/events/statistics?event_id={event_idss}&locale=en_INT", headers=headers)
                     res = conn.getresponse()
                     data = res.read()
-                    
+
                     # Обработка данных и добавление полей в модель Event
                     json_data = json.loads(data)
-                    print(json_data)
+                    # print(json_data)
                     # Получение значений поля yellow_cards_home из json_data
-                    yellow_cards_home = json_data['DATA'][0]['GROUPS'][0]['ITEMS'][11]['VALUE_HOME']
-                    
-                    # Получение значений поля yellow_cards_away из json_data
-                    yellow_cards_away = json_data['DATA'][0]['GROUPS'][0]['ITEMS'][11]['VALUE_AWAY']
-                    
+                    # yellow_cards_home = json_data['DATA'][0]['GROUPS'][0]['ITEMS'][11]['VALUE_HOME']
+                    for item in json_data['DATA'][0]['GROUPS'][0]['ITEMS']:
+                        if item["INCIDENT_NAME"] == "Yellow Cards":
+                            yellow_cards_home = item['VALUE_HOME']
+                            yellow_cards_away = item['VALUE_AWAY']
+                            break
+                    for items in json_data['DATA'][0]['GROUPS'][0]['ITEMS']:
+                        if items["INCIDENT_NAME"] == "Red Cards":
+                            red_cards_home = items['VALUE_HOME']
+                            red_cards_away = items['VALUE_AWAY']
+                            break
+                    # # Получение значений поля yellow_cards_away из json_data
+                    # yellow_cards_away = json_data['DATA'][0]['GROUPS'][0]['ITEMS'][11]['VALUE_AWAY']
+
                     # Обновление записи в модели Event с соответствующим event_id
                     event = Events.objects.get(event_id=event_idss)
                     event.yellow_cards_home = yellow_cards_home
                     event.yellow_cards_away = yellow_cards_away
+                    event.red_cards_home = red_cards_home
+                    event.red_cards_away = red_cards_away
                     event.save()
                 except Exception:
-                    pass           
+                    pass
     except Exception:
         pass
 
