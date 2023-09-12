@@ -1,11 +1,13 @@
 import requests
 import time
+import http
+import json
 
 from django.utils import timezone
 
 from .models import (Events, Tournament, HockeyLiveEvents,
                      TournamentHockey, EndedMatch, Scheduled, All, AllHockey,
-                     ScheduledHockey,EndedHockey)
+                     ScheduledHockey, EndedHockey)
 from .serialaizers import EventsSerializer, HockeyLiveEventsSerializer
 from django.db import transaction
 from celery import shared_task
@@ -76,6 +78,35 @@ def send_request():
                             print(serializer.errors)
             except KeyError:
                 pass
+            # event_ids = Events.objects.values_list('event_id', flat=True)
+
+            # conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+
+            # headers = {
+            #     'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
+            #     'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+            # }
+
+            # for event_id in event_ids:
+            #     conn.request("GET", f"/v1/events/statistics?event_id={event_id}&locale=en_INT", headers=headers)
+            #     res = conn.getresponse()
+            #     data = res.read()
+                
+            #     # Обработка данных и добавление полей в модель Event
+            #     json_data = json.loads(data)
+                
+            #     # Получение значений поля yellow_cards_home из json_data
+            #     yellow_cards_home = json_data['DATA'][0]['GROUPS'][0]['ITEMS'][11]['VALUE_HOME']
+                
+            #     # Получение значений поля yellow_cards_away из json_data
+            #     yellow_cards_away = json_data['DATA'][0]['GROUPS'][0]['ITEMS'][11]['VALUE_AWAY']
+                
+            #     # Обновление записи в модели Event с соответствующим event_id
+            #     event = Events.objects.get(event_id=event_id)
+            #     event.yellow_cards_home = yellow_cards_home
+            #     event.yellow_cards_away = yellow_cards_away
+            #     event.save()
+                            
     except Exception:
         pass
 
@@ -342,6 +373,7 @@ def request_all():
     except Exception:
         pass
 
+
 @shared_task
 def request_all_hockey():
     try:
@@ -405,6 +437,7 @@ def request_all_hockey():
     except Exception:
         pass
 
+
 @shared_task
 def request_scheduled_hockey():
     try:
@@ -454,6 +487,7 @@ def request_scheduled_hockey():
                 pass
     except Exception:
         pass
+
 
 @shared_task
 def request_ended_hockey():

@@ -24,7 +24,8 @@ class EventsSerializer(serializers.ModelSerializer):
         model = Events
         fields = ['event_id', 'start_time', 'start_utime', 'game_time', 'short_name_away',
                   'away_name', 'away_score_current', 'away_score_part_1', 'short_name_home',
-                  'home_name', 'home_score_current', 'home_score_part_1', 'home_images', 'away_images']
+                  'home_name', 'home_score_current', 'home_score_part_1', 'home_images', 'away_images',
+                  'yellow_cards_home','yellow_cards_away','red_cards_home','red_cards_away']
 
 
 class LiveOfEventsSerializer(serializers.ModelSerializer):

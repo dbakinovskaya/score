@@ -32,6 +32,10 @@ class Events(models.Model):
     home_score_part_1 = models.TextField(null=True)
     home_score_part_2 = models.TextField(null=True)
     home_images = models.URLField(null=True)
+    red_cards_home = models.TextField(null=True)
+    red_cards_away = models.TextField(null=True)
+    yellow_cards_home = models.TextField(null=True)
+    yellow_cards_away = models.TextField(null=True)
 
 
 class LiveOfEvents(models.Model):
