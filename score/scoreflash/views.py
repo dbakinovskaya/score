@@ -59,12 +59,10 @@ class EventsViewSet(viewsets.ModelViewSet):
 
 def h2h(live_event_id):
     conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
-
     headers = {
         'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
         'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
     }
-
     url = f"/v1/events/h2h?locale=en_INT&event_id={live_event_id}"
     url = url.replace(" ", "")
     print(url)
@@ -145,7 +143,7 @@ class EventDetails(APIView):
         odd = odds(event.live_event_id)
 
         serialized_data = json.dumps(
-            {'statistics_data': statistics_data})
+            {'statistics_data': statistics_data}, {'h2h':h2h_data}, {'lineups':lineups},{'odd':odd})
 
         return Response(serialized_data)
 

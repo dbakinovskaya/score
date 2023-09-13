@@ -7,7 +7,7 @@ from django.utils import timezone
 
 from .models import (Events, Tournament, HockeyLiveEvents,
                      TournamentHockey, EndedMatch, Scheduled, All, AllHockey,
-                     ScheduledHockey, EndedHockey)
+                     ScheduledHockey, EndedHockey,EventId)
 from .serialaizers import EventsSerializer, HockeyLiveEventsSerializer
 from django.db import transaction
 from celery import shared_task
@@ -31,6 +31,7 @@ def send_request():
             }
             response = requests.get(url, headers=headers, params=params)
             parsed_data = response.json()
+            # print(parsed_data)
             try:
                 for item in parsed_data['DATA']:
                     tournaments = Tournament.objects.filter(name=item['NAME'])
