@@ -1,7 +1,13 @@
 import os
+import logging
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LOG_DIR = os.path.join(BASE_DIR, 'logs')
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
+logging.FileHandler(os.path.join(LOG_DIR, 'file.log'))
+
 
 
 SECRET_KEY = 'outqxie=@%qb-lk38$vt*t2whm9fy@k286qyan45n*(n!@#6*+'
