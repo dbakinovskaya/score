@@ -7,7 +7,7 @@ from django.utils import timezone
 
 from .models import (Events, Tournament, HockeyLiveEvents,
                      TournamentHockey, EndedMatch, Scheduled, All, AllHockey,
-                     ScheduledHockey, EndedHockey,EventId)
+                     ScheduledHockey, EndedHockey, EventId)
 from .serialaizers import EventsSerializer, HockeyLiveEventsSerializer
 from django.db import transaction
 from celery import shared_task
@@ -77,6 +77,11 @@ def send_request():
                             tournament.events.add(event_object)
                         else:
                             print(serializer.errors)
+                        try:
+                            EventId.objects.get(live_event_id=event.event_id)
+                        except EventId.DoesNotExist:
+                            EventId.objects.create(
+                                live_event_id=event.event_id)
             except KeyError:
                 pass
             event_ids = Events.objects.values_list('event_id', flat=True)
