@@ -58,10 +58,11 @@ class EventsViewSet(viewsets.ModelViewSet):
 
 
 def h2h(live_event_id):
-    conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+    conn = http.client.HTTPSConnection("fs.nimbase.cc")
     headers = {
-        'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-        'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+        'api-key-bravo': 'Nc4znHJeSs06G99YMVVBovHF',
+        'x-mashape-user': 'baggio093',
+        'x-mashape-subscription': 'baggio093-Mega'
     }
     url = f"/v1/events/h2h?locale=en_INT&event_id={live_event_id}"
     url = url.replace(" ", "")
@@ -75,11 +76,12 @@ def h2h(live_event_id):
 
 
 def events_statistic(live_event_id):
-    conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+    conn = http.client.HTTPSConnection("fs.nimbase.cc")
 
     headers = {
-        'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-        'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+        'api-key-bravo': 'Nc4znHJeSs06G99YMVVBovHF',
+        'x-mashape-user': 'baggio093',
+        'x-mashape-subscription': 'baggio093-Mega'
     }
     # encoded_event_id = quote(event_id.encode('utf-8'), safe='')
     url = f"/v1/events/statistics?event_id={live_event_id}&locale=en_INT"
@@ -95,11 +97,12 @@ def events_statistic(live_event_id):
 
 def events_start_lineps(live_event_id):
 
-    conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+    conn = http.client.HTTPSConnection("fs.nimbase.cc")
 
     headers = {
-        'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-        'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+        'api-key-bravo': 'Nc4znHJeSs06G99YMVVBovHF',
+        'x-mashape-user': 'baggio093',
+        'x-mashape-subscription': 'baggio093-Mega'
     }
     url = f"/v1/events/lineups?event_id={live_event_id}&locale=en_INT"
     url = url.replace(" ", "")
@@ -113,11 +116,12 @@ def events_start_lineps(live_event_id):
 
 
 def odds(live_event_id):
-    conn = http.client.HTTPSConnection("flashlive-sports.p.rapidapi.com")
+    conn = http.client.HTTPSConnection("fs.nimbase.cc")
 
     headers = {
-        'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-        'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+        'api-key-bravo': 'Nc4znHJeSs06G99YMVVBovHF',
+        'x-mashape-user': 'baggio093',
+        'x-mashape-subscription': 'baggio093-Mega'
     }
 
     url = f"/v1/events/odds?event_id={live_event_id}&locale=en_INT"
@@ -143,7 +147,7 @@ class EventDetails(APIView):
         odd = odds(event.live_event_id)
 
         serialized_data = json.dumps(
-            {'statistics_data': statistics_data}, {'h2h':h2h_data}, {'lineups':lineups},{'odd':odd})
+            {'statistics_data': statistics_data}, {'h2h': h2h_data}, {'lineups': lineups}, {'odd': odd})
 
         return Response(serialized_data)
 
