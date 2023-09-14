@@ -19,10 +19,11 @@ def send_request():
         with transaction.atomic():
             Tournament.objects.all().select_for_update().delete()
             Events.objects.all().select_for_update().delete()
-            url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
+            url = "https://fs.nimbase.cc/v1/events/live-list"
             headers = {
-                'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-                'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+                'api-key-bravo': 'Nc4znHJeSs06G99YMVVBovHF',
+                'x-mashape-user': 'baggio093',
+                'x-mashape-subscription': 'baggio093-Mega'
             }
             params = {
                 'timezone': '-4',
@@ -77,21 +78,22 @@ def send_request():
                             tournament.events.add(event_object)
                         else:
                             print(serializer.errors)
-                        try:
-                            EventId.objects.get(live_event_id=event.event_id)
-                        except EventId.DoesNotExist:
-                            EventId.objects.create(
-                                live_event_id=event.event_id)
+                        # try:
+                        #     EventId.objects.get(live_event_id=event.event_id)
+                        # except EventId.DoesNotExist:
+                        #     EventId.objects.create(
+                        #         live_event_id=event.event_id)
             except KeyError:
                 pass
             event_ids = Events.objects.values_list('event_id', flat=True)
             print(event_ids)
             conn = http.client.HTTPSConnection(
-                "flashlive-sports.p.rapidapi.com")
+                "fs.nimbase.cc")
 
             headers = {
-                'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-                'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+                'api-key-bravo': 'Nc4znHJeSs06G99YMVVBovHF',
+                'x-mashape-user': 'baggio093',
+                'x-mashape-subscription': 'baggio093-Mega'
             }
 
             for event_idss in event_ids:
@@ -142,10 +144,11 @@ def send_request_hockey():
             TournamentHockey.objects.all().select_for_update().delete()
             HockeyLiveEvents.objects.all().select_for_update().delete()
 
-            url = "https://flashlive-sports.p.rapidapi.com/v1/events/live-list"
+            url = "https://fs.nimbase.cc/v1/events/live-list"
             headers = {
-                'X-RapidAPI-Key': "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-                'X-RapidAPI-Host': "flashlive-sports.p.rapidapi.com"
+                'api-key-bravo': 'Nc4znHJeSs06G99YMVVBovHF',
+                'x-mashape-user': 'baggio093',
+                'x-mashape-subscription': 'baggio093-Mega'
             }
             params = {
                 'timezone': '-4',
@@ -229,12 +232,13 @@ def send_request_endedmatch():
     try:
         with transaction.atomic():
             EndedMatch.objects.all().select_for_update().delete()
-            url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
+            url = "https://fs.nimbase.cc/v1/events/list"
             querystring = {"timezone": "-4", "indent_days": "-1",
                            "locale": "en_INT", "sport_id": "1"}
             headers = {
-                "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-                "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
+                'api-key-bravo': 'Nc4znHJeSs06G99YMVVBovHF',
+                'x-mashape-user': 'baggio093',
+                'x-mashape-subscription': 'baggio093-Mega'
             }
             response = requests.get(url, headers=headers, params=querystring)
             parsed_data = response.json()
@@ -290,12 +294,13 @@ def send_request_scheluded():
     try:
         with transaction.atomic():
             Scheduled.objects.all().select_for_update().delete()
-            url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
+            url = "https://fs.nimbase.cc/v1/events/list"
             querystring = {"timezone": "-4", "indent_days": "-1",
                            "locale": "en_INT", "sport_id": "1"}
             headers = {
-                "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-                "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
+                'api-key-bravo': 'Nc4znHJeSs06G99YMVVBovHF',
+                'x-mashape-user': 'baggio093',
+                'x-mashape-subscription': 'baggio093-Mega'
             }
             response = requests.get(url, headers=headers, params=querystring)
             parsed_data = response.json()
@@ -341,12 +346,13 @@ def request_all():
     try:
         with transaction.atomic():
             All.objects.all().select_for_update().delete()
-            url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
+            url = "https://fs.nimbase.cc/v1/events/list"
             querystring = {"timezone": "-4", "indent_days": "-1",
                            "locale": "en_INT", "sport_id": "1"}
             headers = {
-                "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-                "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
+                'api-key-bravo': 'Nc4znHJeSs06G99YMVVBovHF',
+                'x-mashape-user': 'baggio093',
+                'x-mashape-subscription': 'baggio093-Mega'
             }
             response = requests.get(url, headers=headers, params=querystring)
             parsed_data = response.json()
@@ -401,12 +407,13 @@ def request_all_hockey():
     try:
         with transaction.atomic():
             AllHockey.objects.all().select_for_update().delete()
-            url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
+            url = "https://fs.nimbase.cc/v1/events/list"
             querystring = {"timezone": "-4", "indent_days": "-1",
                            "locale": "en_INT", "sport_id": "4"}
             headers = {
-                "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-                "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
+                'api-key-bravo': 'Nc4znHJeSs06G99YMVVBovHF',
+                'x-mashape-user': 'baggio093',
+                'x-mashape-subscription': 'baggio093-Mega'
             }
             response = requests.get(url, headers=headers, params=querystring)
             parsed_data = response.json()
@@ -465,12 +472,13 @@ def request_scheduled_hockey():
     try:
         with transaction.atomic():
             ScheduledHockey.objects.all().select_for_update().delete()
-            url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
+            url = "https://fs.nimbase.cc/v1/events/list"
             querystring = {"timezone": "-4", "indent_days": "-1",
                            "locale": "en_INT", "sport_id": "4"}
             headers = {
-                "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-                "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
+                'api-key-bravo': 'Nc4znHJeSs06G99YMVVBovHF',
+                'x-mashape-user': 'baggio093',
+                'x-mashape-subscription': 'baggio093-Mega'
             }
             response = requests.get(url, headers=headers, params=querystring)
             parsed_data = response.json()
@@ -516,12 +524,13 @@ def request_ended_hockey():
     try:
         with transaction.atomic():
             EndedHockey.objects.all().select_for_update().delete()
-            url = "https://flashlive-sports.p.rapidapi.com/v1/events/list"
+            url = "https://fs.nimbase.cc/v1/events/list"
             querystring = {"timezone": "-4", "indent_days": "-1",
                            "locale": "en_INT", "sport_id": "1"}
             headers = {
-                "X-RapidAPI-Key": "c68d4d6ac2mshe98277d48f502dbp188062jsn10858273d528",
-                "X-RapidAPI-Host": "flashlive-sports.p.rapidapi.com"
+                'api-key-bravo': 'Nc4znHJeSs06G99YMVVBovHF',
+                'x-mashape-user': 'baggio093',
+                'x-mashape-subscription': 'baggio093-Mega'
             }
             response = requests.get(url, headers=headers, params=querystring)
             parsed_data = response.json()

@@ -30,26 +30,26 @@ class EventIdViewSet(viewsets.ModelViewSet):
     queryset = EventId.objects.all()
     serializer_class = EventLiveIdSerializer
 
-    def list_ev(self, request):
-        # Удаление данных из таблицы
-        EventId.objects.all().delete()
-        event_ids = Events.objects.values_list('event_id', flat=True)
-        for event_id in event_ids:
-            live_event = EventId(live_event_id=event_id)
-            live_event.save()
+    # def list_ev(self, request):
+    #     # Удаление данных из таблицы
+    #     EventId.objects.all().delete()
+    #     event_ids = Events.objects.values_list('event_id', flat=True)
+    #     for event_id in event_ids:
+    #         live_event = EventId(live_event_id=event_id)
+    #         live_event.save()
 
-    async def send_request(self):
-        self.list(None)
+    # async def send_request(self):
+    #     self.list(None)
 
-    async def schedule_request(self):
-        while True:
-            await self.send_request()  # Выполняем запрос
-            await asyncio.sleep(0.33)  # Подождать 0.33 секунды
+    # async def schedule_request(self):
+    #     while True:
+    #         await self.send_request()  # Выполняем запрос
+    #         await asyncio.sleep(0.33)  # Подождать 0.33 секунды
 
-    def start_scheduling(self):
-        loop = asyncio.get_event_loop()
-        loop.create_task(self.schedule_request())
-        loop.run_forever()
+    # def start_scheduling(self):
+    #     loop = asyncio.get_event_loop()
+    #     loop.create_task(self.schedule_request())
+    #     loop.run_forever()
 
 
 class EventsViewSet(viewsets.ModelViewSet):
