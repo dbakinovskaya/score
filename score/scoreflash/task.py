@@ -79,19 +79,13 @@ def send_request():
                             tournament.events.add(event_object)
                         else:
                             print(serializer.errors)
-                        # try:
-                        #     event_id_object = EventId.objects.create(live_event_id=event_object.event_id)
-                        # except IntegrityError:
-                        #     event_id_object = EventId.objects.get(live_event_id=event_object.event_id)
-                        #     event_id_object.live_event_id = event_object.event_id
-                        #     event_id_object.save()
             except KeyError:
                 pass
             event_ids = Events.objects.values_list('event_id', flat=True)
             for event_idss in event_ids:
                 EventId.objects.update_or_create(live_event_id=event_idss)
 
-            print(event_ids)
+            # print(event_ids)
             conn = http.client.HTTPSConnection(
                 "fs.nimbase.cc")
 
@@ -133,7 +127,7 @@ def send_request():
 
 @shared_task
 def send_request_hockey():
-    try:
+    # try:
         with transaction.atomic():
             # tournament_hockey = TournamentHockey.objects.all()
             # hockey_events = HockeyLiveEvents.objects.all()
@@ -219,8 +213,8 @@ def send_request_hockey():
                             print(serializer.errors)
             except KeyError:
                 pass
-    except Exception:
-        pass
+    # except Exception:
+    #     pass
 
 
 @shared_task

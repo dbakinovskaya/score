@@ -9,7 +9,6 @@ if not os.path.exists(LOG_DIR):
 logging.FileHandler(os.path.join(LOG_DIR, 'file.log'))
 
 
-
 SECRET_KEY = 'outqxie=@%qb-lk38$vt*t2whm9fy@k286qyan45n*(n!@#6*+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -82,6 +81,8 @@ DATABASES = {
         'PASSWORD': 'user',
         'HOST': 'localhost',
         'PORT': '5432',
+        'ATOMIC_REQUESTS': True,  # Включение повторной попытки запросов
+        'CONN_MAX_AGE': 0.001,  # Время ожидания блокировки в секундах
     }
 }
 

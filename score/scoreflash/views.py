@@ -159,10 +159,10 @@ class TournamentViewSet(viewsets.ModelViewSet):
 
     def start_scheduling(self):
         # Запускаем функцию send_request каждые 5 секунд
-        schedule.every(5).seconds.do(send_request)
+        schedule.every(2).seconds.do(send_request)
         while True:
             schedule.run_pending()
-            time.sleep(5)
+            time.sleep(0.05)
 
     def list(self, request):
         # Запускаем поток для выполнения start_scheduling
