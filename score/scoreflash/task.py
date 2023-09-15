@@ -4,6 +4,7 @@ import http
 import json
 
 from django.utils import timezone
+from django.db import IntegrityError
 
 from .models import (Events, Tournament, HockeyLiveEvents,
                      TournamentHockey, EndedMatch, Scheduled, All, AllHockey,
@@ -79,10 +80,11 @@ def send_request():
                         else:
                             print(serializer.errors)
                         # try:
-                        #     EventId.objects.get(live_event_id=event.event_id)
-                        # except EventId.DoesNotExist:
-                        #     EventId.objects.create(
-                        #         live_event_id=event.event_id)
+                        #     event_id_object = EventId.objects.create(live_event_id=event_object.event_id)
+                        # except IntegrityError:
+                        #     event_id_object = EventId.objects.get(live_event_id=event_object.event_id)
+                        #     event_id_object.live_event_id = event_object.event_id
+                        #     event_id_object.save()
             except KeyError:
                 pass
             event_ids = Events.objects.values_list('event_id', flat=True)
@@ -103,12 +105,7 @@ def send_request():
                         "GET", f"/v1/events/statistics?event_id={event_idss}&locale=en_INT", headers=headers)
                     res = conn.getresponse()
                     data = res.read()
-
-                    # Обработка данных и добавление полей в модель Event
                     json_data = json.loads(data)
-                    # print(json_data)
-                    # Получение значений поля yellow_cards_home из json_data
-                    # yellow_cards_home = json_data['DATA'][0]['GROUPS'][0]['ITEMS'][11]['VALUE_HOME']
                     for item in json_data['DATA'][0]['GROUPS'][0]['ITEMS']:
                         if item["INCIDENT_NAME"] == "Yellow Cards":
                             yellow_cards_home = item['VALUE_HOME']
@@ -119,10 +116,6 @@ def send_request():
                             red_cards_home = items['VALUE_HOME']
                             red_cards_away = items['VALUE_AWAY']
                             break
-                    # # Получение значений поля yellow_cards_away из json_data
-                    # yellow_cards_away = json_data['DATA'][0]['GROUPS'][0]['ITEMS'][11]['VALUE_AWAY']
-
-                    # Обновление записи в модели Event с соответствующим event_id
                     event = Events.objects.get(event_id=event_idss)
                     event.yellow_cards_home = yellow_cards_home
                     event.yellow_cards_away = yellow_cards_away

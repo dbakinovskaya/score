@@ -1,10 +1,6 @@
 from django.db import models
 
 
-class EventId(models.Model):
-    live_event_id = models.TextField(null=True)
-
-
 class Tournament(models.Model):
     name = models.TextField(null=True)
     tournament_stage_type = models.TextField(null=True)
@@ -36,6 +32,11 @@ class Events(models.Model):
     red_cards_away = models.TextField(null=True)
     yellow_cards_home = models.TextField(null=True)
     yellow_cards_away = models.TextField(null=True)
+
+
+class EventId(models.Model):
+    live_event_id = models.OneToOneField(
+        Events, on_delete=models.CASCADE, null=True)
 
 
 class LiveOfEvents(models.Model):
@@ -211,6 +212,7 @@ class ScheduledHockey(models.Model):
     shortname_away = models.TextField(null=True)
     name_away = models.TextField(null=True)
     away_images = models.TextField(null=True)
+
 
 class EndedHockey(models.Model):
     tournament_stage_type = models.TextField(null=True)
