@@ -16,7 +16,7 @@ from celery import shared_task
 
 @shared_task
 def send_request():
-    # try:
+    try:
         with transaction.atomic():
             Tournament.objects.all().select_for_update().delete()
             Events.objects.all().select_for_update().delete()
@@ -88,8 +88,8 @@ def send_request():
             except KeyError:
                 pass
             event_ids = Events.objects.values_list('event_id', flat=True)
-            # for event_id in event_ids:
-            #     EventId.objects.update_or_create(id=str(event_id),live_event_id=event_id)
+            for event_idss in event_ids:
+                EventId.objects.update_or_create(live_event_id=event_idss)
 
             print(event_ids)
             conn = http.client.HTTPSConnection(
@@ -127,8 +127,8 @@ def send_request():
                     event.save()
                 except Exception:
                     pass
-    # except Exception:
-    #     pass
+    except Exception:
+        pass
 
 
 @shared_task

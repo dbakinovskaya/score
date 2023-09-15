@@ -35,8 +35,7 @@ class Events(models.Model):
 
 
 class EventId(models.Model):
-    live_event_id = models.OneToOneField(
-        Events, on_delete=models.CASCADE, null=True)
+    live_event_id = models.TextField(null=True)
 
 
 class LiveOfEvents(models.Model):
