@@ -121,8 +121,10 @@ def send_request():
                     event.save()
                 except Exception:
                     pass
-    except Exception:
-        pass
+    except Exception as e:
+        # Если возникла ошибка, откатываем транзакцию
+        with transaction.atomic():
+            transaction.set_rollback(True)
 
 
 @shared_task
