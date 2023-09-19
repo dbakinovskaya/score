@@ -129,7 +129,7 @@ def send_request():
 
 @shared_task
 def send_request_hockey():
-    # try:
+    try:
         with transaction.atomic():
             # tournament_hockey = TournamentHockey.objects.all()
             # hockey_events = HockeyLiveEvents.objects.all()
@@ -164,45 +164,45 @@ def send_request_hockey():
                         )
                     for event in item['EVENTS']:
                         data = {
-                            'EVENT_ID': event['EVENT_ID'],
-                            'START_TIME': event['START_TIME'],
-                            'START_UTIME': event['START_UTIME'],
-                            'GAME_TIME': event['GAME_TIME'],
-                            'SHORTNAME_AWAY': event['SHORTNAME_AWAY'],
-                            'AWAY_NAME': event['AWAY_NAME'],
-                            'AWAY_SCORE_CURRENT': event['AWAY_SCORE_CURRENT'],
-                            'AWAY_SCORE_PART_1': event['AWAY_SCORE_PART_1'],
-                            'AWAY_SCORE_PART_2': event.get('AWAY_SCORE_PART_2', ''),
-                            'AWAY_IMAGES': event.get('AWAY_IMAGES', ''),
-                            'SHORTNAME_HOME': event['SHORTNAME_HOME'],
-                            'HOME_NAME': event['HOME_NAME'],
-                            'HOME_SCORE_CURRENT': event['HOME_SCORE_CURRENT'],
-                            'HOME_SCORE_PART_1': event['HOME_SCORE_PART_1'],
-                            'HOME_SCORE_PART_2': event.get('HOME_SCORE_PART_2', ''),
-                            'HOME_IMAGES': event.get('HOME_IMAGES', ''),
-                            'STAGE_TYPE': event['STAGE_TYPE'],
-                            'MERGE_STAGE_TYPE': event['MERGE_STAGE_TYPE'],
-                            'STAGE': event['STAGE'],
-                            'SORT': event['SORT'],
-                            'LIVE_MARK': event['LIVE_MARK'],
-                            'HAS_LINEPS': event['HAS_LINEPS'],
-                            'STAGE_START_TIME': event['STAGE_START_TIME'],
-                            'PLAYING_ON_SETS': event['PLAYING_ON_SETS'],
-                            'RECENT_OVERS': event['RECENT_OVERS'],
-                            'HOME_PARTICIPANT_NAME_ONE': event['HOME_PARTICIPANT_NAME_ONE'],
-                            'HOME_EVENT_PARTICIPANT_ID': event['HOME_EVENT_PARTICIPANT_ID'],
-                            'HOME_GOAL_VAR': event['HOME_GOAL_VAR'],
-                            'HOME_SCORE_PART_3': event.get('HOME_SCORE_PART_3', ''),
-                            'AWAY_PARTICIPANT_NAME_ONE': event['AWAY_PARTICIPANT_NAME_ONE'],
-                            'AWAY_EVENT_PARTICIPANT_ID': event['AWAY_EVENT_PARTICIPANT_ID'],
-                            'AWAY_GOAL_VAR': event['AWAY_GOAL_VAR'],
-                            'AWAY_SCORE_FULL': event['AWAY_SCORE_FULL'],
-                            'AWAY_SCORE_PART_3': event.get('AWAY_SCORE_PART_3', '')
+                            'events_id': event['EVENT_ID'],
+                            'start_time': event['START_TIME'],
+                            'start_utime': event['START_UTIME'],
+                            'game_time': event['GAME_TIME'],
+                            'shortname_away': event['SHORTNAME_AWAY'],
+                            'away_name': event['AWAY_NAME'],
+                            'away_current_score': event['AWAY_SCORE_CURRENT'],
+                            'away_score_part_1': event['AWAY_SCORE_PART_1'],
+                            'away_score_part_2': event.get('AWAY_SCORE_PART_2', ''),
+                            'away_images': event.get('AWAY_IMAGES', ''),
+                            'shortname_home': event['SHORTNAME_HOME'],
+                            'home_name': event['HOME_NAME'],
+                            'home_current_score': event['HOME_SCORE_CURRENT'],
+                            'home_score_part_1': event['HOME_SCORE_PART_1'],
+                            'home_score_part_2': event.get('HOME_SCORE_PART_2', ''),
+                            'home_images': event.get('HOME_IMAGES', ''),
+                            'stge_type': event['STAGE_TYPE'],
+                            'merge_stage_tupe': event['MERGE_STAGE_TYPE'],
+                            'stage': event['STAGE'],
+                            'sort': event['SORT'],
+                            'live_mark': event['LIVE_MARK'],
+                            'has_lineps': event['HAS_LINEPS'],
+                            'stage_start_time': event['STAGE_START_TIME'],
+                            'playing_in_sets': event['PLAYING_ON_SETS'],
+                            'recent_overs': event['RECENT_OVERS'],
+                            'home_participant_name_one': event['HOME_PARTICIPANT_NAME_ONE'],
+                            'home_event_participant_id': event['HOME_EVENT_PARTICIPANT_ID'],
+                            'home_goal_var': event['HOME_GOAL_VAR'],
+                            'home_score_part_3': event.get('HOME_SCORE_PART_3', ''),
+                            'away_participant_name_one': event['AWAY_PARTICIPANT_NAME_ONE'],
+                            'away_event_participant_id': event['AWAY_EVENT_PARTICIPANT_ID'],
+                            'away_goal_var': event['AWAY_GOAL_VAR'],
+                            'away_score_fullL': event['AWAY_SCORE_FULL'],
+                            'away_score_part_3': event.get('AWAY_SCORE_PART_3', '')
                         }
                         serializer = HockeyLiveEventsSerializer(data=data)
                         if serializer.is_valid():
                             event_objects = HockeyLiveEvents.objects.filter(
-                                EVENT_ID=event['EVENT_ID'])
+                                events_id=event['EVENT_ID'])
                             if event_objects.exists():
                                 event_object = event_objects.first()
                                 serializer.update(
@@ -215,8 +215,11 @@ def send_request_hockey():
                             print(serializer.errors)
             except KeyError:
                 pass
-    # except Exception:
-    #     pass
+    except Exception as e:
+        # Если возникла ошибка, откатываем транзакцию
+        with transaction.atomic():
+            transaction.set_rollback(True)
+
 
 
 @shared_task

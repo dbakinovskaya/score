@@ -15,7 +15,7 @@ router.register(r'event-ids', EventIdViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('api/live/', TournamentViewSet.as_view({'get': 'list'})),
+    path('api/live/football/', TournamentViewSet.as_view({'get': 'list'})),
     path('api/events/live/', EventIdViewSet.as_view({'get': 'list'})),
     path('live-events/event-details/<str:live_event_id>/',
          EventDetails.as_view(), name='event-details'),

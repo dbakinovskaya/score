@@ -53,8 +53,8 @@ class TournamentSerializer(serializers.ModelSerializer):
 
 
 class HockeyLiveEventsSerializer(serializers.ModelSerializer):
-    HOME_IMAGES = serializers.ListField(allow_null=True, required=False)
-    AWAY_IMAGES = serializers.ListField(allow_null=True, required=False)
+    home_images = serializers.ListField(allow_null=True, required=False)
+    away_images= serializers.ListField(allow_null=True, required=False)
     HOME_SCORE_PART_3 = serializers.CharField(allow_blank=True, required=False)
     AWAY_SCORE_PART_3 = serializers.CharField(allow_blank=True, required=False)
     HOME_SCORE_PART_2 = serializers.CharField(allow_blank=True, required=False)
@@ -62,13 +62,13 @@ class HockeyLiveEventsSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        home_images = representation.get('HOME_IMAGES', [])
+        home_images = representation.get('home_images', [])
         home_images_string = ''.join(home_images)
-        representation['HOME_IMAGES'] = home_images_string
+        representation['home_images'] = home_images_string
 
-        away_images = representation.get('AWAY_IMAGES', [])
+        away_images = representation.get('away_images', [])
         away_images_string = ''.join(away_images)
-        representation['AWAY_IMAGES'] = away_images_string
+        representation['away_images'] = away_images_string
 
         return representation
 
