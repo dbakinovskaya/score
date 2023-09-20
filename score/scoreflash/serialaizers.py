@@ -55,10 +55,10 @@ class TournamentSerializer(serializers.ModelSerializer):
 class HockeyLiveEventsSerializer(serializers.ModelSerializer):
     home_images = serializers.ListField(allow_null=True, required=False)
     away_images= serializers.ListField(allow_null=True, required=False)
-    HOME_SCORE_PART_3 = serializers.CharField(allow_blank=True, required=False)
-    AWAY_SCORE_PART_3 = serializers.CharField(allow_blank=True, required=False)
-    HOME_SCORE_PART_2 = serializers.CharField(allow_blank=True, required=False)
-    AWAY_SCORE_PART_2 = serializers.CharField(allow_blank=True, required=False)
+    home_score_part_3 = serializers.CharField(allow_blank=True, required=False)
+    away_score_part_3 = serializers.CharField(allow_blank=True, required=False)
+    home_score_part_2 = serializers.CharField(allow_blank=True, required=False)
+    away_score_part_2 = serializers.CharField(allow_blank=True, required=False)
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -78,12 +78,12 @@ class HockeyLiveEventsSerializer(serializers.ModelSerializer):
 
 
 class TournamentHockeySerializer(serializers.ModelSerializer):
-    events_hockey = HockeyLiveEventsSerializer(many=True)
+    events = HockeyLiveEventsSerializer(many=True)
 
     class Meta:
         model = TournamentHockey
         fields = ['id', 'name', 'tournament_stage_type', 'tournament_imng',
-                  'TOURNAMENT_TEMPLATE_ID', 'TOURNAMENT_IMAGE', 'events_hockey']
+                  'TOURNAMENT_TEMPLATE_ID', 'TOURNAMENT_IMAGE', 'events']
 
 
 class EndedMatchSerializer(serializers.ModelSerializer):

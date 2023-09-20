@@ -210,7 +210,7 @@ def send_request_hockey():
                             else:
                                 event_object = HockeyLiveEvents.objects.create(
                                     **serializer.validated_data)
-                            tournament.events_hockey.add(event_object)
+                            tournament.events.add(event_object)
                         else:
                             print(serializer.errors)
             except KeyError:

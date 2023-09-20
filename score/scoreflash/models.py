@@ -74,7 +74,7 @@ class TournamentHockey(models.Model):
 
 class HockeyLiveEvents(models.Model):
     tournament = models.ForeignKey(
-        TournamentHockey, related_name='events_hockey', on_delete=models.CASCADE, null=True)
+        TournamentHockey, related_name='events', on_delete=models.CASCADE, null=True)
     events_id = models.TextField(null=True)
     start_time = models.TextField(null=True)
     start_utime = models.TextField(null=True)
